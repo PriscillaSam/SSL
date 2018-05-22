@@ -53,11 +53,20 @@
     <Compile Include="Migrations\201805211304114_InitialMigration.Designer.cs">
       <DependentUpon>201805211304114_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805222150213_AddModelEntities.cs" />
+    <Compile Include="Migrations\201805222150213_AddModelEntities.Designer.cs">
+      <DependentUpon>201805222150213_AddModelEntities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="S.S.L.Entities\Comment.cs" />
     <Compile Include="S.S.L.Entities\Entities.cs" />
-    <Compile Include="S.S.L.Entities\Model.cs" />
+    <Compile Include="S.S.L.Entities\BaseModel.cs" />
+    <Compile Include="S.S.L.Entities\Facilitator.cs" />
+    <Compile Include="S.S.L.Entities\Forum.cs" />
+    <Compile Include="S.S.L.Entities\Mentee.cs" />
     <Compile Include="S.S.L.Entities\Role.cs" />
+    <Compile Include="S.S.L.Entities\Schedule.cs" />
     <Compile Include="S.S.L.Entities\User.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +78,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201805211304114_InitialMigration.resx">
       <DependentUpon>201805211304114_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805222150213_AddModelEntities.resx">
+      <DependentUpon>201805222150213_AddModelEntities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

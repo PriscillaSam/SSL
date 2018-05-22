@@ -1,12 +1,19 @@
-﻿namespace S.S.L.Infrastructure.S.S.L.Entities
+﻿
+using System.Collections.Generic;
+
+namespace S.S.L.Infrastructure.S.S.L.Entities
 {
-    public class User : Model
+    public class User : BaseModel
     {
+
+      
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string MobileNumber { get; set; }
         public string ImageUrl { get; set; }
+        public bool EmailConfirmed { get; set; }
+
 
         //Relationships
         public int RoleId { get; set; }

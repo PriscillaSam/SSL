@@ -12,16 +12,20 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         // 
         // If you wish to target a different database and/or database provider, modify the 'Entities' 
         // connection string in the application configuration file.
-        public Entities()
-            : base("name=Entities")
+        public Entities() : base("name=Entities")
         {
         }
 
-        // Add a DbSet for each entity type that you want to include in your model. For more information 
-        // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
-        public  DbSet<User> Users { get; set; }
-        public  DbSet<Role> Roles { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Facilitator> Facilitators { get; set; }
+        public DbSet<Forum> Fora { get; set; }
+        public DbSet<Mentee> Mentees { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<User> Users { get; set; }
+
+
     }
 
 }

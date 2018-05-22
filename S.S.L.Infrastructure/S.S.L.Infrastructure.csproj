@@ -68,6 +68,7 @@
     <Compile Include="S.S.L.Entities\Role.cs" />
     <Compile Include="S.S.L.Entities\Schedule.cs" />
     <Compile Include="S.S.L.Entities\User.cs" />
+    <Compile Include="Utilities\MD5Encryption.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -82,6 +83,15 @@
     <EmbeddedResource Include="Migrations\201805222150213_AddModelEntities.resx">
       <DependentUpon>201805222150213_AddModelEntities.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\S.S.L.Domain\S.S.L.Domain.csproj">
+      <Project>{849A1DF5-B6C0-4A08-9B34-7968CF29539C}</Project>
+      <Name>S.S.L.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,7 +5,6 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 {
     public class User : BaseModel
     {
-
       
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -14,7 +13,8 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public string ImageUrl { get; set; }
         public bool EmailConfirmed { get; set; }
 
-
+        public string Gender { get; set; }
+        public string Bio { get; set; }
         //Relationships
         public int RoleId { get; set; }
         public Role Role { get; set; }

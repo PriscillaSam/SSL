@@ -8,8 +8,8 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 {
     public class Comment : BaseModel
     {
-        public string Message { get; set; }
-
+        public string CommentPost { get; set; }
+     
         //Relationships
         public int UserId { get; set; }
         public User User { get; set; }

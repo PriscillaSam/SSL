@@ -30,21 +30,17 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
+      
 
         public override int SaveChanges()
         {
-            AddOrUpdateTime();
+            AddOrUpdateDateTime();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync()
         {
-            AddOrUpdateTime();
+            AddOrUpdateDateTime();
             return base.SaveChangesAsync();
         }
 
@@ -65,7 +61,10 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
             base.Dispose(disposing);
         }
 
-        private void AddOrUpdateTime()
+        /// <summary>
+        /// Updates the createdAt and updatedAt fields of application database entities when entities are added or modified 
+        /// </summary>
+        private void AddOrUpdateDateTime()
         {
 
             var currentDateTime = DateTime.Now;

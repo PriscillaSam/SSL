@@ -13,7 +13,7 @@ namespace S.S.L.Infrastructure.Utilities
                 .Cryptography.MD5.Create()
                  .ComputeHash(Encoding.ASCII.GetBytes(plainText))
                   .Select(x => x.ToString("x2"))
-                   .Aggregate((ag, s) => ag + s);
+                  .Aggregate((ag, s) => ag + s);
         }
     }
 }

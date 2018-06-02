@@ -1,4 +1,5 @@
-﻿using System;
+﻿using S.S.L.Web.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace S.S.L.Web
     {
         protected void Application_Start()
         {
+            DatabaseMigrator.UpdateDatabase();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

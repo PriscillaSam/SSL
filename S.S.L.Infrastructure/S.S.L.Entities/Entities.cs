@@ -23,11 +23,13 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 
 
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<Facilitator> Facilitators { get; set; }
         public DbSet<Forum> Fora { get; set; }
         public DbSet<Mentee> Mentees { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<State> States { get; set; }
         public DbSet<User> Users { get; set; }
 
       

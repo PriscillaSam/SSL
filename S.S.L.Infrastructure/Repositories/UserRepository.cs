@@ -38,7 +38,7 @@ namespace S.S.L.Infrastructure.Repositories
                 PasswordHash = passwordHash,
                 EmailConfirmed = false,
                 Gender = model.Gender,
-
+                RoleId = 2
                 //Add other fields
             };
 
@@ -64,7 +64,7 @@ namespace S.S.L.Infrastructure.Repositories
                             .FirstOrDefaultAsync();
 
             if (user == null)
-                return null;
+                throw new Exception("User does not exist");
 
             return UserFormatter(user);
 

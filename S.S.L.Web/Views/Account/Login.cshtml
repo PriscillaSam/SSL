@@ -1,57 +1,78 @@
-﻿@model S.S.L.Web.Models.LoginViewModel
+﻿@model LoginViewModel
 
 @{
     ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
 
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="">
-        <h4>Login</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div style="margin-top: 100px">
+    <h4 class="text-center" style="color:#ccc">Great to have you back</h4>
+    <h3 class="mb-3 text-center text-gold">Login</h3>
+</div>
+<div>
+    @using (Html.BeginForm())
+    {
         
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.RememberMe)
-                    @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-group mb-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-blue"><i class="fas fa-envelope" style="color: white"></i></span>
+                </div>
+                @Html.EditorFor(model => model.Email, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        placeholder = "Email",
+                    }
+                })
+
+            </div>
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group mb-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-blue"><i class="fas fa-key" style="color: white"></i></span>
+                </div>
+                @Html.EditorFor(model => model.Password, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        placeholder = "Password",
+                    }
+                })
+            </div>
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" id="@nameof(Model.RememberMe)" checked="" type="checkbox">
+                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "custom-control-label", id = nameof(Model.RememberMe) })
+
                 </div>
             </div>
+            <div class="col-md-6">
+                <p class="text-center"><a href="" class="form-link">Forgot password?</a></p>
+
+            </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            <button class="btn btn-outline-gold btn-block">Welcome</button>
         </div>
-    </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+        <p class="text-center">Haven't joined us yet? <a href="@Url.Action("signup")" class="form-link">Sign up</a>.</p>
+
+    }
+
 </div>
-
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

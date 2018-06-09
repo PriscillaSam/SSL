@@ -1,18 +1,123 @@
-﻿body {
+﻿/*body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
+/*.body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
+}*/
+
+
+@keyframes slide-in-left {
+    0% {
+        left: 100%;
+    }
+
+    100% {
+        left: 0;
+    }
 }
 
+.bg-blue {
+    background-color: #00008B
+}
+
+.red {
+    background-color: red;
+}
+
+.my-control {
+    border-top: none;
+    width: 100%;
+}
+
+.fas {
+    color: #666
+}
+
+.backdrop {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    background: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+}
+
+.form-back {
+    background-color: rgba(255, 255, 255, 0.9);
+    height: 100%;
+    /*Animation rules*/
+    animation-name: slide-in-left;
+    animation-duration: 1.5s;
+}
+
+.form-link:hover {
+    color: #b8860b;
+    text-decoration-line: none;
+}
+
+.form-nav {
+    border-bottom: 1px solid #eee;
+}
+
+.blue-grad {
+    background: linear-gradient(to bottom right,#eee,#B8860B )
+}
+
+.btn-outline-gold {
+    background-color: transparent;
+    border: 1px solid #B8860B;
+}
+
+    .btn-outline-gold:hover {
+        background-color: #b8860b;
+        color: white;
+    }
+
+.text-default {
+    color: #00008B;
+}
+
+.text-gold {
+    color: #b8860b;
+}
+
+.form-header {
+    background-color: #E6E6FA;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.bd-left-blue {
+    border-left: 3px solid #00008B;
+}
+
+.bd-red {
+    border-left: 3px solid red;
+    border-right: 3px solid red;
+}
+
+#signup-back {
+    background-image: url('../Assets/img/03.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#signup-overlay {
+    background: rgba(0,0,0,0.3);
+}

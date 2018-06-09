@@ -47,7 +47,7 @@ namespace S.S.L.Domain.Managers
             //check if email already exists
             var emailExists = await _repo.VerifyEmailAsync(newUser.Email);
             if (emailExists)
-                throw new Exception("This email is already in use");
+                throw new Exception("This email is already registered");
 
             //hash password
             var passHash = _encryption.Encrypt(password);

@@ -34,6 +34,7 @@ namespace S.S.L.Infrastructure.Repositories
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
+                EmploymentStatus = model.EmploymentStatus,                
                 MobileNumber = model.MobileNumber,
                 PasswordHash = passwordHash,
                 EmailConfirmed = false,

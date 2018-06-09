@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,9 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\ScheduleStatus.cs" />
+    <Compile Include="Interfaces\Repositories\IStateCountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
     <Compile Include="Interfaces\Utilities\IEncryption.cs" />
+    <Compile Include="Managers\LocationManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\CountryModel.cs" />
+    <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

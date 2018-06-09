@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\StateCountryRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="S.S.L.Entities\Comment.cs" />
     <Compile Include="S.S.L.Entities\Country.cs" />

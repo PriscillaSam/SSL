@@ -1,9 +1,7 @@
 ﻿using S.S.L.Domain.Models;
-using System;
+using S.S.L.Infrastructure.Validators;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace S.S.L.Web.Models
 {
@@ -20,9 +18,10 @@ namespace S.S.L.Web.Models
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "please enter a valid email address"), EmailAddress]
+        [EmailValidator]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "please enter a valid phone number"), Display(Name = "Mobile Number")]
+        [Required(ErrorMessage = "please enter a valid phone number"), Display(Name = "Mobile Number"), RegularExpression(pattern: @"^[0-9]+$", ErrorMessage = "please enter a valid phone number")]
         public string MobileNumber { get; set; }
 
         [Required(ErrorMessage = "select your state")]
@@ -37,8 +36,9 @@ namespace S.S.L.Web.Models
         [Required(ErrorMessage = "please enter your password"), DataType(DataType.Password), MinLength(8, ErrorMessage = "Password length should be at least 8 characters")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "please confirm your password"), DataType(DataType.Password), Display(Name = "Confirm Password")]
+        [Required(ErrorMessage = "please confirm your password"), DataType(DataType.Password), Display(Name = "Confirm Password"), Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
+
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -47,6 +47,8 @@ namespace S.S.L.Web.Models
                 yield return new ValidationResult("Passwords do not match", new[] { nameof(Password), nameof(ConfirmPassword) });
 
             }
+
+
         }
     }
 

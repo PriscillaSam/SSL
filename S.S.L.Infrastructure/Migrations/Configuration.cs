@@ -3,9 +3,7 @@ namespace S.S.L.Infrastructure.Migrations
     using global::S.S.L.Infrastructure.S.S.L.Entities;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     public sealed class Configuration : DbMigrationsConfiguration<S.S.L.Entities.Entities>
     {
@@ -30,7 +28,7 @@ namespace S.S.L.Infrastructure.Migrations
 
 
             context.Roles.AddOrUpdate(r => r.Name,
-                new Role { Name = "Admin" },
+                new Role { Name = "Administrator" },
                 new Role { Name = "Facilitator" },
                 new Role { Name = "Mentee" }
 
@@ -45,7 +43,7 @@ namespace S.S.L.Infrastructure.Migrations
             var states = new List<string>() { "Abia", "Adamawa", "Akwa-Ibom" };
 
             states.ForEach(x =>
-                context.States.AddOrUpdate(s => s.Name, 
+                context.States.AddOrUpdate(s => s.Name,
                     new State { Name = x, CountryId = 1 }));
 
 

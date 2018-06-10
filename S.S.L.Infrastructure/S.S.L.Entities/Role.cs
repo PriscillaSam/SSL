@@ -4,9 +4,9 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 {
     public class Role : BaseModel
     {
-        public Role() => Users = new HashSet<User>();
+        public Role() => UserRoles = new HashSet<UserRole>();
 
         public string Name { get; set; }
-        public ICollection<User> Users { get; private set; }
+        public ICollection<UserRole> UserRoles { get; private set; }
     }
 }

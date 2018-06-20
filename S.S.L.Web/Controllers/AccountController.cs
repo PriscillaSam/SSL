@@ -1,7 +1,9 @@
 ﻿using Microsoft.Owin.Security;
+using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
-using S.S.L.Web.Models;
+using S.S.L.Infrastructure.Services.EmailService;
+using S.S.L.Web.Models.AuthViewModels;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -17,11 +19,13 @@ namespace S.S.L.Web.Controllers
 
         private readonly UserManager _user;
         private readonly LocationManager _location;
+        private readonly EmailGenerator _email;
 
-        public AccountController(UserManager user, LocationManager location)
+        public AccountController(UserManager user, LocationManager location, EmailGenerator email)
         {
             _user = user;
             _location = location;
+            _email = email;
         }
 
         [Route("login")]
@@ -64,7 +68,6 @@ namespace S.S.L.Web.Controllers
             {
                 ViewBag.Error = ex.Message;
             }
-            //get claims
 
             return View();
 
@@ -82,13 +85,13 @@ namespace S.S.L.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SignUp(SignUpViewModel model)
         {
-
             try
             {
                 if (ModelState.IsValid)
                 {
                     var user = new UserModel
                     {
+                        UserType = UserType.Mentee,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Email = model.Email,
@@ -98,11 +101,17 @@ namespace S.S.L.Web.Controllers
                         State = model.State,
                         MobileNumber = model.MobileNumber
 
-
                     };
 
-                    var newUser = await _user.Register(user, model.Password);
-                    return RedirectToAction("Login");
+                    var newUser = await _user.RegisterAsync(user, model.Password);
+
+                    //send email
+                    var email = _email.GetTemplate(EmailType.AccountConfirmation, newUser);
+                    await email.GenerateEmailAsync();
+
+                    ViewBag.Error = "An email has been sent to you to confirm your account";
+                    await PopulateDropdown();
+                    return View();
 
                 }
 
@@ -116,6 +125,39 @@ namespace S.S.L.Web.Controllers
             await PopulateDropdown();
             return View();
 
+        }
+
+        //Confirmation page get
+        [Route("{userId}/confirm")]
+        public ActionResult AccountConfirmation(int userId)
+        {
+            ViewBag.UserId = userId;
+            return View();
+        }
+
+        [Route("confirm")]
+        public async Task<JsonResult> Confirm(int userId)
+        {
+            string msg;
+            try
+            {
+                var user = await _user.ConfirmUser(userId);
+
+                //send welcome mail
+                var email = _email.GetTemplate(EmailType.MenteeWelcome, user);
+                await email.GenerateEmailAsync();
+
+                msg = "Your account has been verified";
+
+                return Json(msg, JsonRequestBehavior.AllowGet);
+
+
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+
+            }
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using S.S.L.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace S.S.L.Domain.Models
         public string EmploymentStatus { get; set; }
         public string Country { get; set; }
         public string State { get; set; }
+
+        public UserType UserType { get; set; }
         public string FullName => $"{FirstName} {LastName}";
 
     }

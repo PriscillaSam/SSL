@@ -61,8 +61,8 @@ textarea {
     background-color: rgba(255, 255, 255, 0.9);
     height: 100%;
     /*Animation rules*/
-    animation-name: slide-in-left;
-    animation-duration: 1.5s;
+    /*animation-name: slide-in-left;
+    animation-duration: 1.5s;*/
 }
 
 .form-link:hover {
@@ -101,6 +101,12 @@ textarea {
     padding: 10px;
     font-size: 20px;
     border-radius: 5px;
+}
+.form-footer {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #ccc;
+    font-size: 13px;
 }
 
 .bd-left-blue {

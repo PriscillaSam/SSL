@@ -2,9 +2,6 @@
 using S.S.L.Domain.Interfaces.Utilities;
 using S.S.L.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace S.S.L.Domain.Managers
@@ -31,17 +28,17 @@ namespace S.S.L.Domain.Managers
 
             //Encrypt password string
             var passHash = _encryption.Encrypt(password);
-            return await _repo.ValidateUserAsync(email, passHash);            
-        } 
+            return await _repo.ValidateUserAsync(email, passHash);
+        }
 
 
-       /// <summary>
-       /// Registers new users on the platform
-       /// </summary>
-       /// <param name="newUser"></param>
-       /// <param name="password"></param>
-       /// <returns></returns>
-        public async Task<UserModel> Register(UserModel newUser, string password)
+        /// <summary>
+        /// Registers new users on the platform
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<UserModel> RegisterAsync(UserModel newUser, string password)
         {
 
             //check if email already exists
@@ -55,6 +52,16 @@ namespace S.S.L.Domain.Managers
             //save user
             return await _repo.AddUserAsync(newUser, passHash);
 
+        }
+
+        public async Task<UserModel> GetUserById(int userId)
+        {
+            return await _repo.GetUserAsync(userId);
+        }
+
+        public async Task<UserModel> ConfirmUser(int userId)
+        {
+            return await _repo.ConfirmUser(userId);
         }
     }
 }

@@ -2,10 +2,8 @@
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace S.S.L.Infrastructure.Repositories
@@ -33,13 +31,13 @@ namespace S.S.L.Infrastructure.Repositories
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Email = model.Email,
-                EmploymentStatus = model.EmploymentStatus,                
+                Email = model.Email.ToLower(),
+                EmploymentStatus = model.EmploymentStatus,
                 MobileNumber = model.MobileNumber,
                 PasswordHash = passwordHash,
                 EmailConfirmed = false,
                 Gender = model.Gender,
-                RoleId = 2
+
                 //Add other fields
             };
 
@@ -61,15 +59,15 @@ namespace S.S.L.Infrastructure.Repositories
         {
             var user = await _context
                             .Users
-                            .Where(u => u.Email == email && u.PasswordHash == passwordHash)
+                            .Where(u => u.Email == email.ToLower() && u.PasswordHash == passwordHash)
                             .FirstOrDefaultAsync();
 
+            if (!user.EmailConfirmed)
+                throw new Exception("Please confirm your email before proceeding");
             if (user == null)
-                throw new Exception("User does not exist");
+                throw new Exception("Invalid Email or password");
 
             return UserFormatter(user);
-
-
         }
 
         public async Task<bool> VerifyEmailAsync(string email)
@@ -95,10 +93,26 @@ namespace S.S.L.Infrastructure.Repositories
                 FirstName = query.FirstName,
                 LastName = query.LastName,
                 Email = query.Email,
-
             };
         }
 
-        
+        public async Task<UserModel> GetUserAsync(int userId)
+        {
+            var query = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+            if (query == null) return null;
+            return UserFormatter(query);
+        }
+
+        public async Task<UserModel> ConfirmUser(int userId)
+        {
+            var query = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+            if (query == null || query.EmailConfirmed) throw new Exception("This operation is not valid.");
+
+            query.EmailConfirmed = true;
+            await _context.SaveChangesAsync();
+
+            return UserFormatter(query);
+
+        }
     }
 }

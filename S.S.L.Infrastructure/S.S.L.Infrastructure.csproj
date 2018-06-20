@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201806062224437_AddStateAndCountryModels1.Designer.cs">
       <DependentUpon>201806062224437_AddStateAndCountryModels1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806091635498_AddUserRoleModel.cs" />
+    <Compile Include="Migrations\201806091635498_AddUserRoleModel.Designer.cs">
+      <DependentUpon>201806091635498_AddUserRoleModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\StateCountryRepository.cs" />
@@ -96,7 +100,14 @@
     <Compile Include="S.S.L.Entities\Schedule.cs" />
     <Compile Include="S.S.L.Entities\State.cs" />
     <Compile Include="S.S.L.Entities\User.cs" />
+    <Compile Include="S.S.L.Entities\UserRole.cs" />
+    <Compile Include="Services\EmailService\EmailGenerator.cs" />
+    <Compile Include="Services\EmailService\EmailTemplates\AccountConfirmation.cs" />
+    <Compile Include="Services\EmailService\EmailTemplates\GenericEmailTemplate.cs" />
+    <Compile Include="Services\EmailService\EmailTemplates\MenteeWelcome.cs" />
+    <Compile Include="Services\EmailService\SmtpService.cs" />
     <Compile Include="Utilities\MD5Encryption.cs" />
+    <Compile Include="Validators\EmailValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -128,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806062224437_AddStateAndCountryModels1.resx">
       <DependentUpon>201806062224437_AddStateAndCountryModels1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806091635498_AddUserRoleModel.resx">
+      <DependentUpon>201806091635498_AddUserRoleModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

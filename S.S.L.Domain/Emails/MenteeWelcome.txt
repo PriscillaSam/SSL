@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello {user},</p>
+    <p>The SSL community welcomes you.<br> We are grateful that you have taken this bold step to be a part of the change coming to our society, nation and the world at large.
+        <br>
+        We believe we are taking over and we act accordingly.
+    </p>
+</body>
+</html>

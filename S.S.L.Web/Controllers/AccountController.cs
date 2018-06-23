@@ -5,6 +5,7 @@ using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.Services.EmailService;
 using S.S.L.Web.Models.AuthViewModels;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,6 +17,7 @@ namespace S.S.L.Web.Controllers
     [RoutePrefix("accounts")]
     public class AccountController : Controller
     {
+        public IAuthenticationManager AuthManager => HttpContext.GetOwinContext().Authentication;
 
         private readonly UserManager _user;
         private readonly LocationManager _location;
@@ -39,30 +41,39 @@ namespace S.S.L.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            var auth = HttpContext.GetOwinContext().Authentication;
 
             try
             {
                 var user = await _user.Login(model.Email, model.Password);
-                var claims = new Claim[]
+                var claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.GivenName, user.FullName ),
-
+                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim(ClaimTypes.GivenName, user.FullName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 };
+
+
+                foreach (var roleClaim in user.Roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, roleClaim));
+                }
 
                 var userIdentity = new ClaimsIdentity(claims);
                 var props = new AuthenticationProperties
                 {
-                    IsPersistent = model.RememberMe
+                    IsPersistent = model.RememberMe,
+
                 };
 
-                auth.SignIn(props, userIdentity);
+                AuthManager.SignIn(props, userIdentity);
+                var isAuthenticated = User.Identity.IsAuthenticated;
+
                 if (Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);
-
                 }
+
+                return RedirectToAction("index", "home");
             }
             catch (Exception ex)
             {
@@ -99,7 +110,7 @@ namespace S.S.L.Web.Controllers
                         Gender = model.Gender,
                         Country = model.Country,
                         State = model.State,
-                        MobileNumber = model.MobileNumber
+                        MobileNumber = model.MobileNumber,
 
                     };
 
@@ -109,7 +120,7 @@ namespace S.S.L.Web.Controllers
                     var email = _email.GetTemplate(EmailType.AccountConfirmation, newUser);
                     await email.GenerateEmailAsync();
 
-                    ViewBag.Error = "An email has been sent to you to confirm your account";
+                    ViewBag.Error = "An email has been sent to you to confirm your account.";
                     await PopulateDropdown();
                     return View();
 
@@ -128,7 +139,7 @@ namespace S.S.L.Web.Controllers
         }
 
         //Confirmation page get
-        [Route("{userId}/confirm")]
+        //     [Route("{userId}/confirm")]
         public ActionResult AccountConfirmation(int userId)
         {
             ViewBag.UserId = userId;
@@ -148,7 +159,6 @@ namespace S.S.L.Web.Controllers
                 await email.GenerateEmailAsync();
 
                 msg = "Your account has been verified";
-
                 return Json(msg, JsonRequestBehavior.AllowGet);
 
 
@@ -156,7 +166,6 @@ namespace S.S.L.Web.Controllers
             catch (Exception ex)
             {
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
-
             }
         }
 
@@ -167,7 +176,5 @@ namespace S.S.L.Web.Controllers
             ViewBag.States = new SelectList(await _location.GetStates(1), "Name", "Name");
 
         }
-
-
     }
 }

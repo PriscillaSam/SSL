@@ -1,8 +1,5 @@
-﻿using S.S.L.Web.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Ninject.Mvc;
+using S.S.L.Web.Infrastructure;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -12,6 +9,7 @@ namespace S.S.L.Web
     {
         protected void Application_Start()
         {
+            NinjectContainer.RegisterAssembly();
             DatabaseMigrator.UpdateDatabase();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);

@@ -19,6 +19,7 @@ namespace S.S.L.Web.Infrastructure.NinjectModules
             Bind<DbContext>().To<Entities>();
             Bind<IEncryption>().To<MD5Encryption>();
             Bind<IUserRepository>().To<UserRepository>();
+            Bind<IStateCountryRepository>().To<StateCountryRepository>();
         }
     }
 }

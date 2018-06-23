@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 using Owin;
 
 [assembly: OwinStartup(typeof(S.S.L.Web.Startup))]
@@ -15,8 +13,9 @@ namespace S.S.L.Web
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            app.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions
             {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/accounts/login")
 
             });

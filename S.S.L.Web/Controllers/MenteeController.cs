@@ -2,15 +2,13 @@
 
 namespace S.S.L.Web.Controllers
 {
-    [Authorize]
-    public class HomeController : Controller
+    public class MenteeController : Controller
     {
-        // GET: Home
+        // GET: Mentee
 
-        [Route("~/")]
-        [Route("home/index")]
         public ActionResult Index()
         {
+            ViewBag.User = User.Identity.Name;
             return View();
         }
     }

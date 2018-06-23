@@ -1,12 +1,7 @@
 namespace S.S.L.Infrastructure.S.S.L.Entities
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Validation;
-    using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
 
     public class Entities : DbContext
@@ -30,9 +25,12 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public DbSet<Role> Roles { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<Thought> Thoughts { get; set; }
+        public DbSet<Todo> Todos { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
-      
+
 
         public override int SaveChanges()
         {

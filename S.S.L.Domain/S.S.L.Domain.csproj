@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Common\ConfigSettings.cs" />
     <Compile Include="Enums\EmailType.cs" />
+    <Compile Include="Enums\GymGroup.cs" />
     <Compile Include="Enums\ScheduleStatus.cs" />
     <Compile Include="Enums\UserType.cs" />
     <Compile Include="Interfaces\Repositories\IStateCountryRepository.cs" />

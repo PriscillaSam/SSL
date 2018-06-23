@@ -6,7 +6,7 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 {
     public class User : BaseModel
     {
-      
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -18,6 +18,10 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public string Bio { get; set; }
         public string EmploymentStatus { get; set; }
         public bool EmailConfirmed { get; set; }
+        public GymGroup GymGroup { get; set; }
+
+
+
 
         //location
         public string Country { get; set; }
@@ -25,6 +29,7 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 
 
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Todo> Todos { get; set; }
 
     }
 }

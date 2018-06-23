@@ -1,9 +1,5 @@
 ﻿using S.S.L.Domain.Enums;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace S.S.L.Domain.Models
 {
@@ -21,6 +17,6 @@ namespace S.S.L.Domain.Models
 
         public UserType UserType { get; set; }
         public string FullName => $"{FirstName} {LastName}";
-
+        public IEnumerable<string> Roles { get; set; }
     }
 }

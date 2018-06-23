@@ -2,6 +2,7 @@
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,13 +38,24 @@ namespace S.S.L.Infrastructure.Repositories
                 PasswordHash = passwordHash,
                 EmailConfirmed = false,
                 Gender = model.Gender,
+                UserType = model.UserType,
 
                 //Add other fields
             };
 
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
+
             model.Id = newUser.Id;
+
+            var userRole = new UserRole
+            {
+                UserId = model.Id,
+                RoleId = _context.Roles.Where(r => r.Name == "Mentee").FirstOrDefault().Id
+            };
+
+            _context.UserRoles.Add(userRole);
+            await _context.SaveChangesAsync();
 
             return model;
         }
@@ -62,12 +74,28 @@ namespace S.S.L.Infrastructure.Repositories
                             .Where(u => u.Email == email.ToLower() && u.PasswordHash == passwordHash)
                             .FirstOrDefaultAsync();
 
-            if (!user.EmailConfirmed)
-                throw new Exception("Please confirm your email before proceeding");
             if (user == null)
                 throw new Exception("Invalid Email or password");
 
-            return UserFormatter(user);
+            if (!user.EmailConfirmed)
+                throw new Exception("Please confirm your email before proceeding");
+
+            var _user = UserFormatter(user);
+            _user.Roles = GetUserRoles(user.Id);
+
+            return _user;
+        }
+
+        public IEnumerable<string> GetUserRoles(int userId)
+        {
+            var roles = from ur in _context.UserRoles
+                        where ur.UserId == userId
+                        from r in _context.Roles
+                        where ur.RoleId == r.Id
+                        select r.Name;
+
+            return roles.ToList();
+
         }
 
         public async Task<bool> VerifyEmailAsync(string email)
@@ -83,35 +111,35 @@ namespace S.S.L.Infrastructure.Repositories
         /// <summary>
         /// Custom formatter for transforming User Object to UserModel Object
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="user"></param>
         /// <returns></returns>
-        private static UserModel UserFormatter(User query)
+        private static UserModel UserFormatter(User user)
         {
             return new UserModel
             {
-                Id = query.Id,
-                FirstName = query.FirstName,
-                LastName = query.LastName,
-                Email = query.Email,
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
             };
         }
 
         public async Task<UserModel> GetUserAsync(int userId)
         {
-            var query = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
-            if (query == null) return null;
-            return UserFormatter(query);
+            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+            if (user == null) return null;
+            return UserFormatter(user);
         }
 
         public async Task<UserModel> ConfirmUser(int userId)
         {
-            var query = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
-            if (query == null || query.EmailConfirmed) throw new Exception("This operation is not valid.");
+            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+            if (user == null || user.EmailConfirmed) throw new Exception("This operation is not valid.");
 
-            query.EmailConfirmed = true;
+            user.EmailConfirmed = true;
             await _context.SaveChangesAsync();
 
-            return UserFormatter(query);
+            return UserFormatter(user);
 
         }
     }

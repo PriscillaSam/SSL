@@ -1,0 +1,115 @@
+﻿@model DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.Heading = $"Hello {@User.Identity.Name}";
+    ViewBag.SubHeading = "What would you like to do today?";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!--Thought section-->
+<div class="col-lg-2">
+    <div class="bg-info p-3 shadow rounded-bottom">
+        <p class="text-white lead"><em>Today's thoughts</em></p>
+        <hr class="">
+        <p class="text-white">We believe we are taking over and we act accordingly.</p>
+
+    </div>
+</div>
+<div class="col-lg-8 p-3 shadow bg-white rounded-bottom animated fadeIn">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 mr-lg-4 p-2 bg-dark shadow-sm rounded" style="height:330px;">
+                <div class="shadow-sm p-3">
+                    <div class="mr-4" style="display: inline-block;">
+                        <i class="fa fa-2x fa-users text-danger"></i>
+                    </div>
+                    <div class="" style="display: inline-block;">
+                        <p class="text-muted">
+                            Facilitators<br>
+                            <span class="text-danger">@Model.Facilitatators</span>
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="mt-2 shadow-sm p-3">
+                    <div class="mr-4" style="display: inline-block;">
+                        <i class="fa fa-2x fa-users text-success"></i>
+                    </div>
+                    <div class="" style="display: inline-block;">
+                        <p class="text-muted">
+                            Mentees<br>
+                            <span class="text-success">@Model.Mentees</span>
+                        </p>
+
+                    </div>
+                </div>
+
+
+                <div class="mt-2 shadow-sm p-3">
+                    <div class="mr-4" style="display: inline-block;">
+                        <i class="fa fa-2x fa-bullhorn text-gold"></i>
+                    </div>
+                    <div class="" style="display: inline-block;">
+                        <p class="text-muted">
+                            Forums<br>
+                            <span class="text-gold">100</span>
+                        </p>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-7 p-3 shadow-sm bg-light rounded">
+                <div class="todo-title">
+                    <h4 class="text-muted" style="display: inline;">
+                        <i class="fa mr-3 fa-th-list"></i>My todo
+                    </h4>
+                    <hr>
+                </div>
+                <div class="shadow-sm p-1 mb-3">
+                    <form class="form-inline">
+                        <div class="form-group mr-1 col-md-10">
+                            <label for="inputPassword2" class="sr-only">New Todo</label>
+                            <input type="text" class="form-control col-md-12" placeholder="add new todo">
+                        </div>
+                        <button type="submit" class="btn btn-outline-gold btn-sm"><i class="fa fa-plus"></i></button>
+                    </form>
+                </div>
+
+                <div class="shadow-sm p-2 mb-3">
+                    <p style="display: inline;">
+                        <i class="fa fa-square-o  text-danger mr-3"></i>
+                        Create more gym groups and name them
+                    </p>
+                    <a class="badge badge-light shadow-sm" href="#">Mark as done</a>
+                </div>
+                <div class="shadow-sm p-2 mb-3">
+                    <p style="display: inline;">
+                        <i class="fa fa-check-square-o text-success mr-3"></i>
+                        Send a message to Pastor Clinton
+                    </p>
+                    <a class="badge badge-success shadow-sm" href="#">done</a>
+                </div>
+                <div class="shadow-sm p-2 mb-3">
+                    <p style="display: inline;">
+                        <i class="fa fa-check-square-o text-success mr-3"></i>
+                        Set up classes with Demola
+                    </p>
+                    <a class="badge badge-success shadow-sm" href="#">done</a>
+                </div>
+                <div class="shadow-sm p-2 mb-3">
+                    <p style="display: inline;">
+                        <i class="fa fa-square-o  text-danger mr-3"></i>
+                        Add cooments to Sugar's assignment
+                    </p>
+                    <a class="badge badge-light shadow-sm" href="#">Mark as done</a>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

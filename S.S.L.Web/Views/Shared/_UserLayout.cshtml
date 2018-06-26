@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dashboard</title>
+    <title>@ViewBag.Title - S.S.L</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/dashboard.css" rel="stylesheet" />
+    <link href="~/Assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container-fluid" style="padding: 0">
+    <div class="container-fluid" style="padding: 0;overflow: hidden;">
         <div class="row">
             <div class="col-md-12">
                 <div class="banner">
@@ -26,16 +28,9 @@
                                         <li class="nav-item bn-item">
                                             <a href="login.html"><i class="fa fa-calendar fa-2x"></i><span class="badge badge-light text-success" style="position: absolute;">4</span></a>
                                         </li>
-                                        <div class="dropdown">
-                                            <li class="nav-item bn-item " data-toggle="dropdown">
-                                                <a href="#" aria-haspopup="false"><i class="fa fa-user fa-2x"></i></a>
-                                                <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item text-dark" href="#"><i class="fa fa-pencil text-info mr-3"></i>Profile</a>
-                                                    <a class="dropdown-item" href="#"></a>
-                                                    <a href="login.html" class="dropdown-item text-dark"><i class="fa fa-sign-out text-danger mr-3"></i>Logout</a>
-                                                </div>
-                                            </li>
-                                        </div>
+                                        <li class="nav-item bn-item">
+                                            <a href="#"><i class="fa fa-user fa-2x"></i></a>
+                                        </li>
 
                                         <li class="nav-item bn-item">
                                             <a href="#"><i class="fa fa-bell fa-2x" style="position: relative;"></i><span class="badge badge-light text-success" style="position: absolute;">8</span></a>
@@ -45,10 +40,12 @@
 
                                 </div>
                                 <div class="col-lg-4">
-                                    <h1 class="animated fadeInDown" style="margin-bottom: 0;">Good Morning Priscilla</h1>
-                                    <p class="text-gold lead">What would you like to do today?</p>
+                                    <h1 class="animated fadeInDown" style="margin-bottom: 0;">@ViewBag.Heading</h1>
+
+                                    <p class="text-gold lead">@ViewBag.SubHeading</p>
                                 </div>
                             </div>
+
                         </div>
 
 
@@ -57,25 +54,18 @@
             </div>
         </div>
         <!--Banner navigation only show on small screens-->
-        <div class="row">
+        <div class="row ">
             <div class="d-md-none d-sm-block col-sm-12">
-                <ul class="nav banner-nav shadow center">
+                <ul class="nav banner-nav shadow">
                     <li class="nav-item bn-item ">
                         <a href="#"><i class="fa fa-th fa-fw fa-2x "></i></a>
                     </li>
                     <li class="nav-item bn-item">
                         <a href="#"><i class="fa fa-calendar fa-2x"></i></a>
                     </li>
-                    <div class="dropdown">
-                        <li class="nav-item bn-item " data-toggle="dropdown">
-                            <a href="#" aria-haspopup="false"><i class="fa fa-user fa-2x"></i></a>
-                            <div class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item text-dark" href="#"><i class="fa mr-2 fa-pencil text-info"></i>Profile</a>
-                                <a class="dropdown-item" href="#"></a>
-                                <a class="dropdown-item text-dark" href="login.html"><i class="fa fa-fw fa-sign-out text-danger "></i>Logout</a>
-                            </div>
-                        </li>
-                    </div>
+                    <li class="nav-item bn-item">
+                        <a href="#"><i class="fa fa-user fa-2x"></i></a>
+                    </li>
 
                     <li class="nav-item bn-item">
                         <a href="#"><i class="fa fa-bell fa-2x"></i><span class="badge badge-light text-success" style="position: absolute;">8</span></a>
@@ -85,18 +75,21 @@
 
             </div>
         </div>
-        <div class="row">
+
+        <div class="row" style="min-height:300px">
+            <!--Side navigation starts here-->
+
             <div class="col-md-4 col-lg-2 col-sm-6 col-xs-12">
-                <div class="side-nav bg-white shadow">
+                <div class="side-nav bg-light shadow">
                     <ul class="nav nav-pills flex-column d-sm-block d">
                         <li class="nav-item mb-2">
-                            <a href="#" class="nav-link text-dark p-3"><i class="fa fa-lg fa-home mr-4 text-default "></i><span>Home</span></a>
+                            <a href="@Url.Action("index")" class="nav-link text-dark p-3"><i class="fa fa-lg fa-dashboard mr-4 text-default "></i><span>Dashboard</span></a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
+                            <a href="@Url.Action("facilitators")" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="#" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
+                            <a href="@Url.Action("mentees")" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
                         </li>
                         <li class="nav-item mb-2">
                             <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
@@ -104,78 +97,91 @@
                         <li class="nav-item mb-2">
                             <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bell mr-4 text-success"></i><span class="mr-2">Notifications</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
                         </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-primary"></i><span class="mr-2">Logout</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-2">
-                <div class="bg-white shadow">
-                    <div class="">
-                        <p class="p-3">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque eveniet magnam laborum perferendis ut similique
-                            sunt magni nam porro nulla, facere ratione voluptas inventore aperiam laudantium consectetur architecto labore quae?
-                        </p>
-                    </div>
+            <!--End of side navigation-->
+
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+    <!--Footer-->
+    <footer class="mt-4" style="background-color: #eee">
+        <div class="container p-3">
+            <div class="row justify-content-center">
+                <div class="col-lg-1 mr-5">
+                    <img src="~/Assets/img/logo.png" alt="" class="img-responsive" width="150" height="100">
+
+                </div>
+                <div class="col-lg-5 mt-4">
+                    <p class="text-gold">
+                        <em>...Doing Righteousness at the secular front</em><br>
+                        <span class="text-muted text-center">copyright &copy;2018</span>
+                    </p>
                 </div>
             </div>
         </div>
+    </footer>
 
 
 
-        @RenderBody()
 
-
-        <!--
-                    <div class="dropdown">
-                            <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown button
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>  -->
-
-    </div>
-    <script src="../scripts/jquery-3.0.0.js"></script>
-    <script src="../scripts/bootstrap.bundle.min.js"></script>
-
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <script>
 
 
-    $(function() {
-        $('.side-bar-toggle').click(function(){
-            if($('.side-nav').hasClass('visible')){
-                animate('.side-nav', 'slideOutLeft');
-                setTimeout(function() {
-                    $('.side-nav').removeClass('visible')
+        $(function () {
+            $('.side-bar-toggle').click(function () {
+                if ($('.side-bar-toggle').hasClass('active')) {
+                    $('.side-bar-toggle').removeClass('active');
+                }
+                else {
+                    $('.side-bar-toggle').addClass('active');
+
+                }
+
+                if ($('.side-nav').hasClass('visible')) {
+                    animate('.side-nav', 'slideOutLeft');
+                    setTimeout(function () {
+                        $('.side-nav').removeClass('visible')
+                    }, 1000);
+                }
+
+                animate('.side-nav', 'slideInLeft');
+                $('.side-nav').addClass('visible');
+                return false;
+            });
+
+            //Animate function
+            function animate(elem, animationStyle) {
+                $(elem).addClass('animated ' + animationStyle);
+                var timeOut = setTimeout(function () {
+                    $(elem).removeClass('animated ' + animationStyle);
                 }, 1000);
+
             }
 
-            animate('.side-nav', 'slideInLeft');
-            $('.side-nav').addClass('visible');
-            return false;
-        });
-
-        //Animate function
-        function animate(elem, animationStyle){
-            $(elem).addClass('animated ' + animationStyle);
-            var timeOut = setTimeout(function() {
-                $(elem).removeClass('animated ' + animationStyle);
-            }, 1000);
-
-        }
-
-        //setting active class
-        $('.bn-item').each(function(btn) {
-            $(btn).click(function(){
-                $(btn).addClass('active');
+            //setting active class
+            $('.bn-item').each(function (btn) {
+                $(btn).click(function () {
+                    $(btn).addClass('active');
+                });
             });
-        });
-    })
+        })
 
 
     </script>
+
+
+    @RenderSection("Scripts", false)
+
 </body>
 
 </html>

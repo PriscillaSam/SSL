@@ -1,0 +1,163 @@
+﻿
+@model FacilitatorsViewModel
+@{
+    ViewBag.Title = "Facilitators";
+    ViewBag.Heading = "Facilitators";
+    ViewBag.SubHeading = "Manage Facilitators";
+    var rowCount = 1;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<div class="col-lg-9 mt-3 ">
+    @if (ViewBag.Success != null)
+    {
+        <div class="alert alert-dismissible alert-success shadow">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+            <p class="text-center">@ViewBag.Success</p>
+        </div>
+    }
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-dismissible alert-danger shadow">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+            <p class="text-center">@ViewBag.Error</p>
+        </div>
+    }
+    <div class="container-fluid bg-light p-2 shadow">
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-sm btn-outline-gold mr-2" data-toggle="modal" data-target="#facilitatorModal">
+                    <i class="fa fa-plus fa-fw"></i>
+                </button>
+                <span class="text-gold">Add New Facilitator</span>
+            </div>          
+        </div>
+        @if (Model.Facilitators.Any())
+        {
+
+            <table class="table table-hover table-bordered table-responsive-sm" id="users">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Manage</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var facilitator in Model.Facilitators)
+                    {
+                        <tr>
+                            <th scope="row">@rowCount</th>
+                            <td>@facilitator.FirstName</td>
+                            <td>@facilitator.LastName</td>
+                            <td><a href="mailto:@facilitator.Email" class="text-muted">@facilitator.Email</a></td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-outline-danger mr-2"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil"></i></a>
+
+                            </td>
+                        </tr>
+                        rowCount++;
+                    }
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning h-50">
+                <p class="text-center">There are currently no Facilitators</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#facilitatorModal">
+                    Add Facilitator
+                </button>
+            </div>
+
+        }
+
+    </div>
+</div>
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="facilitatorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content form-back">
+            <div class="modal-header border-gold">
+                <h5 class="modal-title text-gold text-center ml-3" id="exampleModalCenterTitle"><i class="fa fa-user fa-lg mr-3"></i>New Facilitator</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm())
+            {
+
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="text-default">Fist Name</label>
+                                @Html.EditorFor(model => model.FirstName, new
+                                {
+                                    htmlAttributes = new { @class = "form-control", placeholder = "First Name" }
+                                })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger text-sm" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="text-default">Last Name</label>
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger text-sm" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="text-default">Email</label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-sm " })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBoxFor(model => model.MakeAdmin, new { @class = "custom-control-input" })
+                                    @Html.LabelFor(model => model.MakeAdmin, htmlAttributes: new { @class = "custom-control-label text-default", id = nameof(Model.MakeAdmin) })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer border-gold">
+                    <button type="submit" class="btn btn-outline-gold" id="create"><i class="fa fa-spinner fa-spin" id="spinner" style="display:none"></i><span>Create Account</span></button>
+                </div>
+
+            }
+
+
+        </div>
+    </div>
+</div>
+
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+@section Scripts{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#users').DataTable();
+        });
+    </script>
+
+}

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<UserModel>
+@{
+    ViewBag.Title = "Mentees";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Heading = "Mentees";
+    ViewBag.SubHeading = "Manage Mentees";
+    var rowCount = 1;
+}
+
+
+<div class="col-lg-9 mt-3 ">
+    <div class="container-fluid bg-light p-2 shadow">
+        @if (Model.Any())
+        {
+
+            <table class="table table-hover table-bordered table-responsive-sm" id="users">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Manage</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var mentee in Model)
+                    {
+                        <tr>
+                            <th scope="row">@rowCount</th>
+                            <td>@mentee.FirstName</td>
+                            <td>@mentee.LastName</td>
+                            <td><a href="mailto:@mentee.Email" class="text-muted">@mentee.Email</a></td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-outline-danger mr-2"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil"></i></a>
+
+                            </td>
+                        </tr>
+                        rowCount++;
+                    }
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning h-50">
+                <p class="text-center">There are currently no Mentees</p>
+
+            </div>
+
+        }
+    </div>
+
+</div>
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+@section Scripts{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#users').DataTable();
+        });
+    </script>
+}

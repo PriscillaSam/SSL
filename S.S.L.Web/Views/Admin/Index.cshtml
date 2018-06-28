@@ -15,6 +15,7 @@
 
     </div>
 </div>
+
 <div class="col-lg-8 p-3 shadow bg-white rounded-bottom animated fadeIn">
     <div class="container-fluid">
         <div class="row">
@@ -58,9 +59,9 @@
 
                     </div>
                 </div>
-
-
             </div>
+
+            <!--Todo section-->
             <div class="col-lg-7 p-3 shadow-sm bg-light rounded">
                 <div class="todo-title">
                     <h4 class="text-muted" style="display: inline;">
@@ -69,47 +70,119 @@
                     <hr>
                 </div>
                 <div class="shadow-sm p-1 mb-3">
-                    <form class="form-inline">
+                    <form class="form-inline" onsubmit="return postTodoItem()" id="todoForm">
                         <div class="form-group mr-1 col-md-10">
-                            <label for="inputPassword2" class="sr-only">New Todo</label>
-                            <input type="text" class="form-control col-md-12" placeholder="add new todo">
+
+                            @Html.EditorFor(model => model.TodoItem, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @class = "form-control col-md-12",
+                                    placeholder = "Add new todo",
+                                }
+                            })
+
                         </div>
                         <button type="submit" class="btn btn-outline-gold btn-sm"><i class="fa fa-plus"></i></button>
+                        @Html.ValidationMessageFor(model => model.TodoItem, "", new { @class = "text-danger text-sm" })
+
                     </form>
                 </div>
 
-                <div class="shadow-sm p-2 mb-3">
-                    <p style="display: inline;">
-                        <i class="fa fa-square-o  text-danger mr-3"></i>
-                        Create more gym groups and name them
-                    </p>
-                    <a class="badge badge-light shadow-sm" href="#">Mark as done</a>
-                </div>
-                <div class="shadow-sm p-2 mb-3">
-                    <p style="display: inline;">
-                        <i class="fa fa-check-square-o text-success mr-3"></i>
-                        Send a message to Pastor Clinton
-                    </p>
-                    <a class="badge badge-success shadow-sm" href="#">done</a>
-                </div>
-                <div class="shadow-sm p-2 mb-3">
-                    <p style="display: inline;">
-                        <i class="fa fa-check-square-o text-success mr-3"></i>
-                        Set up classes with Demola
-                    </p>
-                    <a class="badge badge-success shadow-sm" href="#">done</a>
-                </div>
-                <div class="shadow-sm p-2 mb-3">
-                    <p style="display: inline;">
-                        <i class="fa fa-square-o  text-danger mr-3"></i>
-                        Add cooments to Sugar's assignment
-                    </p>
-                    <a class="badge badge-light shadow-sm" href="#">Mark as done</a>
-                </div>
+                <div id="todoSection">
 
+                    @if (Model.Todos.Any())
+                    {
+                        foreach (var todo in Model.Todos)
+                        {
+
+                            if (todo.Done)
+                            {
+
+                                <div class="shadow-sm p-2 mb-3">
+                                    <p style="display: inline;">
+                                        <i class="fa fa-check-square-o  text-success mr-3"></i>
+                                        @todo.Item
+                                    </p>
+                                    <span class="badge badge-success shadow-sm" href="#">done</span>
+                                </div>
+                            }
+                            else
+                            {
+
+
+                                <div class="shadow-sm p-2 mb-3">
+                                    <p style="display: inline;">
+                                        <i class="fa fa-square-o  text-danger mr-3"></i>
+                                        @todo.Item
+                                    </p>
+                                    <a class="badge badge-light shadow-sm js-update-todo" href="#" data-todo-id="@todo.TodoId">Mark as done</a>
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <div class="shadow-sm p-3 mt-5" id="noTodo">
+                            <p  class="text-success text-center">
+                                You don't have any pending todos.
+                            </p>
+                        </div>
+                    }
+
+                </div>
             </div>
         </div>
 
 
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#todoSection').on("click", ".js-update-todo", (function (e) {
+                e.preventDefault();
+                var link = $(e.target);
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/todo/update",
+                    data: { todoId: link.attr("data-todo-id") }
+                })
+                    .done(function (todo) {
+                        link.parent("div").fadeOut(function () {
+                            $(this).remove();
+                            $("#todoSection").prepend('<div class="shadow-sm p-2 mb-3"><p style="display: inline;"><i class="fa fa-check-square-o text-success mr-3"></i>' + todo.Item + '</p><span class="badge badge-success shadow-sm ml-2">done</span></div>');
+                        });
+                    }).fail(function () {
+                        alert("failed");
+                    });
+            }));
+        });
+        function postTodoItem() {
+
+            if ($('form').valid()) {
+                var data = $('input').val();
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/todo/create",
+                    data: { todoItem: data }
+                })
+                    .done(function (todo) {
+                        $('#todoForm')[0].reset();
+                        $("#todoSection").prepend('<div class="shadow-sm p-2 mb-3"><p style="display: inline;"><i class="fa fa-square-o  text-danger mr-3"></i>' + todo.Item + '</p><a class="badge badge-light shadow-sm js-update-todo" href="#" data-todo-id="' + todo.TodoId + '">Mark as done</a></div>');
+                        $('#noTodo').hide(1000);
+                    })
+            }
+
+            return false;
+        }
+
+
+
+    </script>
+
+}

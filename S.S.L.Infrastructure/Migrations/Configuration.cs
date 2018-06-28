@@ -25,7 +25,24 @@ namespace S.S.L.Infrastructure.Migrations
                 throw new ArgumentNullException(nameof(context));
             }
 
+            context.Users.AddOrUpdate(r => r.Email,
+                new User
+                {
+                    FirstName = "Hillprieston",
+                    LastName = "Okwara",
+                    Email = "hillprieston@gmail.com",
+                    EmailConfirmed = true,
+                    PasswordHash = "5f4dcc3b5aa765d61d8327deb882cf99",
+                }
+                );
+            context.UserRoles.AddOrUpdate(r => r.UserId,
 
+                new UserRole
+                {
+                    UserId = 1,
+                    RoleId = 1
+                }
+                );
 
             context.Roles.AddOrUpdate(r => r.Name,
                 new Role { Name = "Administrator" },

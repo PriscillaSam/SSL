@@ -2,7 +2,6 @@
 
 namespace S.S.L.Web.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         // GET: Home

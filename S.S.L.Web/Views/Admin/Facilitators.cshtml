@@ -9,7 +9,7 @@
 }
 
 
-<div class="col-lg-9 mt-3 ">
+<div class="col-lg-9 mt-3 animated fadeIn">
     @if (ViewBag.Success != null)
     {
         <div class="alert alert-dismissible alert-success shadow">
@@ -29,7 +29,7 @@
     <div class="container-fluid bg-light p-2 shadow">
         <div class="row mb-3">
             <div class="col-lg-3">
-                <button type="button" class="btn btn-sm btn-outline-gold mr-2" data-toggle="modal" data-target="#facilitatorModal">
+                <button type="button" class="btn-sm btn-outline-gold mr-2" data-toggle="modal" data-target="#facilitatorModal">
                     <i class="fa fa-plus fa-fw"></i>
                 </button>
                 <span class="text-gold">Add New Facilitator</span>
@@ -59,7 +59,7 @@
                             <td><a href="mailto:@facilitator.Email" class="text-muted">@facilitator.Email</a></td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-outline-danger mr-2"><i class="fa fa-trash"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-info">Make Admin</a>
 
                             </td>
                         </tr>
@@ -71,11 +71,9 @@
         }
         else
         {
-            <div class="alert alert-warning h-50">
-                <p class="text-center">There are currently no Facilitators</p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#facilitatorModal">
-                    Add Facilitator
-                </button>
+            <div class="alert alert-light h-50 shadow">
+                <p class="text-center text-success">There are currently no Facilitators.</p>
+               
             </div>
 
         }
@@ -135,7 +133,7 @@
                 </div>
 
                 <div class="modal-footer border-gold">
-                    <button type="submit" class="btn btn-outline-gold" id="create"><i class="fa fa-spinner fa-spin" id="spinner" style="display:none"></i><span>Create Account</span></button>
+                    <button type="submit" class="btn-sm btn-outline-gold" id="create">Create Account</button>
                 </div>
 
             }
@@ -147,7 +145,7 @@
 
 
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" />
 @section Scripts{
 
     <script src="~/Scripts/jquery.validate.min.js"></script>

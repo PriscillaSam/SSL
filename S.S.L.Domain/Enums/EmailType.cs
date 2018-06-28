@@ -3,6 +3,7 @@
     public enum EmailType
     {
         AccountConfirmation,
+        PasswordReset,
         MenteeWelcome,
         FacilitatorWelcome,
 

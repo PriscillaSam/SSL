@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
 
-<div style="margin-top: 100px">
+<div class="">
     <h4 class="text-center" style="color:#ccc">Great to have you back</h4>
     <h3 class="mb-3 text-center text-gold">Login</h3>
 </div>
@@ -34,12 +34,12 @@
                 })
 
             </div>
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-sm" })
         </div>
         <div class="form-group mb-3">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text bg-blue"><i class="fa fa-key" style="color: white"></i></span>
+                    <span class="input-group-text bg-blue"><i class="fa fa-lock" style="color: white"></i></span>
                 </div>
                 @Html.EditorFor(model => model.Password, new
                 {
@@ -50,24 +50,24 @@
                     }
                 })
             </div>
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger text-sm" })
         </div>
         <div class="form-row">
             <div class="col-md-6">
+                
                 <div class="custom-control custom-checkbox">
-                    <input class="custom-control-input" id="@nameof(Model.RememberMe)" checked="" type="checkbox">
-                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "custom-control-label", id = nameof(Model.RememberMe) })
-
+                    @Html.CheckBoxFor(model => model.RememberMe, new { @class = "custom-control-input" })
+                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "custom-control-label text-muted", id = nameof(Model.RememberMe) })
                 </div>
             </div>
             <div class="col-md-6">
-                <p class="text-center"><a href="" class="form-link">Forgot password?</a></p>
+                <p class="text-center"><a href="@Url.Action("ForgotPassword")" class="form-link">Forgot password?</a></p>
 
             </div>
         </div>
 
         <div class="form-group">
-            <button class="btn btn-outline-gold btn-block">Welcome</button>
+            <button class="btn btn-outline-gold btn-block" type="submit">Welcome</button>
         </div>
 
 

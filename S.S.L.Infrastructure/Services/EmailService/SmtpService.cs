@@ -34,8 +34,9 @@ namespace S.S.L.Infrastructure.Services.EmailService
             };
 
             message.From = new MailAddress(user.Username, smtp.Sender);
-            
+
             await smtpClient.SendMailAsync(message);
+
         }
 
     }

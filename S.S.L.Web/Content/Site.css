@@ -81,6 +81,7 @@ textarea {
 .btn-outline-gold {
     background-color: transparent;
     border: 1px solid #B8860B;
+    color: #B8860B;
 }
 
     .btn-outline-gold:hover {
@@ -117,7 +118,10 @@ textarea {
     border-left: 3px solid red;
     border-right: 3px solid red;
 }
-
+.border-gold {
+    border-bottom-color: #ddd;
+    border-top-color: #ddd;
+}
 #signup-back {
     background-image: url('../Assets/img/03.jpg');
     background-size: cover;
@@ -127,3 +131,10 @@ textarea {
 #signup-overlay {
     background: rgba(0,0,0,0.3);
 }
+
+.text-sm{
+    font-size: 14px;
+    
+}
+
+

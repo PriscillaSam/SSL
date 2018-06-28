@@ -31,8 +31,8 @@ namespace S.S.L.Domain.Common
 
         public sealed class DomainSettings
         {
-            public string EmailPath => GetValue(nameof(EmailPath));
             public string EmailConfirmUrl => GetValue(nameof(EmailConfirmUrl));
+            public string PasswordResetUrl => GetValue(nameof(PasswordResetUrl));
         }
         private static string GetValue(string key)
         {

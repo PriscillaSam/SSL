@@ -47,21 +47,19 @@
     <Compile Include="Enums\GymGroup.cs" />
     <Compile Include="Enums\ScheduleStatus.cs" />
     <Compile Include="Enums\UserType.cs" />
+    <Compile Include="Interfaces\Repositories\ICustomRepository.cs" />
     <Compile Include="Interfaces\Repositories\IStateCountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
     <Compile Include="Interfaces\Utilities\IEncryption.cs" />
+    <Compile Include="Managers\CustomManager.cs" />
     <Compile Include="Managers\LocationManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\StateModel.cs" />
+    <Compile Include="Models\TodoModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Emails\AccountConfirmation.txt" />
-    <Content Include="Emails\FacilitatorWelcome.txt" />
-    <Content Include="Emails\MenteeWelcome.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

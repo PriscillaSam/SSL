@@ -8,13 +8,13 @@
 }
 
 
-<div class="col-lg-9 mt-3 ">
+<div class="col-lg-9 mt-3 animated fadeIn">
     <div class="container-fluid bg-light p-2 shadow">
         @if (Model.Any())
         {
 
             <table class="table table-hover table-bordered table-responsive-sm" id="users">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">First Name</th>
@@ -34,8 +34,7 @@
                             <td><a href="mailto:@mentee.Email" class="text-muted">@mentee.Email</a></td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-outline-danger mr-2"><i class="fa fa-trash"></i></a>
-                                <a href="#" class="btn btn-sm btn-outline-info"><i class="fa fa-pencil"></i></a>
-
+                                <a href="#" class="btn btn-sm btn-outline-info">Make Mentor</a>
                             </td>
                         </tr>
                         rowCount++;
@@ -46,9 +45,8 @@
         }
         else
         {
-            <div class="alert alert-warning h-50">
-                <p class="text-center">There are currently no Mentees</p>
-
+            <div class="alert alert-light h-50 shadow">
+                <p class="text-center text-success">There are currently no Mentees.</p>
             </div>
 
         }
@@ -56,7 +54,7 @@
 
 </div>
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" />
 @section Scripts{
 
     <script src="~/Scripts/jquery.validate.min.js"></script>

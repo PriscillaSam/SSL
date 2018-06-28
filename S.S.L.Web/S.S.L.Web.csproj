@@ -122,6 +122,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\font-awesome\css\font-awesome.css" />
+    <Content Include="Assets\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Assets\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\font-awesome\HELP-US-OUT.txt" />
     <Content Include="Assets\img\01.jpg" />
     <Content Include="Assets\img\02.jpg" />
     <Content Include="Assets\img\03.jpg" />
@@ -134,7 +138,12 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dashboard.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Emails\AccountConfirmation.txt" />
+    <Content Include="Emails\FacilitatorWelcome.txt" />
+    <Content Include="Emails\MenteeWelcome.txt" />
+    <Content Include="Emails\PasswordReset.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -159,6 +168,44 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Compile Include="App_Start\Ninject.Mvc.cs" />
+    <Content Include="Assets\font-awesome\.bower.json" />
+    <Content Include="Assets\font-awesome\.gitignore" />
+    <Content Include="Assets\font-awesome\.npmignore" />
+    <Content Include="Assets\font-awesome\bower.json" />
+    <Content Include="Assets\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Assets\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Assets\font-awesome\less\animated.less" />
+    <Content Include="Assets\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Assets\font-awesome\less\core.less" />
+    <Content Include="Assets\font-awesome\less\fixed-width.less" />
+    <Content Include="Assets\font-awesome\less\font-awesome.less" />
+    <Content Include="Assets\font-awesome\less\icons.less" />
+    <Content Include="Assets\font-awesome\less\larger.less" />
+    <Content Include="Assets\font-awesome\less\list.less" />
+    <Content Include="Assets\font-awesome\less\mixins.less" />
+    <Content Include="Assets\font-awesome\less\path.less" />
+    <Content Include="Assets\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Assets\font-awesome\less\screen-reader.less" />
+    <Content Include="Assets\font-awesome\less\stacked.less" />
+    <Content Include="Assets\font-awesome\less\variables.less" />
+    <Content Include="Assets\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Assets\font-awesome\scss\_animated.scss" />
+    <Content Include="Assets\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Assets\font-awesome\scss\_core.scss" />
+    <Content Include="Assets\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Assets\font-awesome\scss\_icons.scss" />
+    <Content Include="Assets\font-awesome\scss\_larger.scss" />
+    <Content Include="Assets\font-awesome\scss\_list.scss" />
+    <Content Include="Assets\font-awesome\scss\_mixins.scss" />
+    <Content Include="Assets\font-awesome\scss\_path.scss" />
+    <Content Include="Assets\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Assets\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Assets\font-awesome\scss\_stacked.scss" />
+    <Content Include="Assets\font-awesome\scss\_variables.scss" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -193,8 +240,12 @@
     </Compile>
     <Compile Include="Infrastructure\DatabaseMigrator.cs" />
     <Compile Include="Infrastructure\NinjectModules\MainModule.cs" />
+    <Compile Include="Models\AdminViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\AdminViewModels\FacilitatorSignUpViewModel.cs" />
+    <Compile Include="Models\AdminViewModels\FacilitatorsViewModel.cs" />
     <Compile Include="Models\AuthViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\AuthViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\AuthViewModels\PasswordResetViewModel.cs" />
     <Compile Include="Models\AuthViewModels\SignUpViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -220,6 +271,11 @@
     <Content Include="Views\Account\AccountConfirmation.cshtml" />
     <Content Include="Views\Shared\_UserLayout.cshtml" />
     <Content Include="Views\Mentee\Index.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Facilitators.cshtml" />
+    <Content Include="Views\Admin\Mentees.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -229,7 +285,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

@@ -1,5 +1,7 @@
 ﻿using Ninject.Mvc;
 using S.S.L.Web.Infrastructure;
+using System.Security.Claims;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -13,6 +15,9 @@ namespace S.S.L.Web
             DatabaseMigrator.UpdateDatabase();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimsIdentity.DefaultNameClaimType;
+            //AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
         }
     }
 }

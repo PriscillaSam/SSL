@@ -15,6 +15,8 @@ namespace S.S.L.Infrastructure.Services.EmailService
                     return new AccountConfirmation(param as UserModel);
                 case EmailType.MenteeWelcome:
                     return new MenteeWelcome(param as UserModel);
+                case EmailType.PasswordReset:
+                    return new PasswordReset(param as UserModel);
                 default:
                     return null;
 

@@ -1,6 +1,5 @@
 ﻿using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.Validators;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace S.S.L.Web.Models.AuthViewModels
@@ -40,16 +39,6 @@ namespace S.S.L.Web.Models.AuthViewModels
         public string ConfirmPassword { get; set; }
 
 
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (Password != ConfirmPassword)
-            {
-                yield return new ValidationResult("Passwords do not match", new[] { nameof(Password), nameof(ConfirmPassword) });
-
-            }
-
-
-        }
     }
 
 

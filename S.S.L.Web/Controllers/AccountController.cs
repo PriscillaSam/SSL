@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Security;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
@@ -47,9 +48,10 @@ namespace S.S.L.Web.Controllers
                 var user = await _user.Login(model.Email, model.Password);
                 var claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim(ClaimTypes.Name, user.FirstName),
                     new Claim(ClaimTypes.GivenName, user.FullName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email)
                 };
 
 
@@ -58,22 +60,20 @@ namespace S.S.L.Web.Controllers
                     claims.Add(new Claim(ClaimTypes.Role, roleClaim));
                 }
 
-                var userIdentity = new ClaimsIdentity(claims);
+                var userIdentity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var props = new AuthenticationProperties
                 {
                     IsPersistent = model.RememberMe,
-
                 };
 
                 AuthManager.SignIn(props, userIdentity);
-                var isAuthenticated = User.Identity.IsAuthenticated;
 
                 if (Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);
                 }
 
-                return RedirectToAction("index", "home");
+                return RedirectToAction("index", "admin");
             }
             catch (Exception ex)
             {
@@ -84,10 +84,16 @@ namespace S.S.L.Web.Controllers
 
         }
 
+        public ActionResult LogOut()
+        {
+            AuthManager.SignOut();
+            return RedirectToAction("login");
+        }
+
         [Route("register")]
         public async Task<ActionResult> SignUp()
         {
-            await PopulateDropdown();
+            await PopulateLocationDropdown();
             return View();
         }
 
@@ -120,26 +126,24 @@ namespace S.S.L.Web.Controllers
                     var email = _email.GetTemplate(EmailType.AccountConfirmation, newUser);
                     await email.GenerateEmailAsync();
 
-                    ViewBag.Error = "An email has been sent to you to confirm your account.";
-                    await PopulateDropdown();
-                    return View();
+                    ViewBag.Success = "An email has been sent to you to confirm your account.";
 
                 }
 
             }
             catch (Exception ex)
             {
-                await PopulateDropdown();
+                await PopulateLocationDropdown();
                 ViewBag.Error = ex.Message;
             }
 
-            await PopulateDropdown();
+            await PopulateLocationDropdown();
             return View();
 
         }
 
         //Confirmation page get
-        //     [Route("{userId}/confirm")]
+        [Route("{userId}/confirm")]
         public ActionResult AccountConfirmation(int userId)
         {
             ViewBag.UserId = userId;
@@ -161,7 +165,6 @@ namespace S.S.L.Web.Controllers
                 msg = "Your account has been verified";
                 return Json(msg, JsonRequestBehavior.AllowGet);
 
-
             }
             catch (Exception ex)
             {
@@ -169,8 +172,67 @@ namespace S.S.L.Web.Controllers
             }
         }
 
+        //password reset
+        [Route("forgot")]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
 
-        private async Task PopulateDropdown()
+        [Route("forgot")]
+        [HttpPost]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    //check that email exists
+                    var user = await _user.ValidateEmail(model.Email);
+                    //send email
+                    var resetEmail = _email.GetTemplate(EmailType.PasswordReset, user);
+                    await resetEmail.GenerateEmailAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+
+            return View(model);
+        }
+
+        [Route("{userId}/reset")]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [Route("{userId}/reset")]
+        [HttpPost]
+        public async Task<ActionResult> ResetPassword(PasswordResetViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _user.RecoverPasswordAsync(model.Email, model.Password);
+                }
+
+                ViewBag.Success = "Your password has been changed successfully";
+
+            }
+
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+
+            return View();
+        }
+
+
+        private async Task PopulateLocationDropdown()
         {
             ViewBag.Countries = new SelectList(await _location.GetCountries(), "Name", "Name");
             ViewBag.States = new SelectList(await _location.GetStates(1), "Name", "Name");

@@ -1,4 +1,5 @@
-﻿using S.S.L.Domain.Interfaces.Repositories;
+﻿using S.S.L.Domain.Enums;
+using S.S.L.Domain.Interfaces.Repositories;
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
 using System;
@@ -44,18 +45,10 @@ namespace S.S.L.Infrastructure.Repositories
             };
 
             _context.Users.Add(newUser);
+            AddUserRole(newUser, UserType.Mentee);
             await _context.SaveChangesAsync();
 
             model.Id = newUser.Id;
-
-            var userRole = new UserRole
-            {
-                UserId = model.Id,
-                RoleId = _context.Roles.Where(r => r.Name == "Mentee").FirstOrDefault().Id
-            };
-
-            _context.UserRoles.Add(userRole);
-            await _context.SaveChangesAsync();
 
             return model;
         }
@@ -75,7 +68,7 @@ namespace S.S.L.Infrastructure.Repositories
                             .FirstOrDefaultAsync();
 
             if (user == null)
-                throw new Exception("Invalid Email or password");
+                throw new Exception("Sorry, Email or Password is invalid");
 
             if (!user.EmailConfirmed)
                 throw new Exception("Please confirm your email before proceeding");
@@ -98,15 +91,113 @@ namespace S.S.L.Infrastructure.Repositories
 
         }
 
-        public async Task<bool> VerifyEmailAsync(string email)
+        public async Task<UserModel> VerifyUserAsync(string email)
+        {
+            var user = await _context
+                              .Users
+                              .FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null) return null;
+
+            return UserFormatter(user);
+        }
+
+
+
+        public async Task<UserModel> GetUserAsync(int userId)
+        {
+            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+            if (user == null) return null;
+            return UserFormatter(user);
+        }
+
+        public async Task<UserModel> ConfirmUser(int userId)
+        {
+            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+            if (user == null || user.EmailConfirmed)
+                throw new Exception("Sorry, this operation is not valid.");
+
+            user.EmailConfirmed = true;
+            _context.Entry(user).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return UserFormatter(user);
+
+        }
+
+        public async Task ResetPassword(string email, string passwordHash)
         {
 
-            var emailTaken = await _context
-                              .Users
-                              .AnyAsync(u => u.Email == email);
+            var user = await _context.Users
+                .Where(u => u.Email == email)
+                .FirstOrDefaultAsync();
 
-            return emailTaken;
+            if (user == null) throw new Exception("Sorry, we don't know you.");
+
+            user.PasswordHash = passwordHash;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
         }
+
+
+
+
+        /// <summary>
+        /// Get all the users of a particular usertype
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public async Task<List<UserModel>> GetUsers(UserType type)
+        {
+
+            var users = await _context.Users
+                .Where(u => u.UserType == type)
+                .Select(u => new UserModel
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    MobileNumber = u.MobileNumber,
+                    Gender = u.Gender
+
+                }).ToListAsync();
+
+            return users;
+        }
+
+        /// <summary>
+        /// Registers a user as a facilitator or mentor
+        /// </summary>
+        /// <param name="newMentor"></param>
+        /// <param name="makeAdmin"></param>
+        /// <returns></returns>
+        public async Task AddFacilitator(UserModel newMentor, bool makeAdmin)
+        {
+
+            var existingUser = await _context.Users.AnyAsync(u => u.Email == newMentor.Email);
+            if (existingUser)
+                throw new Exception("Sorry, this email is already taken.");
+
+            var user = new User
+            {
+                FirstName = newMentor.FirstName,
+                LastName = newMentor.LastName,
+                Email = newMentor.Email,
+                UserType = UserType.Facilitator
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            AddUserRole(user, UserType.Facilitator);
+            if (makeAdmin)
+                AddUserRole(user, UserType.Administrator);
+
+            await _context.SaveChangesAsync();
+        }
+
 
         /// <summary>
         /// Custom formatter for transforming User Object to UserModel Object
@@ -124,23 +215,16 @@ namespace S.S.L.Infrastructure.Repositories
             };
         }
 
-        public async Task<UserModel> GetUserAsync(int userId)
+
+        private void AddUserRole(User user, UserType type)
         {
-            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
-            if (user == null) return null;
-            return UserFormatter(user);
-        }
+            var userRole = new UserRole
+            {
+                User = user,
+                Role = _context.Roles.Where(r => r.Name == type.ToString()).FirstOrDefault()
+            };
 
-        public async Task<UserModel> ConfirmUser(int userId)
-        {
-            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
-            if (user == null || user.EmailConfirmed) throw new Exception("This operation is not valid.");
-
-            user.EmailConfirmed = true;
-            await _context.SaveChangesAsync();
-
-            return UserFormatter(user);
-
+            user.UserRoles.Add(userRole);
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace S.S.L.Infrastructure.S.S.L.Entities
 {
@@ -14,6 +10,6 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public ICollection<Mentee> Mentees { get; private set; }
+        public ICollection<Mentee> Mentees { get; set; }
     }
 }

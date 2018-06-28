@@ -5,18 +5,18 @@
 }
 
 
-<div class="alert alert-light shadow-sm"  id="confirm" style="margin-top:150px">
-    <p class="text-center text-danger">Please confirm your account</p>
-    <button class="btn btn-block btn-outline-gold text-gold" onclick="Verified()">Confirm</button>
+<div class="alert alert-light shadow-sm" id="confirm" style="margin-top:150px">
+    <p class="text-center text-danger" id="p-display">Please confirm your account</p>
+    <button class="btn btn-block btn-outline-gold text-gold" onclick="Verified()"><i class="fa fa-2x fa-spinner fa-spin" id="spinner" style="display:none"></i><span>Confirm</span></button>
 
 </div>
 
 
-    <div class="alert alert-light shadow-sm" id="success" style="margin-top:150px;display:none">
-        <p class="text-center text-success" id="feedback"></p>
-        <a class="btn btn-block btn-outline-gold text-gold" href="@Url.Action("login")">Log in</a>
+<div class="alert alert-light shadow-sm" id="success" style="margin-top:150px;display:none">
+    <p class="text-center text-success" id="feedback"></p>
+    <a class="btn btn-block btn-outline-gold text-gold" href="@Url.Action("login")">Log in</a>
 
-    </div>
+</div>
 
 
 
@@ -26,6 +26,12 @@
             type: "post",
             url: "/accounts/confirm",
             data: { "userId": @ViewBag.UserId},
+            beforeSend: function () {
+                $("span").hide();
+                $("#p-display").text("Please wait. Confirming...");
+                $("#spinner").show();
+
+            },
             success: function (msg) {
 
                 $("#confirm").hide();

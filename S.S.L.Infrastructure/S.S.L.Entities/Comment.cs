@@ -8,7 +8,7 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 {
     public class Comment : BaseModel
     {
-        public string CommentPost { get; set; }
+        public string Message { get; set; }
      
         //Relationships
         public int UserId { get; set; }

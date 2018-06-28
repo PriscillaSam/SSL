@@ -1,11 +1,9 @@
 ﻿using S.S.L.Domain.Interfaces.Repositories;
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace S.S.L.Infrastructure.Repositories
@@ -64,7 +62,7 @@ namespace S.S.L.Infrastructure.Repositories
                                          .ToList();
             return states;
         }
-        
+
 
     }
 }

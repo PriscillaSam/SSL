@@ -21,8 +21,6 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public GymGroup GymGroup { get; set; }
 
 
-
-
         //location
         public string Country { get; set; }
         public string State { get; set; }
@@ -30,6 +28,14 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Todo> Todos { get; set; }
+
+        public User()
+        {
+            UserRoles = new HashSet<UserRole>();
+            Todos = new HashSet<Todo>();
+        }
+
+
 
     }
 }

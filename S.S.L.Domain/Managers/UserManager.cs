@@ -1,7 +1,9 @@
-﻿using S.S.L.Domain.Interfaces.Repositories;
+﻿using S.S.L.Domain.Enums;
+using S.S.L.Domain.Interfaces.Repositories;
 using S.S.L.Domain.Interfaces.Utilities;
 using S.S.L.Domain.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace S.S.L.Domain.Managers
@@ -31,6 +33,13 @@ namespace S.S.L.Domain.Managers
             return await _repo.ValidateUserAsync(email, passHash);
         }
 
+        public async Task<List<UserModel>> GetUsersAsync(UserType type)
+        {
+            return await _repo.GetUsers(type);
+        }
+
+
+
 
         /// <summary>
         /// Registers new users on the platform
@@ -42,9 +51,8 @@ namespace S.S.L.Domain.Managers
         {
 
             //check if email already exists
-            var emailExists = await _repo.VerifyEmailAsync(newUser.Email);
-            if (emailExists)
-                throw new Exception("This email is already registered");
+            var user = await _repo.VerifyUserAsync(newUser.Email);
+
 
             //hash password
             var passHash = _encryption.Encrypt(password);
@@ -52,6 +60,11 @@ namespace S.S.L.Domain.Managers
             //save user
             return await _repo.AddUserAsync(newUser, passHash);
 
+        }
+
+        public async Task RegisterFacilitator(UserModel newMentor, bool makeAdmin)
+        {
+            await _repo.AddFacilitator(newMentor, makeAdmin);
         }
 
         public async Task<UserModel> GetUserById(int userId)
@@ -62,6 +75,22 @@ namespace S.S.L.Domain.Managers
         public async Task<UserModel> ConfirmUser(int userId)
         {
             return await _repo.ConfirmUser(userId);
+        }
+
+        public async Task<UserModel> ValidateEmail(string email)
+        {
+            var user = await _repo.VerifyUserAsync(email);
+            if (user == null)
+                throw new Exception("Sorry. We don't know you.");
+
+            return user;
+        }
+
+        public async Task RecoverPasswordAsync(string email, string password)
+        {
+            //hash password
+            var passwordHash = _encryption.Encrypt(password);
+            await _repo.ResetPassword(email, passwordHash);
         }
     }
 }

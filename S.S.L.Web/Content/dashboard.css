@@ -1,0 +1,61 @@
+
+body{
+    font-family: 'Open sans', sans-serif;
+    background-color: white;
+}
+
+.banner{
+    background-image: url('../Assets/img/03.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    position: relative;
+}
+
+.banner-text{
+    background-color:rgba(0, 0, 0, 0.3);
+    color: white;
+    position: absolute ;
+    bottom: 0;
+    width: 100%;
+}
+
+.banner-nav{
+    height: 100%;
+}
+
+.bn-item{
+    padding:30px 20px;
+}
+
+.bn-item .fa{
+    color: #B8860B
+}
+
+.bn-item:hover{
+    background-color: rgba(0, 0, 0, 0.5);        
+}
+
+.bn-item:hover .fa{
+    color: white
+}
+.side-nav{
+display: none;
+padding: 20px 0;
+}
+
+
+.side-nav a:hover{
+    border-left: 2px solid #B8860B;
+}
+
+.visible{
+    display: block;
+}
+.active {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+    .active .fa {
+        color: white;
+    }

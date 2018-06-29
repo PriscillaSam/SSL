@@ -28,11 +28,14 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
 
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Todo> Todos { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
+
 
         public User()
         {
             UserRoles = new HashSet<UserRole>();
             Todos = new HashSet<Todo>();
+            Schedules = new HashSet<Schedule>();
         }
 
 

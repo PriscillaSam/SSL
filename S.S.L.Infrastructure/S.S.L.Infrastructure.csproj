@@ -95,9 +95,14 @@
     <Compile Include="Migrations\201806251135173_UpdateUserRoleTable.Designer.cs">
       <DependentUpon>201806251135173_UpdateUserRoleTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806291021102_UpdateFacilitatorMenteeModels.cs" />
+    <Compile Include="Migrations\201806291021102_UpdateFacilitatorMenteeModels.Designer.cs">
+      <DependentUpon>201806291021102_UpdateFacilitatorMenteeModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomRepository.cs" />
+    <Compile Include="Repositories\MenteeRepository.cs" />
     <Compile Include="Repositories\StateCountryRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="S.S.L.Entities\Comment.cs" />
@@ -162,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806251135173_UpdateUserRoleTable.resx">
       <DependentUpon>201806251135173_UpdateUserRoleTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806291021102_UpdateFacilitatorMenteeModels.resx">
+      <DependentUpon>201806291021102_UpdateFacilitatorMenteeModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

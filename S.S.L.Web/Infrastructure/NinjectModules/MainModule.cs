@@ -17,6 +17,7 @@ namespace S.S.L.Web.Infrastructure.NinjectModules
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IStateCountryRepository>().To<StateCountryRepository>();
             Bind<ICustomRepository>().To<CustomRepository>();
+            Bind<IMenteeRepository>().To<MenteeRepository>();
         }
     }
 }

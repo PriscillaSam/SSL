@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace S.S.L.Infrastructure.S.S.L.Entities
 {
     public class Mentee : BaseModel
     {
-        public Mentee() => Schedules = new HashSet<Schedule>();
-        
-
+        [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
 
-
+        [ForeignKey("Facilitator")]
         public int FacilitatorId { get; set; }
-        public Facilitator Facilitator { get; set; }
-        public ICollection<Schedule> Schedules { get; private set; }
+        public virtual Facilitator Facilitator { get; set; }
     }
 }

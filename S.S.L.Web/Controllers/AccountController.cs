@@ -23,12 +23,14 @@ namespace S.S.L.Web.Controllers
         private readonly UserManager _user;
         private readonly LocationManager _location;
         private readonly EmailGenerator _email;
+        private readonly MenteeManager _mentee;
 
-        public AccountController(UserManager user, LocationManager location, EmailGenerator email)
+        public AccountController(UserManager user, LocationManager location, EmailGenerator email, MenteeManager mentee)
         {
             _user = user;
             _location = location;
             _email = email;
+            _mentee = mentee;
         }
 
         [Route("login")]
@@ -121,6 +123,7 @@ namespace S.S.L.Web.Controllers
                     };
 
                     var newUser = await _user.RegisterAsync(user, model.Password);
+                    await _mentee.CreateMentee(newUser.Id);
 
                     //send email
                     var email = _email.GetTemplate(EmailType.AccountConfirmation, newUser);

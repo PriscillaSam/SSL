@@ -67,7 +67,7 @@ namespace S.S.L.Infrastructure.Repositories
 
 
             var todoList = todos
-                .SkipWhile(t => t.Done && t.UpdatedAt <= DateTime.Now.AddMinutes(-2))
+               
                 .Take(10)
                 .Select(t => new TodoModel
                 {

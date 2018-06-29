@@ -3,6 +3,7 @@ using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
 using S.S.L.Web.Models.AdminViewModels;
+using S.S.L.Web.Models.CustomViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,7 +37,10 @@ namespace S.S.L.Web.Controllers
             {
                 Mentees = mentees.Count,
                 Facilitatators = facilitators.Count,
-                Todos = todos
+                TodoModel = new TodoViewModel
+                {
+                    Todos = todos
+                }
             };
 
             //forum counts,
@@ -44,44 +48,6 @@ namespace S.S.L.Web.Controllers
 
         }
 
-        [Route("todo/create")]
-        [HttpPost]
-        public async Task<JsonResult> CreateTodo(string todoItem)
-        {
-            try
-            {
-                var todo = new TodoModel
-                {
-                    Item = todoItem,
-                    Done = false,
-                };
-
-                var newTodo = await _custom.CreateTodo(todo, int.Parse(User.Identity.GetUserId()));
-                return Json(newTodo, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message, JsonRequestBehavior.AllowGet);
-            }
-
-        }
-
-        [Route("todo/update")]
-        [HttpPost]
-        public async Task<JsonResult> UpdateTodo(int todoId)
-        {
-            var userId = int.Parse(User.Identity.GetUserId());
-            try
-            {
-                var todo = await _custom.UpdateTodo(todoId, userId);
-                return Json(todo, JsonRequestBehavior.AllowGet);
-            }
-
-            catch (Exception ex)
-            {
-                return Json(ex.Message, JsonRequestBehavior.AllowGet);
-            }
-        }
 
         [Route("manage/facilitators")]
         public async Task<ActionResult> Facilitators()

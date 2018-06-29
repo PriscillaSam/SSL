@@ -1,6 +1,4 @@
-﻿using S.S.L.Domain.Models;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using S.S.L.Web.Models.CustomViewModels;
 
 namespace S.S.L.Web.Models.AdminViewModels
 {
@@ -13,11 +11,8 @@ namespace S.S.L.Web.Models.AdminViewModels
         //thought
         //
 
-        [Required(ErrorMessage = "Todo item can't be empty")]
-        public string TodoItem { get; set; }
         public int Mentees { get; set; }
         public int Facilitatators { get; set; }
-        public IEnumerable<TodoModel> Todos { get; set; }
-
+        public TodoViewModel TodoModel { get; set; }
     }
 }

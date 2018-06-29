@@ -75,7 +75,7 @@ namespace S.S.L.Web.Controllers
                     return Redirect(returnUrl);
                 }
 
-                return RedirectToAction("index", nameof(user.UserType));
+                return RedirectToAction("index", user.UserType.ToString());
             }
             catch (Exception ex)
             {

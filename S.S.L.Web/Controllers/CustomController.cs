@@ -8,22 +8,19 @@ using System.Web.Mvc;
 namespace S.S.L.Web.Controllers
 {
     [Authorize]
-    [RoutePrefix("custom")]
     public class CustomController : Controller
     {
+        private readonly UserManager _user;
         private readonly CustomManager _custom;
 
-        public CustomController(CustomManager custom)
+        public CustomController(CustomManager custom, UserManager user)
         {
+            _user = user;
             _custom = custom;
         }
-        // GET: Custom
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        [Route("todo/create")]
+
+        [Route("custom/todo/create")]
         [HttpPost]
         public async Task<JsonResult> CreateTodo(string todoItem)
         {
@@ -45,7 +42,7 @@ namespace S.S.L.Web.Controllers
 
         }
 
-        [Route("todo/update")]
+        [Route("custom/todo/update")]
         [HttpPost]
         public async Task<JsonResult> UpdateTodo(int todoId)
         {
@@ -60,6 +57,16 @@ namespace S.S.L.Web.Controllers
             {
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [Route("user/profile")]
+        public async Task<ActionResult> UserProfile()
+        {
+            //get user model data
+            var userId = int.Parse(User.Identity.GetUserId());
+            var user = await _user.GetUserById(userId);
+
+            return View(user);
         }
 
     }

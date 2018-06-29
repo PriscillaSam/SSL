@@ -108,7 +108,19 @@ namespace S.S.L.Infrastructure.Repositories
         {
             var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
             if (user == null) return null;
-            return UserFormatter(user);
+
+            return new UserModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Country = user.Country,
+                State = user.State,
+                Gender = user.Gender,
+                MobileNumber = user.MobileNumber,
+                UserType = user.UserType
+            };
         }
 
         public async Task<UserModel> ConfirmUser(int userId)
@@ -212,6 +224,8 @@ namespace S.S.L.Infrastructure.Repositories
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
+                UserType = user.UserType
+
             };
         }
 

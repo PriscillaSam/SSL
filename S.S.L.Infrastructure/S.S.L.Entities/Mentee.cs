@@ -9,7 +9,7 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public User User { get; set; }
 
         [ForeignKey("Facilitator")]
-        public int FacilitatorId { get; set; }
+        public int? FacilitatorId { get; set; }
         public virtual Facilitator Facilitator { get; set; }
     }
 }

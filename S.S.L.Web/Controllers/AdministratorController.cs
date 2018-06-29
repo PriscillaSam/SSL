@@ -17,11 +17,13 @@ namespace S.S.L.Web.Controllers
     {
         private readonly UserManager _user;
         private readonly CustomManager _custom;
+        private readonly MenteeManager _mentee;
 
-        public AdministratorController(UserManager user, CustomManager custom)
+        public AdministratorController(UserManager user, CustomManager custom, MenteeManager mentee)
         {
             _user = user;
             _custom = custom;
+            _mentee = mentee;
         }
 
         // GET: Admin
@@ -99,7 +101,8 @@ namespace S.S.L.Web.Controllers
         [Route("manage/mentees")]
         public async Task<ActionResult> Mentees()
         {
-            var model = await _user.GetUsersAsync(UserType.Mentee);
+            var mentored = true;
+            var model = await _mentee.GetMentees(mentored);
             return View(model);
         }
 

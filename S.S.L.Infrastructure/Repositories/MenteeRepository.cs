@@ -1,7 +1,10 @@
 ﻿using S.S.L.Domain.Interfaces.Repositories;
+using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace S.S.L.Infrastructure.Repositories
@@ -39,5 +42,27 @@ namespace S.S.L.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
         }
+
+        /// <summary>
+        /// Gets all mentees currently being mentored
+        /// </summary>
+        /// <returns>List of User models</returns>
+        public async Task<List<UserModel>> GetMentees(bool mentored)
+        {
+            var mentees = from mentee in _context.Mentees
+                          let isMentored = mentored ? mentee.Facilitator != null : mentee.Facilitator == null
+                          from user in _context.Users
+                          where mentee.UserId == user.Id && isMentored
+                          select new UserModel
+                          {
+                              FirstName = user.FirstName,
+                              LastName = user.LastName,
+                              Email = user.Email
+                          };
+
+            return await mentees.ToListAsync();
+        }
+
+
     }
 }

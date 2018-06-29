@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using S.S.L.Domain.Enums;
+
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -85,15 +87,19 @@
                         <li class="nav-item mb-2">
                             <a href="@Url.Action("index")" class="nav-link text-dark p-3"><i class="fa fa-lg fa-dashboard mr-4 text-default "></i><span>Dashboard</span></a>
                         </li>
-                        <li class="nav-item mb-2">
-                            <a href="@Url.Action("facilitators")" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a href="@Url.Action("mentees")" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
-                        </li>
+                        @if (User.IsInRole(nameof(UserType.Administrator)))
+                        {
+                            <li class="nav-item mb-2">
+                                <a href="@Url.Action("facilitators")" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="@Url.Action("mentees")" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
+                            </li>
+                        }
+
                         <li class="nav-item mb-2">
                             <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bell mr-4 text-success"></i><span class="mr-2">Notifications</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
                         </li>
@@ -105,14 +111,13 @@
             </div>
             <!--End of side navigation-->
 
-
             @RenderBody()
 
         </div>
 
     </div>
     <!--Footer-->
-    <footer class="mt-4 animated slideInUp"  style="background-color: #eee">
+    <footer class="mt-4 animated slideInUp" style="background-color: #eee">
         <div class="container p-3">
             <div class="row justify-content-center">
                 <div class="col-lg-1 mr-5">

@@ -1,8 +1,41 @@
-﻿
+﻿@model MenteeDashboardViewModel
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
+    ViewBag.Heading = $"Hello {@User.Identity.Name}";
+    ViewBag.SubHeading = "What would you like to do today?";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
+<!--Thought section-->
+<div class="col-lg-2">
+    <div class="bg-info p-3 shadow rounded-bottom">
+        <p class="text-white lead"><em>Today's thoughts</em></p>
+        <hr class="">
+        <p class="text-white">We believe we are taking over and we act accordingly.</p>
 
+    </div>
+</div>
+
+<div class="col-lg-8 p-3 shadow bg-white rounded-bottom animated fadeIn">
+    <div class="container-fluid">
+        <div class="row">            
+
+            <!--Todo section-->
+            @{
+                Html.RenderPartial("~/Views/Shared/_Todos.cshtml", Model.TodoModel);
+
+            }
+        </div>
+
+
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+
+}
 

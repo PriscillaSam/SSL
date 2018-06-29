@@ -11,14 +11,14 @@ using System.Web.Mvc;
 
 namespace S.S.L.Web.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = nameof(UserType.Administrator))]
     [RoutePrefix("admin")]
-    public class AdminController : Controller
+    public class AdministratorController : Controller
     {
         private readonly UserManager _user;
         private readonly CustomManager _custom;
 
-        public AdminController(UserManager user, CustomManager custom)
+        public AdministratorController(UserManager user, CustomManager custom)
         {
             _user = user;
             _custom = custom;

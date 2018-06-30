@@ -40,7 +40,6 @@ namespace S.S.L.Domain.Managers
 
 
 
-
         /// <summary>
         /// Registers new users on the platform
         /// </summary>
@@ -64,7 +63,9 @@ namespace S.S.L.Domain.Managers
 
         public async Task RegisterFacilitator(UserModel newMentor, bool makeAdmin)
         {
-            await _repo.AddFacilitator(newMentor, makeAdmin);
+            var passHash = _encryption.Encrypt("password");
+
+            await _repo.AddFacilitator(newMentor, makeAdmin, passHash);
         }
 
         public async Task<UserModel> GetUserById(int userId)

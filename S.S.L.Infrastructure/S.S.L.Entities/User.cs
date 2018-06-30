@@ -19,6 +19,7 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
         public string EmploymentStatus { get; set; }
         public bool EmailConfirmed { get; set; }
         public GymGroup GymGroup { get; set; }
+        public bool IsDeleted { get; set; }
 
 
         //location

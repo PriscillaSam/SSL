@@ -14,6 +14,6 @@ namespace S.S.L.Domain.Interfaces.Repositories
         Task<UserModel> ConfirmUser(int userId);
         Task ResetPassword(string email, string password);
         Task<List<UserModel>> GetUsers(UserType type);
-        Task AddFacilitator(UserModel newMentor, bool makeAdmin);
+        Task AddFacilitator(UserModel newMentor, bool makeAdmin, string passHash);
     }
 }

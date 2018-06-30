@@ -241,6 +241,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DatabaseMigrator.cs" />
+    <Compile Include="Infrastructure\Extensions\IdentityExtensions.cs" />
     <Compile Include="Infrastructure\NinjectModules\MainModule.cs" />
     <Compile Include="Models\AdminViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\AdminViewModels\FacilitatorSignUpViewModel.cs" />

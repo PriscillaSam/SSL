@@ -53,7 +53,8 @@ namespace S.S.L.Web.Controllers
                     new Claim(ClaimTypes.Name, user.FirstName),
                     new Claim(ClaimTypes.GivenName, user.FullName),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email)
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Actor, user.UserType.ToString())
                 };
 
 

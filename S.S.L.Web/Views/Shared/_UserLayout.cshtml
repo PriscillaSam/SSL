@@ -1,5 +1,5 @@
 ﻿@using S.S.L.Domain.Enums;
-
+@using S.S.L.Web.Infrastructure.Extensions;
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,15 +85,15 @@
                 <div class="side-nav bg-light shadow">
                     <ul class="nav nav-pills flex-column d-sm-block d">
                         <li class="nav-item mb-2">
-                            <a href="@Url.Action("index")" class="nav-link text-dark p-3"><i class="fa fa-lg fa-dashboard mr-4 text-default "></i><span>Dashboard</span></a>
+                            <a href="@Url.Action("index", User.Identity.GetUserType())" class="nav-link text-dark p-3"><i class="fa fa-lg fa-dashboard mr-4 text-default "></i><span>Dashboard</span></a>
                         </li>
-                        @if (User.IsInRole(nameof(UserType.Administrator)))
+                        @if (User.IsAdmin())
                         {
                             <li class="nav-item mb-2">
-                                <a href="@Url.Action("facilitators")" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
+                                <a href="@Url.Action("facilitators",User.Identity.GetUserType())" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
                             </li>
                             <li class="nav-item mb-2">
-                                <a href="@Url.Action("mentees")" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
+                                <a href="@Url.Action("mentees",User.Identity.GetUserType())" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
                             </li>
                             <li class="nav-item mb-2">
                                 <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>

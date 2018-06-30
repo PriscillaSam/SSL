@@ -154,8 +154,6 @@ namespace S.S.L.Infrastructure.Repositories
         }
 
 
-
-
         /// <summary>
         /// Get all the users of a particular usertype
         /// </summary>
@@ -182,26 +180,35 @@ namespace S.S.L.Infrastructure.Repositories
         /// <summary>
         /// Registers a user as a facilitator or mentor
         /// </summary>
-        /// <param name="newMentor"></param>
+        /// <param name="newFacilitator"></param>
         /// <param name="makeAdmin"></param>
         /// <returns></returns>
-        public async Task AddFacilitator(UserModel newMentor, bool makeAdmin)
+        public async Task AddFacilitator(UserModel newFacilitator, bool makeAdmin, string passHash)
         {
 
-            var existingUser = await _context.Users.AnyAsync(u => u.Email == newMentor.Email);
+            var existingUser = await _context.Users.AnyAsync(u => u.Email == newFacilitator.Email);
             if (existingUser)
                 throw new Exception("Sorry, this email is already taken.");
 
             var user = new User
             {
-                FirstName = newMentor.FirstName,
-                LastName = newMentor.LastName,
-                Email = newMentor.Email,
+                FirstName = newFacilitator.FirstName,
+                LastName = newFacilitator.LastName,
+                Email = newFacilitator.Email,
+                PasswordHash = passHash,
                 UserType = UserType.Facilitator
             };
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+
+            //add facilitator model
+            var facilitator = new Facilitator
+            {
+                UserId = user.Id
+            };
+
+            _context.Facilitators.Add(facilitator);
 
             AddUserRole(user, UserType.Facilitator);
             if (makeAdmin)
@@ -210,7 +217,15 @@ namespace S.S.L.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task RemoveUser(int userId, bool isAdmin)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null) throw new Exception("This user does not exist");
 
+            user.IsDeleted = true;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
         /// <summary>
         /// Custom formatter for transforming User Object to UserModel Object
         /// </summary>

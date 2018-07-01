@@ -19,21 +19,56 @@ $(document).ready(function () {
                     className: 'btn-outline-info'
                 }
             },
-            callback: function () {
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "POST",
+                        data: { userId: link.attr("data-id") },
+                        url: "/admin/remove"
+                    })
+                        .done(function (msg) {
+                            link.text("Removed");
+                            link.siblings(".badge").hide();
 
-                $.ajax({
-                    type: "POST",
-                    data: { userId: link.attr("data-id") },
-                    url: "/admin/remove"
-                })
-                    .done(function (msg) {
-                        link.text("Removed");
-                        link.siblings(".badge").hide();
-
-                    }).fail(function (msg) { alert(msg); });
+                        }).fail(function (msg) { alert(msg); });
+                }
             }
         });
 
     });
 
 });
+
+$(".js-change-role").click(function (e) {
+
+    e.preventDefault();
+    var link = $(this);
+
+    bootbox.confirm({
+        message: "Are you sure you want to perform this operation?",
+        buttons: {
+            confirm: {
+                label: 'Yes',
+                className: 'btn-outline-success'
+            },
+            cancel: {
+                label: 'Cancel',
+                className: 'btn-info'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    data: { userId: link.attr("data-id") },
+                    url: "/admin/changerole"
+                })
+                    .done(function (msg) {
+                        link.text("Administrator");
+                        link.siblings(".badge").hide();
+
+                    }).fail(function (msg) { alert(msg); });
+            }
+        }
+    });
+})

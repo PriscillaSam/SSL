@@ -1,4 +1,5 @@
-﻿using S.S.L.Domain.Enums;
+﻿
+using S.S.L.Domain.Enums;
 using S.S.L.Domain.Interfaces.Repositories;
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace S.S.L.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
@@ -103,14 +103,18 @@ namespace S.S.L.Infrastructure.Repositories
         }
 
 
-
+        private async Task<User> GetUser(int userId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        }
         public async Task<UserModel> GetUserAsync(int userId)
         {
-            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+            var user = await GetUser(userId);
             if (user == null) return null;
 
             return new UserModel
             {
+
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -120,12 +124,14 @@ namespace S.S.L.Infrastructure.Repositories
                 Gender = user.Gender,
                 MobileNumber = user.MobileNumber,
                 UserType = user.UserType
+
             };
         }
 
         public async Task<UserModel> ConfirmUser(int userId)
         {
-            var user = await _context.Users.Where(u => u.Id == userId).SingleOrDefaultAsync();
+
+            var user = await GetUser(userId);
             if (user == null || user.EmailConfirmed)
                 throw new Exception("Sorry, this operation is not valid.");
 
@@ -153,7 +159,6 @@ namespace S.S.L.Infrastructure.Repositories
 
         }
 
-
         /// <summary>
         /// Get all the users of a particular usertype
         /// </summary>
@@ -164,6 +169,7 @@ namespace S.S.L.Infrastructure.Repositories
 
             var users = await _context.Users
                 .Where(u => u.UserType == type)
+                .Where(u => !u.IsDeleted)
                 .Select(u => new UserModel
                 {
                     FirstName = u.FirstName,
@@ -171,11 +177,32 @@ namespace S.S.L.Infrastructure.Repositories
                     Email = u.Email,
                     MobileNumber = u.MobileNumber,
                     Gender = u.Gender,
-                    Id = u.Id
+                    Id = u.Id,
 
                 }).ToListAsync();
+            users.ForEach(u =>
+            {
+                u.Roles = GetUserRoles(u.Id);
+            });
 
             return users;
+        }
+
+        public async Task UpdateUserRole(int userId)
+        {
+            var user = await GetUser(userId);
+
+
+            if (user.UserType == UserType.Mentee)
+            {
+                user.UserType = UserType.Facilitator;
+                AddUserRole(user, UserType.Facilitator);
+            }
+
+            else if (user.UserType == UserType.Facilitator)
+            {
+                AddUserRole(user, UserType.Administrator);
+            }
         }
 
         /// <summary>
@@ -220,7 +247,7 @@ namespace S.S.L.Infrastructure.Repositories
 
         public async Task RemoveUser(int userId)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await GetUser(userId);
             if (user == null) throw new Exception("This user does not exist");
 
             user.IsDeleted = true;
@@ -256,5 +283,7 @@ namespace S.S.L.Infrastructure.Repositories
 
             user.UserRoles.Add(userRole);
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿@using S.S.L.Web.Infrastructure.Extensions;
+@using S.S.L.Domain.Enums;
 @model FacilitatorsViewModel
 @{
     ViewBag.Title = "Facilitators";
@@ -58,17 +59,25 @@
                             <td>@facilitator.LastName</td>
                             <td><a href="mailto:@facilitator.Email" class="text-muted">@facilitator.Email</a></td>
                             <td>
-                                <a href="#" class="badge badge-danger mr-2 p-1 js-delete-user" title="delete" data-id="@facilitator.Id">
+
+                                @if (facilitator.HasRole(nameof(UserType.Administrator)))
+                                {
+                                    <span class="badge badge-dark p-1 mr-3" href="#">Administrator</span>
+
+                                }
+                                else
+                                {
+                                    <a href="#" class="badge badge-dark p-1 js-change-role mr-3" data-id="@facilitator.Id">Make Admin</a>
+
+                                }
+                                <a href="#" class="badge badge-danger p-1 js-delete-user" title="delete" data-id="@facilitator.Id">
                                     <i class="fa fa-lg fa-trash"></i>
                                 </a>
-                                <a href="#" class="badge badge-dark">Make Admin</a>
-
                             </td>
                         </tr>
                         rowCount++;
                     }
                 </tbody>
-
             </table>
         }
         else

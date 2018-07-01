@@ -2,6 +2,7 @@
 using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
+using S.S.L.Web.Infrastructure.Extensions;
 using S.S.L.Web.Models.AdminViewModels;
 using S.S.L.Web.Models.CustomViewModels;
 using System;
@@ -113,7 +114,7 @@ namespace S.S.L.Web.Controllers
         {
             try
             {
-                if (!User.IsInRole(nameof(UserType.Administrator)))
+                if (!User.IsAdmin())
                     throw new Exception("Unauthorized");
 
                 await _user.RemoveUser(userId);
@@ -125,6 +126,22 @@ namespace S.S.L.Web.Controllers
             }
         }
 
+        [Route("changerole")]
+        [HttpPost]
+        public async Task<JsonResult> ChangeRole(int userId)
+        {
+            try
+            {
+                if (!User.IsAdmin())
+                    throw new Exception("Unauthorized");
 
+                await _user.UpdateUserRole(userId);
+                return Json("success", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

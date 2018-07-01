@@ -97,5 +97,10 @@ namespace S.S.L.Domain.Managers
         {
             await _repo.RemoveUser(userId);
         }
+
+        public async Task UpdateUserRole(int userId)
+        {
+            await _repo.UpdateUserRole(userId);
+        }
     }
 }

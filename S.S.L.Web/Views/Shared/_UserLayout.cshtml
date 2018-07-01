@@ -90,10 +90,10 @@
                         @if (User.IsAdmin())
                         {
                             <li class="nav-item mb-2">
-                                <a href="@Url.Action("facilitators",User.Identity.GetUserType())" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
+                                <a href="@Url.Action("facilitators",User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
                             </li>
                             <li class="nav-item mb-2">
-                                <a href="@Url.Action("mentees",User.Identity.GetUserType())" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
+                                <a href="@Url.Action("mentees",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
                             </li>
                             <li class="nav-item mb-2">
                                 <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>

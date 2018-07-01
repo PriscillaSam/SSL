@@ -93,5 +93,9 @@ namespace S.S.L.Domain.Managers
             var passwordHash = _encryption.Encrypt(password);
             await _repo.ResetPassword(email, passwordHash);
         }
+        public async Task RemoveUser(int userId)
+        {
+            await _repo.RemoveUser(userId);
+        }
     }
 }

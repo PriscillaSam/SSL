@@ -8,10 +8,7 @@ namespace S.S.L.Web.Infrastructure.Extensions
     public static class IdentityExtensions
     {
 
-        public static string GetUserType(this IIdentity identity)
-        {
-            return ((ClaimsIdentity)identity)?.FindFirstValue(ClaimTypes.Actor);
-        }
+        public static string GetUserType(this IIdentity identity) => ((ClaimsIdentity)identity)?.FindFirstValue(ClaimTypes.Actor);
 
         public static bool IsAdmin(this IPrincipal user) => user.IsInRole(nameof(Administrator));
 

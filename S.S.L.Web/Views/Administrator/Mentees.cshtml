@@ -33,17 +33,20 @@
                             <td>@mentee.LastName</td>
                             <td><a href="mailto:@mentee.Email" class="text-muted">@mentee.Email</a></td>
                             <td>
-                                <a href="#" class="badge badge-danger mr-2 p-1 js-delete-user" title="delete" data-toggle="modal" data-target="#confirmModal">
+                                <a href="#" class="badge badge-danger mr-2 p-1 js-delete-user" title="delete" data-id="@mentee.Id">
                                     <i class="fa fa-lg fa-trash"></i>
                                 </a>
-                                <a href="#" class="badge badge-dark">Make Facilitator</a>
+                                <a href="#" class="badge badge-dark p-1 ">Make Facilitator</a>
                             </td>
                         </tr>
+
                         rowCount++;
                     }
                 </tbody>
 
+
             </table>
+         
         }
         else
         {
@@ -57,26 +60,7 @@
 
 
 </div>
-<!-- Modal -->
-<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-danger" id="exampleModalLabel"><i class="fa fa-warning text-danger mr-2"></i>Remove User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-               Are you sure you want to remove this user?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" />
 @section Scripts{
@@ -85,15 +69,34 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#users').DataTable();
         });
 
-            //$(".js-delete-user").on("click", function (e) {
+        $(document).ready(function () {
+            $(".js-delete-user").click(function (e) {
 
+                e.preventDefault();
+                var link = $(this);
+                bootbox.confirm("Are you sure you want to remove this user?", function () {
+                    $.ajax({
+                        type: "POST",
+                        data: { userId: link.attr("data-id") },
+                        url: "/admin/remove",
+                    })
+                        .done(function (msg) {
+                            link.text("Removed");
+                            link.siblings(".badge").hide();
 
+                        }).fail(function (msg) { alert(msg); });
 
-            //});
+                });
+
+            });
+
+        });
+
     </script>
 }

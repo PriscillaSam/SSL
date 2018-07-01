@@ -57,7 +57,8 @@ namespace S.S.L.Infrastructure.Repositories
                           {
                               FirstName = user.FirstName,
                               LastName = user.LastName,
-                              Email = user.Email
+                              Email = user.Email,
+                              Id = user.Id
                           };
 
             return await mentees.ToListAsync();

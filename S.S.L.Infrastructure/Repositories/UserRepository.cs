@@ -217,7 +217,7 @@ namespace S.S.L.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveUser(int userId, bool isAdmin)
+        public async Task RemoveUser(int userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null) throw new Exception("This user does not exist");

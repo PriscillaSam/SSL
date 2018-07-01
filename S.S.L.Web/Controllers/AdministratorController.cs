@@ -106,5 +106,25 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
+
+        [Route("remove")]
+        [HttpPost]
+        public async Task<JsonResult> RemoveUser(int userId)
+        {
+            try
+            {
+                if (!User.IsInRole(nameof(UserType.Administrator)))
+                    throw new Exception("Unauthorized");
+
+                await _user.RemoveUser(userId);
+                return Json("success", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

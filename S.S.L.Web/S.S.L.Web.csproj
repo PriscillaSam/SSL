@@ -145,6 +145,7 @@
     <Content Include="Emails\MenteeWelcome.txt" />
     <Content Include="Emails\PasswordReset.txt" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

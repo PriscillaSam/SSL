@@ -170,7 +170,8 @@ namespace S.S.L.Infrastructure.Repositories
                     LastName = u.LastName,
                     Email = u.Email,
                     MobileNumber = u.MobileNumber,
-                    Gender = u.Gender
+                    Gender = u.Gender,
+                    Id = u.Id
 
                 }).ToListAsync();
 

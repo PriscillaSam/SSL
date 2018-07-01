@@ -70,33 +70,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/bootbox.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#users').DataTable();
-        });
-
-        $(document).ready(function () {
-            $(".js-delete-user").click(function (e) {
-
-                e.preventDefault();
-                var link = $(this);
-                bootbox.confirm("Are you sure you want to remove this user?", function () {
-                    $.ajax({
-                        type: "POST",
-                        data: { userId: link.attr("data-id") },
-                        url: "/admin/remove",
-                    })
-                        .done(function (msg) {
-                            link.text("Removed");
-                            link.siblings(".badge").hide();
-
-                        }).fail(function (msg) { alert(msg); });
-
-                });
-
-            });
-
-        });
-
-    </script>
+    <script src="~/Scripts/user-table.js"></script>
+      
 }
+    

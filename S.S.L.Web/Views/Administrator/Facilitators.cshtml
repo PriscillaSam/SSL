@@ -33,7 +33,7 @@
                     <i class="fa fa-plus fa-fw"></i>
                 </button>
                 <span class="text-gold">Add New Facilitator</span>
-            </div>          
+            </div>
         </div>
         @if (Model.Facilitators.Any())
         {
@@ -58,7 +58,9 @@
                             <td>@facilitator.LastName</td>
                             <td><a href="mailto:@facilitator.Email" class="text-muted">@facilitator.Email</a></td>
                             <td>
-                                <a href="#" class="badge badge-danger mr-2 p-1" title="delete"><i class="fa fa-lg fa-trash"></i></a>
+                                <a href="#" class="badge badge-danger mr-2 p-1 js-delete-user" title="delete" data-id="@facilitator.Id">
+                                    <i class="fa fa-lg fa-trash"></i>
+                                </a>
                                 <a href="#" class="badge badge-dark">Make Admin</a>
 
                             </td>
@@ -73,7 +75,7 @@
         {
             <div class="alert alert-light h-50 shadow">
                 <p class="text-center text-success">There are currently no Facilitators.</p>
-               
+
             </div>
 
         }
@@ -152,10 +154,8 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#users').DataTable();
-        });
-    </script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+
+    <script src="~/Scripts/user-table.js"></script>
 
 }

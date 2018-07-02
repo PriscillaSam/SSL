@@ -1,4 +1,5 @@
-﻿using S.S.L.Domain.Interfaces.Repositories;
+﻿using S.S.L.Domain.Enums;
+using S.S.L.Domain.Interfaces.Repositories;
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
 using System;
@@ -52,6 +53,7 @@ namespace S.S.L.Infrastructure.Repositories
             var mentees = from mentee in _context.Mentees
                           let isMentored = mentored ? mentee.Facilitator != null : mentee.Facilitator == null
                           from user in _context.Users
+                          where user.UserType == UserType.Mentee
                           where mentee.UserId == user.Id && isMentored
                           select new UserModel
                           {
@@ -66,7 +68,37 @@ namespace S.S.L.Infrastructure.Repositories
         }
 
 
+        public async Task AssignOrUpdateFacilitator(int menteeId, int facilitatorId)
+        {
+            var mentee = await _context.Mentees.FirstOrDefaultAsync(m => m.UserId == menteeId);
+            if (mentee == null) throw new Exception("Sorry, this mentee does not exist");
 
+            var facilitator = await _context.Facilitators.FirstOrDefaultAsync(f => f.UserId == facilitatorId);
+            mentee.FacilitatorId = facilitator.Id;
+            _context.Entry(mentee).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+        }
+
+
+        public async Task<UserModel> GetMentee(int userId)
+        {
+            var mentee = await _context.Mentees
+                .Where(m => m.UserId == userId)
+                .Include(m => m.User)
+                .Select(m => new UserModel
+                {
+                    Id = m.UserId,
+                    FirstName = m.User.FirstName,
+                    LastName = m.User.LastName,
+                    Gender = m.User.Gender,
+
+                }).FirstOrDefaultAsync();
+
+            if (mentee == null) throw new Exception("Sorry, this user does not exist.");
+
+            return mentee;
+        }
 
 
     }

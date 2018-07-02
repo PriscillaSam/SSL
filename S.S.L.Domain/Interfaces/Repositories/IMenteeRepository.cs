@@ -8,5 +8,6 @@ namespace S.S.L.Domain.Interfaces.Repositories
     {
         Task AddMentee(int userId);
         Task<List<UserModel>> GetMentees(bool mentored);
+        Task AssignOrUpdateFacilitator(int menteeId, int facilitatorId);
     }
 }

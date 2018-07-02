@@ -23,5 +23,7 @@ namespace S.S.L.Domain.Managers
         {
             return await _repo.GetMentees(mentored);
         }
+
+
     }
 }

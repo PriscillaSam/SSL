@@ -48,11 +48,13 @@
     <Compile Include="Enums\ScheduleStatus.cs" />
     <Compile Include="Enums\UserType.cs" />
     <Compile Include="Interfaces\Repositories\ICustomRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFacilitatorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMenteeRepository.cs" />
     <Compile Include="Interfaces\Repositories\IStateCountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUserRepository.cs" />
     <Compile Include="Interfaces\Utilities\IEncryption.cs" />
     <Compile Include="Managers\CustomManager.cs" />
+    <Compile Include="Managers\FacilitatorManager.cs" />
     <Compile Include="Managers\LocationManager.cs" />
     <Compile Include="Managers\MenteeManager.cs" />
     <Compile Include="Managers\UserManager.cs" />

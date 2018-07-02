@@ -250,6 +250,7 @@
     <Compile Include="Models\AdminViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\AdminViewModels\FacilitatorSignUpViewModel.cs" />
     <Compile Include="Models\AdminViewModels\FacilitatorsViewModel.cs" />
+    <Compile Include="Models\AdminViewModels\UnassignedMenteeViewModel.cs" />
     <Compile Include="Models\AuthViewModels\LoginViewModel.cs" />
     <Compile Include="Models\AuthViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\AuthViewModels\PasswordResetViewModel.cs" />
@@ -289,6 +290,7 @@
     <Content Include="Views\Shared\_Todos.cshtml" />
     <Content Include="Views\Custom\UserProfile.cshtml" />
     <Content Include="Views\Facilitator\Index.cshtml" />
+    <Content Include="Views\Administrator\NotMentored.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

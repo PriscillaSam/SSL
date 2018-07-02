@@ -56,8 +56,8 @@
             <div class="col-md-6">
                 
                 <div class="custom-control custom-checkbox">
-                    @Html.CheckBoxFor(model => model.RememberMe, new { @class = "custom-control-input" })
-                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "custom-control-label text-muted", id = nameof(Model.RememberMe) })
+                    @Html.CheckBoxFor(model => model.RememberMe, new { @class = "custom-control-input", @checked = true })
+                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "custom-control-label text-muted", id = nameof(Model.RememberMe)})
                 </div>
             </div>
             <div class="col-md-6">

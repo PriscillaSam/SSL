@@ -1,4 +1,5 @@
-﻿@model IEnumerable<UserModel>
+﻿@using S.S.L.Web.Infrastructure.Extensions;
+@model IEnumerable<UserModel>
 @{
     ViewBag.Title = "Mentees";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -14,13 +15,16 @@
         {
 
             <table class="table table-hover table-bordered table-responsive-sm" id="users">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Manage</th>
+                        @if (User.Identity.IsSuperAdmin())
+                        {
+                            <th scope="col">Manage</th>
+                        }
 
                     </tr>
                 </thead>
@@ -32,12 +36,18 @@
                             <td>@mentee.FirstName</td>
                             <td>@mentee.LastName</td>
                             <td><a href="mailto:@mentee.Email" class="text-muted">@mentee.Email</a></td>
-                            <td>
-                                <a href="#" class="badge badge-danger mr-2 p-1 js-delete-user" title="delete" data-id="@mentee.Id">
-                                    <i class="fa fa-lg fa-trash"></i>
-                                </a>
-                                <a href="#" class="badge badge-dark p-1 js-change-role" data-id="@mentee.Id">Make Facilitator</a>
-                            </td>
+
+                            @if (User.Identity.IsSuperAdmin())
+                            {
+
+
+                                <td>
+                                    <a href="#" class="badge badge-danger mr-2 p-1 js-delete-user" title="delete" data-id="@mentee.Id">
+                                        <i class="fa fa-lg fa-trash"></i>
+                                    </a>
+                                    <a href="#" class="badge badge-dark p-1 js-change-role" data-id="@mentee.Id">Make Facilitator</a>
+                                </td>
+                            }
                         </tr>
 
                         rowCount++;
@@ -46,7 +56,7 @@
 
 
             </table>
-         
+
         }
         else
         {
@@ -71,6 +81,5 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/bootbox.min.js"></script>
     <script src="~/Scripts/user-table.js"></script>
-      
+
 }
-    

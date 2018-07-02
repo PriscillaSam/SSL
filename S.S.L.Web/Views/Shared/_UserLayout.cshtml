@@ -66,7 +66,7 @@
                         <a href="#"><i class="fa fa-calendar fa-2x"></i></a>
                     </li>
                     <li class="nav-item bn-item">
-                        <a href="#"><i class="fa fa-user fa-2x"></i></a>
+                        <a href="@Url.Action("userprofile", "custom")"><i class="fa fa-user fa-2x"></i></a>
                     </li>
 
                     <li class="nav-item bn-item">
@@ -93,18 +93,24 @@
                                 <a href="@Url.Action("facilitators",User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-users mr-4 text-info"></i><span>Facilitators</span></a>
                             </li>
                             <li class="nav-item mb-2">
-                                <a href="@Url.Action("mentees",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger text-warning"></i><span>Mentees</span></a>
+                                <a href="@Url.Action("mentees",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-users mr-4 text-danger"></i><span>Mentees</span></a>
                             </li>
+
                             <li class="nav-item mb-2">
                                 <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
                             </li>
                         }
-
+                        @if (User.Identity.IsSuperAdmin())
+                        {
+                            <li class="nav-item mb-2">
+                                <a href="@Url.Action("notmentored",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-tasks mr-4 text-primary"></i><span>Unassigned</span></a>
+                            </li>
+                        }
                         <li class="nav-item mb-2">
                             <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bell mr-4 text-success"></i><span class="mr-2">Notifications</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-primary"></i><span class="mr-2">Logout</span></a>
+                            <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-danger"></i><span class="mr-2">Logout</span></a>
                         </li>
                     </ul>
                 </div>

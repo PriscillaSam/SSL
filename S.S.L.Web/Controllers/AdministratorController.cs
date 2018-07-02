@@ -19,12 +19,14 @@ namespace S.S.L.Web.Controllers
         private readonly UserManager _user;
         private readonly CustomManager _custom;
         private readonly MenteeManager _mentee;
+        private readonly FacilitatorManager _facilitator;
 
-        public AdministratorController(UserManager user, CustomManager custom, MenteeManager mentee)
+        public AdministratorController(UserManager user, CustomManager custom, MenteeManager mentee, FacilitatorManager facilitator)
         {
             _user = user;
             _custom = custom;
             _mentee = mentee;
+            _facilitator = facilitator;
         }
 
         // GET: Admin
@@ -107,6 +109,22 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
+        [Route("mentees/assign")]
+        public async Task<ActionResult> NotMentored()
+        {
+
+            var mentored = false;
+            var mentees = await _mentee.GetMentees(mentored);
+            var facilitators = new SelectList(await _facilitator.GetFacilitators(), "Id", "FullName");
+
+            var model = new UnassignedMenteeViewModel
+            {
+                Mentees = mentees,
+                Facilitators = facilitators
+            };
+
+            return View(model);
+        }
 
         [Route("remove")]
         [HttpPost]

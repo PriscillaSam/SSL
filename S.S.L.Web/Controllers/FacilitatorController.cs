@@ -13,23 +13,25 @@ namespace S.S.L.Web.Controllers
     [RoutePrefix("facilitator")]
     public class FacilitatorController : Controller
     {
-        private readonly UserManager _user;
         private readonly CustomManager _custom;
+        private readonly FacilitatorManager _facilitator;
 
-        public FacilitatorController(UserManager user, CustomManager custom)
+        public FacilitatorController(CustomManager custom, FacilitatorManager facilitator)
         {
-            _user = user;
             _custom = custom;
+            _facilitator = facilitator;
         }
 
         [Route("dashboard")]
         public async Task<ActionResult> Index()
         {
-            var todos = await _custom.GetUserTodos(int.Parse(User.Identity.GetUserId()));
-
+            var userId = int.Parse(User.Identity.GetUserId());
+            var todos = await _custom.GetUserTodos(userId);
+            var mentees = await _facilitator.GetFacilitatorMentees(userId);
             if (todos == null) todos = new List<TodoModel>();
             var model = new DashViewModel
             {
+                Mentees = mentees.Count,
                 TodoModel = new TodoViewModel
                 {
                     Todos = todos
@@ -37,6 +39,13 @@ namespace S.S.L.Web.Controllers
             };
 
             return View(model);
+        }
+
+        [Route("list")]
+        public async Task<JsonResult> List()
+        {
+            var facilitators = await _facilitator.GetFacilitators();
+            return Json(facilitators, JsonRequestBehavior.AllowGet);
         }
     }
 }

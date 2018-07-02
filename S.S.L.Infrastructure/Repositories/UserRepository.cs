@@ -203,6 +203,9 @@ namespace S.S.L.Infrastructure.Repositories
             {
                 AddUserRole(user, UserType.Administrator);
             }
+
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -282,6 +285,7 @@ namespace S.S.L.Infrastructure.Repositories
             };
 
             user.UserRoles.Add(userRole);
+            _context.Entry(userRole).State = EntityState.Modified;
         }
 
 

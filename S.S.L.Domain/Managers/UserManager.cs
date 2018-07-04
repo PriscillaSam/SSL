@@ -61,11 +61,11 @@ namespace S.S.L.Domain.Managers
 
         }
 
-        public async Task RegisterFacilitator(UserModel newMentor, bool makeAdmin)
+        public async Task<UserModel> RegisterFacilitator(UserModel newMentor, bool makeAdmin)
         {
             var passHash = _encryption.Encrypt("password");
 
-            await _repo.AddFacilitator(newMentor, makeAdmin, passHash);
+            return await _repo.AddFacilitator(newMentor, makeAdmin, passHash);
         }
 
         public async Task<UserModel> GetUserById(int userId)

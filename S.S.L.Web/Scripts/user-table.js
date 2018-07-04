@@ -71,4 +71,4 @@ $(".js-change-role").click(function (e) {
             }
         }
     });
-})
+});

@@ -20,9 +20,9 @@ namespace S.S.L.Domain.Managers
             return await _repo.GetMenteesByFacilitator(userId);
         }
 
-        public async Task<List<UserModel>> GetFacilitators()
+        public async Task<List<UserModel>> GetFacilitators(string gender)
         {
-            return await _repo.GetFacilitators();
+            return await _repo.GetFacilitators(gender);
         }
     }
 }

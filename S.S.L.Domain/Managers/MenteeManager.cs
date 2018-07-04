@@ -24,6 +24,10 @@ namespace S.S.L.Domain.Managers
             return await _repo.GetMentees(mentored);
         }
 
+        public async Task AssignFacilitator(int userId, int facilitatorId)
+        {
+            await _repo.AssignOrUpdateFacilitator(userId, facilitatorId);
+        }
 
     }
 }

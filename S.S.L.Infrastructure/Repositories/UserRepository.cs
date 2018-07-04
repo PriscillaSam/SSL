@@ -214,7 +214,7 @@ namespace S.S.L.Infrastructure.Repositories
         /// <param name="newFacilitator"></param>
         /// <param name="makeAdmin"></param>
         /// <returns></returns>
-        public async Task AddFacilitator(UserModel newFacilitator, bool makeAdmin, string passHash)
+        public async Task<UserModel> AddFacilitator(UserModel newFacilitator, bool makeAdmin, string passHash)
         {
 
             var existingUser = await _context.Users.AnyAsync(u => u.Email == newFacilitator.Email);
@@ -227,6 +227,7 @@ namespace S.S.L.Infrastructure.Repositories
                 LastName = newFacilitator.LastName,
                 Email = newFacilitator.Email,
                 PasswordHash = passHash,
+                Gender = newFacilitator.Gender,
                 UserType = UserType.Facilitator
             };
 
@@ -246,6 +247,7 @@ namespace S.S.L.Infrastructure.Repositories
                 AddUserRole(user, UserType.Administrator);
 
             await _context.SaveChangesAsync();
+            return UserFormatter(user);
         }
 
         public async Task RemoveUser(int userId)
@@ -278,14 +280,14 @@ namespace S.S.L.Infrastructure.Repositories
 
         private void AddUserRole(User user, UserType type)
         {
-            var userRole = new UserRole
-            {
-                User = user,
-                Role = _context.Roles.Where(r => r.Name == type.ToString()).FirstOrDefault()
-            };
+            var role = _context.Roles
+                .Where(r => r.Name == type.ToString())
+                .FirstOrDefault();
+
+            var userRole = new UserRole(role, user);
 
             user.UserRoles.Add(userRole);
-            _context.Entry(userRole).State = EntityState.Modified;
+            _context.UserRoles.Add(userRole);
         }
 
 

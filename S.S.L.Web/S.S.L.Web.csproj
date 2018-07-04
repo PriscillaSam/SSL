@@ -291,6 +291,7 @@
     <Content Include="Views\Custom\UserProfile.cshtml" />
     <Content Include="Views\Facilitator\Index.cshtml" />
     <Content Include="Views\Administrator\NotMentored.cshtml" />
+    <Content Include="Views\Shared\_Alerts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

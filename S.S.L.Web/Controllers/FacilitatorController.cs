@@ -41,11 +41,7 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
-        [Route("list")]
-        public async Task<JsonResult> List()
-        {
-            var facilitators = await _facilitator.GetFacilitators();
-            return Json(facilitators, JsonRequestBehavior.AllowGet);
-        }
+        //[Authorize(Roles = nameof(Administrator))]
+
     }
 }

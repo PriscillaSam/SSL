@@ -19,6 +19,9 @@ namespace S.S.L.Web.Models.AdminViewModels
         [Required(ErrorMessage = "please enter valid email address"), EmailAddress]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "please the gender field is required")]
+        public string Gender { get; set; }
+
         [Display(Name = "Make Admin")]
         public bool MakeAdmin { get; set; }
 

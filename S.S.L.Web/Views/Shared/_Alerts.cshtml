@@ -1,0 +1,16 @@
+﻿@if (ViewBag.Success != null)
+{
+    <div class="alert alert-dismissible alert-success shadow">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <p class="text-center text-sm">@ViewBag.Success</p>
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-dismissible alert-danger shadow">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <p class="text-center text-sm">@ViewBag.Error</p>
+    </div>
+}

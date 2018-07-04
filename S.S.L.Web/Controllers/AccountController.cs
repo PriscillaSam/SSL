@@ -162,9 +162,12 @@ namespace S.S.L.Web.Controllers
             {
                 var user = await _user.ConfirmUser(userId);
 
-                //send welcome mail
-                var email = _email.GetTemplate(EmailType.MenteeWelcome, user);
-                await email.GenerateEmailAsync();
+                //send welcome mail if user is a mentee
+                if (user.UserType == UserType.Mentee)
+                {
+                    var email = _email.GetTemplate(EmailType.MenteeWelcome, user);
+                    await email.GenerateEmailAsync();
+                }
 
                 msg = "Your account has been verified";
                 return Json(msg, JsonRequestBehavior.AllowGet);

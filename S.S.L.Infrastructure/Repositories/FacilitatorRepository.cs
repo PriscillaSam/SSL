@@ -26,17 +26,21 @@ namespace S.S.L.Infrastructure.Repositories
             var facilitator = await _context.Facilitators.FirstOrDefaultAsync(f => f.UserId == userId);
             //if (facilitator.User == null) throw new Exception("Sorry, this user does not exist");
 
-            var mentees = await _context.Mentees.Where(m => m.FacilitatorId == facilitator.Id).Include(m => m.User).Select(m => new UserModel
-            {
-                Id = m.UserId
+            var mentees = await _context.Mentees
+                .Where(m => m.FacilitatorId == facilitator.Id)
+                .Include(m => m.User)
+                .Select(m => new UserModel
+                {
+                    Id = m.UserId
 
-            }).ToListAsync();
+                }).ToListAsync();
 
             return mentees;
         }
 
-        public async Task<List<UserModel>> GetFacilitators()
+        public async Task<List<UserModel>> GetFacilitators(string gender)
         {
+
             var facilitators = await _context.Facilitators
                 .Include(f => f.User)
                 .Where(fu => !fu.User.IsDeleted)
@@ -44,8 +48,15 @@ namespace S.S.L.Infrastructure.Repositories
                 {
                     Id = fu.UserId,
                     FirstName = fu.User.FirstName,
-                    LastName = fu.User.LastName
+                    LastName = fu.User.LastName,
+                    Gender = fu.User.Gender
+
                 }).ToListAsync();
+
+            if (gender == "Male" || gender == "Female")
+            {
+                return facilitators.Where(u => u.Gender == gender).ToList();
+            }
 
             return facilitators;
 

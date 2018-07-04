@@ -2,6 +2,7 @@
 using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
+using S.S.L.Infrastructure.Services.EmailService;
 using S.S.L.Web.Infrastructure.Extensions;
 using S.S.L.Web.Models.AdminViewModels;
 using S.S.L.Web.Models.CustomViewModels;
@@ -20,6 +21,7 @@ namespace S.S.L.Web.Controllers
         private readonly CustomManager _custom;
         private readonly MenteeManager _mentee;
         private readonly FacilitatorManager _facilitator;
+        private readonly EmailGenerator _emailService;
 
         public AdministratorController(UserManager user, CustomManager custom, MenteeManager mentee, FacilitatorManager facilitator)
         {
@@ -27,6 +29,7 @@ namespace S.S.L.Web.Controllers
             _custom = custom;
             _mentee = mentee;
             _facilitator = facilitator;
+            _emailService = new EmailGenerator();
         }
 
         // GET: Admin
@@ -79,11 +82,14 @@ namespace S.S.L.Web.Controllers
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
+                    Gender = model.Gender
                 };
 
-                await _user.RegisterFacilitator(newMentor, model.MakeAdmin);
+                var facilitator = await _user.RegisterFacilitator(newMentor, model.MakeAdmin);
+                var email = _emailService.GetTemplate(EmailType.AccountConfirmation, facilitator);
+                await email.GenerateEmailAsync();
 
-                ViewBag.Success = "Facilitator account created";
+                ViewBag.Success = "Facilitator account created. Awaiting email confirmation from facilitator";
 
             }
 
@@ -115,16 +121,42 @@ namespace S.S.L.Web.Controllers
 
             var mentored = false;
             var mentees = await _mentee.GetMentees(mentored);
-            var facilitators = new SelectList(await _facilitator.GetFacilitators(), "Id", "FullName");
 
             var model = new UnassignedMenteeViewModel
             {
                 Mentees = mentees,
-                Facilitators = facilitators
             };
 
             return View(model);
         }
+
+        [Route("mentees/assign")]
+        [HttpPost]
+        public async Task<ActionResult> NotMentored(UnassignedMenteeViewModel model)
+        {
+            try
+            {
+
+                await _mentee.AssignFacilitator(model.MenteeId, model.FacilitatorId);
+                ViewBag.Success = "Mentee assigned";
+            }
+
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            var mentored = false;
+            var mentees = await _mentee.GetMentees(mentored);
+
+            var viewModel = new UnassignedMenteeViewModel
+            {
+                Mentees = mentees,
+            };
+            return View(viewModel);
+        }
+
+
+        #region Ajax Method Calls
 
         [Route("remove")]
         [HttpPost]
@@ -161,5 +193,16 @@ namespace S.S.L.Web.Controllers
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [Route("get")]
+        [HttpPost]
+        public async Task<JsonResult> FacilitatorList(string gender)
+        {
+            var facilitators = await _facilitator.GetFacilitators(gender);
+
+            return Json(facilitators, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }

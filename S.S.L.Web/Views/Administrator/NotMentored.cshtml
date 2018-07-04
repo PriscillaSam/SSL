@@ -9,6 +9,9 @@
 }
 
 <div class="col-lg-9 mt-3 animated fadeIn">
+    @{
+        Html.RenderPartial("_Alerts");
+    }
     <div class="container-fluid bg-light p-2 shadow">
         @if (Model.Mentees.Any())
         {
@@ -65,8 +68,8 @@
 <!--Modal-->
 <div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog " role="document">
-        <div class="modal-content form-back">
-            <div class="modal-header border-gold">
+        <div class="modal-content bg-light">
+            <div class="modal-header">
                 <h5 class="modal-title text-gold text-center ml-3" id="exampleModalCenterTitle"><i class="fa fa-pencil fa-lg mr-3"></i>Assign Facilitator</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -74,38 +77,45 @@
             </div>
             @using (Html.BeginForm())
             {
-
+                @Html.HiddenFor(model => model.MenteeId, htmlAttributes: new { id= "id"})
                 <div class="modal-body">
                     <div class="container-fluid">
+                        <div class="row shadow mb-3">
+                            <div class="col-md-12 p-3">
+                                <p class="text-default mb-0">Name</p>
+                                <h6 class="text-muted mb-3" id="username"></h6>
 
-                        <h5 class="text-muted" id="username"><i class="fa fa-user"></i></h5>
-                        <p id="user-gender"><i class="fa fa-female"></i></p>
-                        @Html.DropDownListFor(model => model.Facilitators, Model.Facilitators, "Select facilitator")
-                        @*<div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="text-default">Fist Name</label>
-                                    @Html.EditorFor(model => model.FirstName, new
-                                    {
-                                        htmlAttributes = new { @class = "form-control", placeholder = "First Name" }
-                                    })
-                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger text-sm" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="text-default">Last Name</label>
-                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
-                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger text-sm" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="text-default">Email</label>
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-sm " })
-                                </div>
-                            </div>*@
+                                <p class="text-default mb-0">Gender</p>
+                                <h6 class="text-muted mb-3" id="user-gender"></h6>
 
+                                <p class="text-default mb-1">Preffered Facilitator Gender</p>
+                                
+                                <div class="custom-control custom-radio">
+                                    @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "custom-control-input", id = "female" })
+                                    <label class="custom-control-label text-sm" for="female">Female</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "custom-control-input", id = "male" })
+                                    <label class="custom-control-label text-sm" for="male">Male</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    @Html.RadioButtonFor(model => model.Gender, "All", new { @class = "custom-control-input", id = "all" })
+                                    <label class="custom-control-label text-sm" for="all">All</label>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Gender, "", htmlAttributes: new { @class = "text-danger text-sm" })
+
+                            </div>
+
+                        </div>
+
+                        <div class="row shadow">
+                            <div class="col-md-12 p-2">
+                                <select name="@nameof(Model.FacilitatorId)" class="form-control" id="facilitators">
+                                    <option selected>Select Facilitator</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.FacilitatorId, "",new { @class="text-danger, text-sm"})
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -120,23 +130,58 @@
     </div>
 </div>
 @section Scripts{
-
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/bootbox.min.js"></script>
     <script src="~/Scripts/user-table.js"></script>
     <script>
 
-        $(".js-assign").click(function () {
+        $(document).ready(function () {
+            $(".js-assign").click(function () {
 
 
-            var link = $(this);
-            $.ajax({
-                type: "POST",
-                url: "/mentee/get",
-                data: { userId: link.attr("data-id") }
-            }).done(function (user) {
-                $("#username").text(user.FullName);
-                $("#user-gender").text(user.Gender);
+                var link = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: "/mentee/get",
+                    data: { userId: link.attr("data-id") }
+                }).done(function (user) {
+                    $("#username").text(user.FullName);
+                    $("#user-gender").text(user.Gender);
+                    $("#id").val(user.Id);
+                });
             });
         });
+        var dropdown = $("#facilitators");
+        $("input[type=radio][name=@nameof(Model.Gender)]").on("change", (function () {
+
+            dropdown.empty();
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/get",
+                data: { gender: this.value },
+
+                success: function (facilitators) {
+
+                    $.each(facilitators, function (i, item) {
+
+                        $('<option />',
+                            {
+                                value: item.Id,
+                                text: item.FullName
+
+                            }).appendTo(dropdown);
+
+                    });
+                }
+
+            });
+
+        }));
+
+
+
+
     </script>
 }

@@ -1,13 +1,13 @@
 ﻿@model DashboardViewModel
 @{
     ViewBag.Title = "Dashboard";
-    ViewBag.Heading = $"Hello {@User.Identity.Name}";
+    ViewBag.Heading = $"Hello {User.Identity.Name}";
     ViewBag.SubHeading = "What would you like to do today?";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
 <!--Thought section-->
-<div class="col-lg-2">
+<div class="col-md-3 col-lg-2 col-sm-12">
     <div class="bg-info p-3 shadow rounded-bottom">
         <p class="text-white lead"><em>Today's thoughts</em></p>
         <hr class="">
@@ -16,10 +16,10 @@
     </div>
 </div>
 
-<div class="col-lg-8 p-3 shadow bg-white rounded-bottom animated fadeIn">
+<div class="col-lg-8 col-md-9 p-3 shadow bg-white rounded-bottom animated fadeIn">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4 mr-lg-4 p-2 bg-dark shadow-sm rounded" style="height:330px;">
+            <div class="col-sm-4 col-md-4 col-lg-4 mr-lg-4 p-2 bg-dark shadow-sm rounded" style="height:330px;">
                 <div class="shadow-sm p-3">
                     <div class="mr-4" style="display: inline-block;">
                         <i class="fa fa-2x fa-users text-danger"></i>
@@ -76,6 +76,6 @@
 @section Scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>  
-     <script src="~/Scripts/custom.js" ></script>
+     <script src="~/Scripts/app/custom.js" ></script>
 
 }

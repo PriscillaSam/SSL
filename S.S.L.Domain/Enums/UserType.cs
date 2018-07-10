@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace S.S.L.Domain.Enums
+﻿namespace S.S.L.Domain.Enums
 {
     public enum UserType
     {
-        Administrator,
-        Facilitator,
-        Mentee
+        Administrator = 1,
+        Facilitator = 2,
+        Mentee = 3
     }
 }

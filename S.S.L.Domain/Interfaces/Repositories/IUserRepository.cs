@@ -17,6 +17,6 @@ namespace S.S.L.Domain.Interfaces.Repositories
         Task RemoveUser(int userId);
         Task<UserModel> AddFacilitator(UserModel newMentor, bool makeAdmin, string passHash);
         Task UpdateUserRole(int userId);
-
+        Task UpdateUserProfile(int userId, UserModel model);
     }
 }

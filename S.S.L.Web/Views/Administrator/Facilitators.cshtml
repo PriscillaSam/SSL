@@ -48,7 +48,7 @@
                             <th scope="row">@rowCount</th>
                             <td>@facilitator.FirstName</td>
                             <td>@facilitator.LastName</td>
-                            <td><a href="mailto:@facilitator.Email" class="text-muted">@facilitator.Email</a></td>
+                            <td><a href="mailto:@facilitator.Email" class="text-muted text-capitalize">@facilitator.Email</a></td>
                             @if (User.Identity.IsSuperAdmin())
                             {
                                 <td>
@@ -60,7 +60,7 @@
                                     }
                                     else
                                     {
-                                        <a href="#" class="badge badge-info p-1 js-change-role mr-3" data-id="@facilitator.Id">Make Admin</a>
+                                        <a href="#" class="badge badge-warning p-1 js-change-role mr-3" data-id="@facilitator.Id">Make Admin</a>
 
                                     }
                                     <a href="#" class="badge badge-danger p-1 js-delete-user" title="delete" data-id="@facilitator.Id">
@@ -181,6 +181,6 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/bootbox.min.js"></script>
 
-    <script src="~/Scripts/user-table.js"></script>
+    <script src="~/Scripts/app/user-table.js"></script>
 
 }

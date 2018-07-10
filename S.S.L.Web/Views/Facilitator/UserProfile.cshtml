@@ -1,0 +1,89 @@
+﻿@model FacilitatorProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+    ViewBag.Heading = Model.Facilitator.FullName;
+    ViewBag.SubHeading = "Profile";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="col-lg-8">
+    <div class="row mt-4">
+        @{
+            Html.RenderPartial("_Profile", Model.Facilitator);
+        }
+    </div>
+    <div class="row animated slideInUp">
+        <div class="col-lg-12 bg-white p-4 shadow">
+            <div class="row shadow bg-white rounded p-3 mb-3">
+                <h5 class="text-info mb-0">Mentees Corner</h5>
+
+            </div>
+            <div>
+                @if (Model.Mentees.Any())
+                {
+                    <div class="row shadow bg-dark rounded p-2 mb-3 ">
+                        <div class="col-md-3">
+                            <p class="text-light m-0 text-sm">Name</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-light m-0 text-sm">Email</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-light m-0 text-sm">Mobile Number</p>
+                        </div>
+                        <div class="col-md-1">
+                            <p class="text-light m-0 text-sm">Gender</p>
+                        </div>
+                    </div>
+                    foreach (var mentee in Model.Mentees)
+                    {
+                        <div class="row shadow bg-light rounded p-2 mb-2 js-animate">
+                            <div class="col-md-3">
+                                <p class="text-muted m-0 text-sm">@mentee.FullName</p>
+                            </div>
+                            <div class="col-md-4 ">
+                                <p class=" m-0 text-sm"><a href="mailto:@mentee.Email" class="text-muted">@mentee.Email</a></p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="text-muted m-0 text-sm">@mentee.MobileNumber</p>
+                            </div>
+                            <div class="col-md-1 ">
+                                <p class="text-muted m-0 text-sm">@mentee.Gender</p>
+                            </div>
+                        </div>
+                    }
+
+                }
+
+                else
+                {
+                    <div class="alert alert-light shadow">
+                        <p class="text-center text-success mb-0">You don't have any mentees.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-2 col-md-2">
+
+    <p class="ml-4 ">
+        <a href="#" class="rounded-circle bg-dark p-4 shadow" data-target="#userModal" data-toggle="modal">
+            <i class="fa fa-edit fa-lg text-gold"></i>
+        </a>
+    </p>
+
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $(".js-animate").hover(function () {
+                $(this).toggleClass("bg-dark")
+            })
+        })
+    </script>
+
+}
+
+

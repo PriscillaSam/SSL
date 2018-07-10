@@ -1,6 +1,6 @@
 ﻿@model TodoViewModel
 
-<div class="col-lg-7 p-3 shadow-sm bg-light rounded">
+<div class="col-lg-7 col-md-8 col-sm-8 p-3 shadow-sm bg-light rounded">
     <div class="todo-title">
         <h4 class="text-muted" style="display: inline;">
             <i class="fa mr-3 fa-th-list"></i>My todo
@@ -9,19 +9,19 @@
     </div>
     <div class="shadow-sm p-1 mb-3">
         <form class="form-inline" onsubmit="return postTodoItem()" id="todoForm">
-            <div class="form-group mr-1 col-md-10">
+            <div class="form-group col-md-12">
 
                 @Html.EditorFor(model => model.TodoItem, new
                 {
                     htmlAttributes = new
                     {
-                        @class = "form-control col-md-12",
+                        @class = "form-control col-md-10 col-lg-11 col-sm-10 mr-sm-2",
                         placeholder = "Add new todo",
                     }
                 })
+                <button type="submit" class="btn btn-outline-gold btn-sm"><i class="fa fa-plus"></i></button>
 
             </div>
-            <button type="submit" class="btn btn-outline-gold btn-sm"><i class="fa fa-plus"></i></button>
             @Html.ValidationMessageFor(model => model.TodoItem, "", new { @class = "text-danger text-sm" })
 
         </form>

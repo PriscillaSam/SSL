@@ -39,6 +39,8 @@ namespace S.S.L.Infrastructure.Repositories
                 PasswordHash = passwordHash,
                 EmailConfirmed = false,
                 Gender = model.Gender,
+                Country = model.Country,
+                State = model.State,
                 UserType = model.UserType,
 
                 //Add other fields
@@ -95,7 +97,7 @@ namespace S.S.L.Infrastructure.Repositories
         {
             var user = await _context
                               .Users
-                              .FirstOrDefaultAsync(u => u.Email == email);
+                              .FirstOrDefaultAsync(u => u.Email == email.ToLower());
 
             if (user == null) return null;
 
@@ -107,6 +109,7 @@ namespace S.S.L.Infrastructure.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
+
         public async Task<UserModel> GetUserAsync(int userId)
         {
             var user = await GetUser(userId);
@@ -127,7 +130,40 @@ namespace S.S.L.Infrastructure.Repositories
 
             };
         }
+        public async Task UpdateUserProfile(int userId, UserModel model)
+        {
+            var existingUser = await GetUser(userId);
+            if (existingUser == null) return;
 
+            if (model.FirstName != null)
+            {
+                existingUser.FirstName = model.FirstName;
+
+            }
+            if (model.LastName != null)
+            {
+                existingUser.LastName = model.LastName;
+
+            }
+            if (model.Country != null)
+            {
+                existingUser.Country = model.Country;
+
+            }
+            if (model.State != null)
+            {
+                existingUser.State = model.State;
+
+            }
+            if (model.MobileNumber != null)
+            {
+                existingUser.MobileNumber = model.MobileNumber;
+
+            }
+
+            _context.Entry(existingUser).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
         public async Task<UserModel> ConfirmUser(int userId)
         {
 
@@ -148,7 +184,7 @@ namespace S.S.L.Infrastructure.Repositories
         {
 
             var user = await _context.Users
-                .Where(u => u.Email == email)
+                .Where(u => u.Email == email.ToLower())
                 .FirstOrDefaultAsync();
 
             if (user == null) throw new Exception("Sorry, we don't know you.");
@@ -196,6 +232,13 @@ namespace S.S.L.Infrastructure.Repositories
             if (user.UserType == UserType.Mentee)
             {
                 user.UserType = UserType.Facilitator;
+                //add facilitator model
+                var facilitator = new Facilitator
+                {
+                    UserId = user.Id
+                };
+
+                _context.Facilitators.Add(facilitator);
                 AddUserRole(user, UserType.Facilitator);
             }
 

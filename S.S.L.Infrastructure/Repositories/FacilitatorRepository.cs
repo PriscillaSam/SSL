@@ -31,7 +31,12 @@ namespace S.S.L.Infrastructure.Repositories
                 .Include(m => m.User)
                 .Select(m => new UserModel
                 {
-                    Id = m.UserId
+                    Id = m.UserId,
+                    FirstName = m.User.FirstName,
+                    LastName = m.User.LastName,
+                    Email = m.User.Email,
+                    MobileNumber = m.User.MobileNumber,
+                    Gender = m.User.Gender
 
                 }).ToListAsync();
 

@@ -2,10 +2,10 @@
 {
     public enum EmailType
     {
-        AccountConfirmation,
-        PasswordReset,
-        MenteeWelcome,
-        FacilitatorWelcome,
+        AccountConfirmation = 1,
+        PasswordReset = 2,
+        MenteeWelcome = 3,
+        FacilitatorWelcome = 4,
 
     }
 }

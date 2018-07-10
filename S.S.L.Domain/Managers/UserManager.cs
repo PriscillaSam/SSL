@@ -73,6 +73,11 @@ namespace S.S.L.Domain.Managers
             return await _repo.GetUserAsync(userId);
         }
 
+        public async Task UpdateProfile(int userId, UserModel model)
+        {
+            await _repo.UpdateUserProfile(userId, model);
+        }
+
         public async Task<UserModel> ConfirmUser(int userId)
         {
             return await _repo.ConfirmUser(userId);

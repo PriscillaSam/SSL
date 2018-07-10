@@ -59,15 +59,7 @@ namespace S.S.L.Web.Controllers
             }
         }
 
-        [Route("user/profile")]
-        public async Task<ActionResult> UserProfile()
-        {
-            //get user model data
-            var userId = int.Parse(User.Identity.GetUserId());
-            var user = await _user.GetUserById(userId);
 
-            return View(user);
-        }
 
     }
 }

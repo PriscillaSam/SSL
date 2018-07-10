@@ -1,5 +1,6 @@
 namespace S.S.L.Infrastructure.Migrations
 {
+    using global::S.S.L.Domain.Enums;
     using global::S.S.L.Infrastructure.S.S.L.Entities;
     using System;
     using System.Collections.Generic;
@@ -33,16 +34,10 @@ namespace S.S.L.Infrastructure.Migrations
                     Email = "hillprieston@gmail.com",
                     EmailConfirmed = true,
                     PasswordHash = "5f4dcc3b5aa765d61d8327deb882cf99",
+                    UserType = UserType.Administrator
                 }
                 );
-            context.UserRoles.AddOrUpdate(r => r.UserId,
 
-                new UserRole
-                {
-                    UserId = 1,
-                    RoleId = 1
-                }
-                );
 
             context.Roles.AddOrUpdate(r => r.Name,
                 new Role { Name = "Administrator" },
@@ -50,6 +45,27 @@ namespace S.S.L.Infrastructure.Migrations
                 new Role { Name = "Mentee" }
 
             );
+            context.Facilitators.AddOrUpdate(r => r.UserId,
+               new Facilitator
+               {
+                   UserId = 1,
+
+               });
+            context.UserRoles.AddOrUpdate(
+
+               new UserRole
+               {
+                   UserId = 1,
+                   RoleId = 1
+               },
+               new UserRole
+               {
+                   UserId = 1,
+                   RoleId = 2
+               }
+               );
+
+
 
             context.Countries.AddOrUpdate(r => r.Name,
                 new Country { Name = "Nigeria" },

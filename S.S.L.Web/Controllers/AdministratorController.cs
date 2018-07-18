@@ -183,6 +183,24 @@ namespace S.S.L.Web.Controllers
             {
 
                 await _mentee.AssignFacilitator(model.MenteeId, model.FacilitatorId);
+                //get the facilitator and mentee
+                var mentee = await _user.GetUserById(model.MenteeId);
+                var facilitator = await _user.GetUserById(model.FacilitatorId);
+
+                var emailModel = new MenteeFacilitatorModel
+                {
+                    MenteeName = mentee.FullName,
+                    MenteeEmail = mentee.Email,
+                    MenteeFirstName = mentee.FirstName,
+                    MenteeNumber = mentee.MobileNumber,
+                    FacilitatorEmail = facilitator.Email,
+                    FacilitatorName = facilitator.FullName,
+                    FacilitatorFirstName = facilitator.FirstName
+                };
+
+                var email = _emailService.GetTemplate(EmailType.MenteeAssignment, emailModel);
+                await email.GenerateEmailAsync();
+
                 ViewBag.Success = "Mentee assigned";
             }
 

@@ -21,7 +21,10 @@ namespace S.S.L.Infrastructure.Services.EmailService.EmailTemplates
         {
             var emailService = SmtpService.Instance;
 
-            var body = this[nameof(AccountConfirmation)].Replace("{url}", _settings.Domain.EmailConfirmUrl.Replace("{userId}", $"{_user.Id}")).Replace("{user}", _user.FullName);
+            var body = this[nameof(AccountConfirmation)]
+                .Replace("{url}", _settings.Domain.EmailConfirmUrl
+                .Replace("{userId}", $"{_user.Id}"))
+                .Replace("{user}", _user.FullName);
 
             var mailMessage = new MailMessage
             {

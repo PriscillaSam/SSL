@@ -67,7 +67,7 @@
                         <a href="#"><i class="fa fa-calendar fa-2x"></i></a>
                     </li>
                     <li class="nav-item bn-item">
-                        <a href="@Url.Action("userprofile", User.Identity.GetUserType())"><i class="fa fa-user fa-2x"></i></a>
+                        <a href="@Url.Action("userprofile", User.Identity.GetUserType(), new {userId = User.Identity.GetUserId() })"><i class="fa fa-user fa-2x"></i></a>
                     </li>
 
                     <li class="nav-item bn-item">
@@ -100,9 +100,7 @@
                             <li class="nav-item mb-2">
                                 <a href="@Url.Action("create", "forum")" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
                             </li>
-                        }
-                        @if (User.Identity.IsSuperAdmin())
-                        {
+                        
                             <li class="nav-item mb-2">
                                 <a href="@Url.Action("notmentored",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-tasks mr-4 text-primary"></i><span>Unassigned</span></a>
                             </li>
@@ -149,9 +147,7 @@
                     <li class="nav-item mb-2">
                         <a href="@Url.Action("create", "forum")" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
                     </li>
-                }
-                @if (User.Identity.IsSuperAdmin())
-                {
+               
                     <li class="nav-item mb-2">
                         <a href="@Url.Action("notmentored",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-tasks mr-4 text-primary"></i><span>Unassigned</span></a>
                     </li>

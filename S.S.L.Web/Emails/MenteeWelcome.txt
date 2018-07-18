@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Welcome</title>
+    <title>Document</title>
 </head>
 
 <body style=" width: 100%;background-color: #eee;">
-    <div style=" margin: 0px auto; width: 70%; background-color: white;padding: 20px;">    
+    <div style=" margin: 0px auto; width: 70%; background-color: white;padding: 20px;color: rgb(90, 89, 89)">    
         <header>
-            <h4 style="color: #B8860B;">Hello {user},</h4>
+            <p style="font-size: 17px">Hello {user},</p>
         </header>
         <p>We are delighted to have you join the SSL community .</p>
         <p>This email is to get you acquainted with the next steps to take on your journey with us.</p>
@@ -29,11 +29,10 @@
 
         
     </div>
-    <div style="background-color: #E6E6FA; text-align: center;margin: 0px auto; width: 70%;padding: 20px;">
-            <p style="font-size: 15px;color: #00008B;"><span style="color:#B8860B;">SSL Account:</span> Sacred Secular League | Zenith Bank | 1015777693</p>
+    <div style="background-color: #E6E6FA; text-align: center;margin: 0px auto; width: 70%;padding:10px 20px;">
+            <p style="color: #00008B;font-size: 12px"><span style="color:#B8860B;">SSL Account:</span> Sacred Secular League | Zenith Bank | 1015777693</p>
         </div>
 </body>
-
 </html>
 
 

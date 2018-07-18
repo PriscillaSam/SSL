@@ -1,0 +1,21 @@
+﻿<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mentee</title>
+</head>
+<body style=" width: 100%;background-color: #eee;">
+    <div style=" margin: 0px auto; width: 70%; background-color: white;padding: 20px;color: rgb(90, 89, 89)">
+            <div style="margin-bottom: 30px;">
+                    <p style=" font-size: 17px">Hello {user},</p>
+                    <p>{message}, {fullName}.</p>
+                    <p>Please reach {assigned} via this email <a href="mailto:{email}" style="color:rgb(134, 134, 134)"><strong>{email}</strong></a><span></span></p>
+                </div>
+                
+                <p>Best regards,</p>
+                <p style="color: #B8860B;margin-top: 0;">The SSL Community</p>
+    </div>
+  
+</body>
+</html>

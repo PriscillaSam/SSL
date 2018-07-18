@@ -142,6 +142,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Emails\AccountConfirmation.txt" />
     <Content Include="Emails\FacilitatorWelcome.txt" />
+    <Content Include="Emails\MenteeAssignment.txt" />
     <Content Include="Emails\MenteeWelcome.txt" />
     <Content Include="Emails\PasswordReset.txt" />
     <Content Include="Global.asax" />

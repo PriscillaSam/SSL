@@ -17,6 +17,8 @@ namespace S.S.L.Infrastructure.Services.EmailService
                     return new MenteeWelcome(param as UserModel);
                 case EmailType.PasswordReset:
                     return new PasswordReset(param as UserModel);
+                case EmailType.MenteeAssignment:
+                    return new MenteeAssignment(param as MenteeFacilitatorModel);
                 default:
                     return null;
 

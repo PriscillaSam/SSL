@@ -80,8 +80,10 @@
     <Compile Include="Services\EmailService\EmailGenerator.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\AccountConfirmation.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\GenericEmailTemplate.cs" />
+    <Compile Include="Services\EmailService\EmailTemplates\MenteeAssignment.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\MenteeWelcome.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\PasswordReset.cs" />
+    <Compile Include="Services\EmailService\MenteeFacilitatorModel.cs" />
     <Compile Include="Services\EmailService\SmtpService.cs" />
     <Compile Include="Utilities\MD5Encryption.cs" />
     <Compile Include="Validators\EmailValidator.cs" />

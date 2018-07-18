@@ -1,6 +1,7 @@
 ﻿using S.S.L.Domain.Interfaces.Repositories;
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace S.S.L.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<List<UserModel>> GetMenteesByFacilitator(int userId)
+        public async Task<List<MenteeUserModel>> GetMenteesByFacilitator(int userId)
         {
 
             //this id is the userid
@@ -29,14 +30,19 @@ namespace S.S.L.Infrastructure.Repositories
             var mentees = await _context.Mentees
                 .Where(m => m.FacilitatorId == facilitator.Id)
                 .Include(m => m.User)
-                .Select(m => new UserModel
+                .Select(m => new MenteeUserModel
                 {
-                    Id = m.UserId,
-                    FirstName = m.User.FirstName,
-                    LastName = m.User.LastName,
-                    Email = m.User.Email,
-                    MobileNumber = m.User.MobileNumber,
-                    Gender = m.User.Gender
+                    User = new UserModel
+                    {
+                        Id = m.UserId,
+                        FirstName = m.User.FirstName,
+                        LastName = m.User.LastName,
+                        Email = m.User.Email,
+                        MobileNumber = m.User.MobileNumber,
+                        Gender = m.User.Gender
+                    },
+
+                    FinishedClasses = m.FinishedClass
 
                 }).ToListAsync();
 
@@ -64,6 +70,28 @@ namespace S.S.L.Infrastructure.Repositories
             }
 
             return facilitators;
+
+        }
+
+        public async Task UpdateMenteeProgressAsync(int menteeId, int facilitatorId)
+        {
+
+            //check that facilitator exists
+
+            var facilitator = await _context.Facilitators.FirstOrDefaultAsync(f => f.UserId == facilitatorId);
+
+            if (facilitator == null) throw new Exception("This facilitator does not exist");
+
+            //check that facilitator is mentoring the mentee 
+            var mentee = await _context.Mentees.FirstOrDefaultAsync(m => m.UserId == menteeId);
+            if (mentee == null)
+                throw new Exception("This mentee does not exist");
+            else if (mentee.FacilitatorId != facilitator.Id)
+                throw new Exception("You are not authorized to perform this operation");
+
+            mentee.FinishedClass = true;
+            _context.Entry(mentee).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
         }
     }

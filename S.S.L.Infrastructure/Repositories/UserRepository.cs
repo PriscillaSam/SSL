@@ -107,7 +107,9 @@ namespace S.S.L.Infrastructure.Repositories
 
         private async Task<User> GetUser(int userId)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            return await _context.Users
+                .Where(u => u.Id == userId && !u.IsDeleted)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<UserModel> GetUserAsync(int userId)
@@ -213,6 +215,7 @@ namespace S.S.L.Infrastructure.Repositories
                     Email = u.Email,
                     MobileNumber = u.MobileNumber,
                     Gender = u.Gender,
+                    GymGroup = u.GymGroup,
                     Id = u.Id,
 
                 }).ToListAsync();
@@ -292,6 +295,48 @@ namespace S.S.L.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return UserFormatter(user);
         }
+
+        public async Task<List<GymGroupView>> GetGymGroupingsAsync()
+        {
+            var groups = await _context.Users
+                .Where(u => u.GymGroup != 0)
+                .GroupBy(u => u.GymGroup)
+                .Select(g => new GymGroupView
+                {
+                    GroupName = g.Key,
+                    GroupMembers = g.Select(u => new UserModel
+                    {
+                        Id = u.Id,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        UserType = u.UserType,
+                        Gender = u.Gender
+                    }).ToList()
+
+                }).ToListAsync();
+
+            return groups;
+        }
+
+        public async Task AssignGymGroup(int userId, GymGroup group)
+        {
+            var user = await GetUser(userId);
+            if (user == null) throw new Exception("User does not exist");
+
+            user.GymGroup = group;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveUserFromGym(int userId)
+        {
+            var user = await GetUser(userId);
+            if (user == null) throw new Exception("User does not exist");
+            user.GymGroup = 0;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
 
         public async Task RemoveUser(int userId)
         {

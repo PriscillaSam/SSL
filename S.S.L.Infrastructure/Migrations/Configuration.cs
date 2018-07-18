@@ -6,7 +6,7 @@ namespace S.S.L.Infrastructure.Migrations
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
 
-    public sealed class Configuration : DbMigrationsConfiguration<S.S.L.Entities.Entities>
+    public sealed class Configuration : DbMigrationsConfiguration<Entities>
     {
         public Configuration()
         {
@@ -49,7 +49,6 @@ namespace S.S.L.Infrastructure.Migrations
                new Facilitator
                {
                    UserId = 1,
-
                });
             context.UserRoles.AddOrUpdate(
 
@@ -57,15 +56,8 @@ namespace S.S.L.Infrastructure.Migrations
                {
                    UserId = 1,
                    RoleId = 1
-               },
-               new UserRole
-               {
-                   UserId = 1,
-                   RoleId = 2
                }
-               );
-
-
+             );
 
             context.Countries.AddOrUpdate(r => r.Name,
                 new Country { Name = "Nigeria" },

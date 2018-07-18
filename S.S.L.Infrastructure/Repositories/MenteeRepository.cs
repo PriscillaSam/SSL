@@ -48,19 +48,25 @@ namespace S.S.L.Infrastructure.Repositories
         /// Gets all mentees currently being mentored
         /// </summary>
         /// <returns>List of User models</returns>
-        public async Task<List<UserModel>> GetMentees(bool mentored)
+        public async Task<List<MenteeUserModel>> GetMentees(bool mentored)
         {
             var mentees = from mentee in _context.Mentees
                           let isMentored = mentored ? mentee.Facilitator != null : mentee.Facilitator == null
                           from user in _context.Users
                           where user.UserType == UserType.Mentee && user.EmailConfirmed
                           where mentee.UserId == user.Id && isMentored
-                          select new UserModel
+                          select new MenteeUserModel
                           {
-                              FirstName = user.FirstName,
-                              LastName = user.LastName,
-                              Email = user.Email,
-                              Id = user.Id
+                              User = new UserModel
+                              {
+                                  FirstName = user.FirstName,
+                                  LastName = user.LastName,
+                                  Email = user.Email,
+                                  Id = user.Id,
+                                  GymGroup = user.GymGroup
+                              },
+                              FinishedClasses = mentee.FinishedClass
+
                           };
 
             return await mentees.ToListAsync();

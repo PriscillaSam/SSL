@@ -51,66 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201805211304114_InitialMigration.cs" />
-    <Compile Include="Migrations\201805211304114_InitialMigration.Designer.cs">
-      <DependentUpon>201805211304114_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805222150213_AddModelEntities.cs" />
-    <Compile Include="Migrations\201805222150213_AddModelEntities.Designer.cs">
-      <DependentUpon>201805222150213_AddModelEntities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805251348273_UpdateScheduleAndUserModel.cs" />
-    <Compile Include="Migrations\201805251348273_UpdateScheduleAndUserModel.Designer.cs">
-      <DependentUpon>201805251348273_UpdateScheduleAndUserModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805251401416_UpdateCommentModel.cs" />
-    <Compile Include="Migrations\201805251401416_UpdateCommentModel.Designer.cs">
-      <DependentUpon>201805251401416_UpdateCommentModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806021935484_Schema change.cs" />
-    <Compile Include="Migrations\201806021935484_Schema change.Designer.cs">
-      <DependentUpon>201806021935484_Schema change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806041535312_UpdateUserSchema.cs" />
-    <Compile Include="Migrations\201806041535312_UpdateUserSchema.Designer.cs">
-      <DependentUpon>201806041535312_UpdateUserSchema.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806062218352_AddStateAndCountryModels.cs" />
-    <Compile Include="Migrations\201806062218352_AddStateAndCountryModels.Designer.cs">
-      <DependentUpon>201806062218352_AddStateAndCountryModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806062224437_AddStateAndCountryModels1.cs" />
-    <Compile Include="Migrations\201806062224437_AddStateAndCountryModels1.Designer.cs">
-      <DependentUpon>201806062224437_AddStateAndCountryModels1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806091635498_AddUserRoleModel.cs" />
-    <Compile Include="Migrations\201806091635498_AddUserRoleModel.Designer.cs">
-      <DependentUpon>201806091635498_AddUserRoleModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806230925339_AddCustomModels.cs" />
-    <Compile Include="Migrations\201806230925339_AddCustomModels.Designer.cs">
-      <DependentUpon>201806230925339_AddCustomModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806251135173_UpdateUserRoleTable.cs" />
-    <Compile Include="Migrations\201806251135173_UpdateUserRoleTable.Designer.cs">
-      <DependentUpon>201806251135173_UpdateUserRoleTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806291021102_UpdateFacilitatorMenteeModels.cs" />
-    <Compile Include="Migrations\201806291021102_UpdateFacilitatorMenteeModels.Designer.cs">
-      <DependentUpon>201806291021102_UpdateFacilitatorMenteeModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806291302181_UpdateMEnteeModel.cs" />
-    <Compile Include="Migrations\201806291302181_UpdateMEnteeModel.Designer.cs">
-      <DependentUpon>201806291302181_UpdateMEnteeModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807011705337_UpdateDatabase.cs" />
-    <Compile Include="Migrations\201807011705337_UpdateDatabase.Designer.cs">
-      <DependentUpon>201807011705337_UpdateDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201807171106462_InitialMigration.cs" />
+    <Compile Include="Migrations\201807171106462_InitialMigration.Designer.cs">
+      <DependentUpon>201807171106462_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomRepository.cs" />
     <Compile Include="Repositories\FacilitatorRepository.cs" />
+    <Compile Include="Repositories\ForumRepository.cs" />
     <Compile Include="Repositories\MenteeRepository.cs" />
     <Compile Include="Repositories\StateCountryRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
@@ -144,50 +93,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805211304114_InitialMigration.resx">
-      <DependentUpon>201805211304114_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805222150213_AddModelEntities.resx">
-      <DependentUpon>201805222150213_AddModelEntities.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805251348273_UpdateScheduleAndUserModel.resx">
-      <DependentUpon>201805251348273_UpdateScheduleAndUserModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805251401416_UpdateCommentModel.resx">
-      <DependentUpon>201805251401416_UpdateCommentModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806021935484_Schema change.resx">
-      <DependentUpon>201806021935484_Schema change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806041535312_UpdateUserSchema.resx">
-      <DependentUpon>201806041535312_UpdateUserSchema.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806062218352_AddStateAndCountryModels.resx">
-      <DependentUpon>201806062218352_AddStateAndCountryModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806062224437_AddStateAndCountryModels1.resx">
-      <DependentUpon>201806062224437_AddStateAndCountryModels1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806091635498_AddUserRoleModel.resx">
-      <DependentUpon>201806091635498_AddUserRoleModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806230925339_AddCustomModels.resx">
-      <DependentUpon>201806230925339_AddCustomModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806251135173_UpdateUserRoleTable.resx">
-      <DependentUpon>201806251135173_UpdateUserRoleTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806291021102_UpdateFacilitatorMenteeModels.resx">
-      <DependentUpon>201806291021102_UpdateFacilitatorMenteeModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806291302181_UpdateMEnteeModel.resx">
-      <DependentUpon>201806291302181_UpdateMEnteeModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807011705337_UpdateDatabase.resx">
-      <DependentUpon>201807011705337_UpdateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +100,11 @@
       <Project>{849A1DF5-B6C0-4A08-9B34-7968CF29539C}</Project>
       <Name>S.S.L.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201807171106462_InitialMigration.resx">
+      <DependentUpon>201807171106462_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

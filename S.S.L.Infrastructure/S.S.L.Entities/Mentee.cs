@@ -6,6 +6,7 @@ namespace S.S.L.Infrastructure.S.S.L.Entities
     {
         [ForeignKey("User")]
         public int UserId { get; set; }
+        public bool FinishedClass { get; set; }
         public User User { get; set; }
 
         [ForeignKey("Facilitator")]

@@ -1,7 +1,7 @@
 ﻿@model UserModel
+@using Microsoft.AspNet.Identity;
 
-
-<div class="col-lg-12 bg-light bg-light p-4">
+<div class="col-lg-12 bg-light p-4">
     <div class="row shadow animated fadeIn">
         <div class="col-md-4 p-2">
             <img src="~/Assets/img/03.jpg" alt="Profile Picture" class="img-fluid" />
@@ -57,71 +57,78 @@
 
 </div>
 
-<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content form-back">
-            <div class="modal-header border-gold">
-                <h5 class="modal-title text-gold text-center ml-3" id="exampleModalCenterTitle"><i class="fa fa-edit fa-lg mr-3"></i>Edit Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @using (Html.BeginForm())
-            {
+@if (User.Identity.GetUserId() == Model.Id.ToString())
+{
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content form-back">
+                <div class="modal-header border-gold">
+                    <h5 class="modal-title text-gold text-center ml-3" id="exampleModalCenterTitle"><i class="fa fa-edit fa-lg mr-3"></i>Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm())
+                {
 
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label class="text-default">Fist Name</label>
-                                @Html.EditorFor(model => model.FirstName, new
-                                {
-                                    htmlAttributes = new { @class = "form-control", placeholder = "First Name" }
-                                })
-                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger text-sm" })
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="text-default">Fist Name</label>
+                                    @Html.EditorFor(model => model.FirstName, new
+                                    {
+                                        htmlAttributes = new { @class = "form-control", placeholder = "First Name" }
+                                    })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger text-sm" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label class="text-default">Last Name</label>
-                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
-                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger text-sm" })
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="text-default">Last Name</label>
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger text-sm" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label class="text-default">Mobile Number</label>
-                                @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Mobile Number" } })
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-sm " })
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="text-default">Mobile Number</label>
+                                    @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Mobile Number" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-sm " })
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label class="text-default">State</label>
-                                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", placeholder = "State" } })
-                                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger text-sm " })
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="text-default">Country</label>
+                                    @Html.DropDownListFor(model => model.Country, (SelectList)ViewBag.Countries, "-Select your country-", new { @class = "custom-select" })
+                                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger text-sm " })
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label class="text-default">Country</label>
-                                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Country" } })
-                                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger text-sm " })
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="text-default">State</label>
+                                    @Html.DropDownListFor(model => model.State, (SelectList)ViewBag.States, "-Select your state-", new { @class = "custom-select" })
+                                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger text-sm " })
+                                </div>
                             </div>
-                        </div>
 
+
+                        </div>
                     </div>
-                </div>
 
-                <div class="modal-footer border-gold">
-                    <button type="submit" class="btn-sm btn-outline-gold" id="create">Update Profile</button>
-                </div>
+                    <div class="modal-footer border-gold">
+                        <button type="submit" class="btn-sm btn-outline-gold" id="create">Update Profile</button>
+                    </div>
 
-            }
+                }
 
 
+            </div>
         </div>
     </div>
-</div>
+}
+
+
+
 
 

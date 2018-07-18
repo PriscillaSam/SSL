@@ -34,8 +34,12 @@
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+
+
                         @if (User.Identity.IsSuperAdmin())
                         {
+                            <th scope="col">Gym Group</th>
                             <th scope="col">Manage</th>
                         }
 
@@ -49,23 +53,45 @@
                             <td>@facilitator.FirstName</td>
                             <td>@facilitator.LastName</td>
                             <td><a href="mailto:@facilitator.Email" class="text-muted text-capitalize">@facilitator.Email</a></td>
+                            <td>
+                                @if (facilitator.HasRole(nameof(UserType.Administrator)))
+                                {
+                                    <span class="badge badge-dark shadow p-1 mr-1" href="#">Administrator</span>
+
+                                }
+                                else
+                                {
+                                    <span class="badge badge-light shadow p-1 mr-1" href="#">Facilitator</span>
+
+                                }
+                            </td>
                             @if (User.Identity.IsSuperAdmin())
                             {
                                 <td>
-
-                                    @if (facilitator.HasRole(nameof(UserType.Administrator)))
+                                    @if (facilitator.HasGymGroup())
                                     {
-                                        <span class="badge badge-dark p-1 mr-3" href="#">Administrator</span>
-
+                                        <span class="badge badge-dark p-1">@facilitator.GymGroup.GetDescription()</span>
                                     }
                                     else
                                     {
-                                        <a href="#" class="badge badge-warning p-1 js-change-role mr-3" data-id="@facilitator.Id">Make Admin</a>
+                                        <a href="#" class="badge badge-info p-1 js-assign-gym" data-toggle="modal" data-target="#assignModal" data-id="@facilitator.Id">Assign GymGroup</a>
 
                                     }
-                                    <a href="#" class="badge badge-danger p-1 js-delete-user" title="delete" data-id="@facilitator.Id">
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("userprofile","facilitator", new { userId = facilitator.Id})" class="badge badge-secondary shadow p-1 mr-1" title="view profile" data-id="@facilitator.Id">
+                                        View
+                                    </a>
+
+                                    <a href="#" class="badge badge-danger shadow p-1 mr-1 js-delete-user" title="delete" data-id="@facilitator.Id">
                                         <i class="fa fa-lg fa-trash"></i>
                                     </a>
+                                    @if (!facilitator.HasRole(nameof(UserType.Administrator)))
+                                    {
+                                        <a href="#" class="badge badge-info shadow p-1 js-change-role mr-3" data-id="@facilitator.Id">Make Admin</a>
+
+                                    }
+
                                 </td>
                             }
                         </tr>
@@ -85,7 +111,7 @@
 
     </div>
 </div>
-<!-- Modal -->
+<!--Add facilitator Modal -->
 <div class="modal fade" id="facilitatorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content form-back">
@@ -169,7 +195,60 @@
         </div>
     </div>
 </div>
+<!--Gym group assignment modal-->
+<div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-light">
+            <div class="modal-header">
+                <h5 class="modal-title text-gold text-center ml-3" id="exampleModalCenterTitle"><i class="fa fa-pencil fa-lg mr-3"></i>Assign GymGroup</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="end">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
+            <form>
+                @Html.HiddenFor(model => model.UserId, htmlAttributes: new { id = "id" })
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row" id="json-result">
+                            <div class="col-md-12">
+                                <div class="alert alert-success shadow">
+                                    <span class="text-sm text-center text-muted form-text">Gym Group Assigned</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row shadow mb-3">
+
+                            <div class="col-md-12 p-3">
+                                <p class="text-default mb-0">Name</p>
+                                <h6 class="text-muted mb-3" id="username"></h6>
+
+                                <p class="text-default mb-0">Gender</p>
+                                <h6 class="text-muted mb-3" id="user-gender"></h6>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row shadow">
+                            <div class="col-md-12 p-2">
+                                @Html.EnumDropDownListFor(model => model.GymGroup, "SELECT GYM GROUP", htmlAttributes: new { @class = "form-control text-sm p-2", id = "group" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-gold">
+                    <button type="submit" class="btn-sm btn-outline-gold" id="create">Assign</button>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
 
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" />

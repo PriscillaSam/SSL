@@ -21,15 +21,15 @@ namespace S.S.L.Web.Controllers
         public IAuthenticationManager AuthManager => HttpContext.GetOwinContext().Authentication;
 
         private readonly UserManager _user;
-        private readonly LocationManager _location;
         private readonly EmailGenerator _email;
+        private readonly CustomManager _location;
         private readonly MenteeManager _mentee;
 
-        public AccountController(UserManager user, LocationManager location, EmailGenerator email, MenteeManager mentee)
+        public AccountController(UserManager user, CustomManager location, EmailGenerator email, MenteeManager mentee)
         {
             _user = user;
-            _location = location;
             _email = email;
+            _location = location;
             _mentee = mentee;
         }
 

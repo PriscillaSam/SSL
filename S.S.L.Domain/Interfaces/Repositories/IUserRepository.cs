@@ -18,5 +18,8 @@ namespace S.S.L.Domain.Interfaces.Repositories
         Task<UserModel> AddFacilitator(UserModel newMentor, bool makeAdmin, string passHash);
         Task UpdateUserRole(int userId);
         Task UpdateUserProfile(int userId, UserModel model);
+        Task AssignGymGroup(int userId, GymGroup group);
+        Task<List<GymGroupView>> GetGymGroupingsAsync();
+        Task RemoveUserFromGym(int userId);
     }
 }

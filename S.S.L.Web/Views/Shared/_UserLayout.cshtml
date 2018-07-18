@@ -1,4 +1,6 @@
 ﻿@using S.S.L.Domain.Enums;
+@using Microsoft.AspNet.Identity;
+
 @using S.S.L.Web.Infrastructure.Extensions;
 <!DOCTYPE html>
 <html>
@@ -28,10 +30,10 @@
                                             <a href="#"><i class="fa fa-th fa-fw fa-2x"></i></a>
                                         </li>
                                         <li class="nav-item bn-item">
-                                            <a href="login.html"><i class="fa fa-calendar fa-2x"></i><span class="badge badge-light text-success" style="position: absolute;">4</span></a>
+                                            <a href="#"><i class="fa fa-calendar fa-2x"></i><span class="badge badge-light text-success" style="position: absolute;">4</span></a>
                                         </li>
                                         <li class="nav-item bn-item">
-                                            <a href="@Url.Action("userprofile", User.Identity.GetUserType())"><i class="fa fa-user fa-2x"></i></a>
+                                            <a href="@Url.Action("userprofile", User.Identity.GetUserType(), new {userId = User.Identity.GetUserId() })"><i class="fa fa-user fa-2x"></i></a>
                                         </li>
 
                                         <li class="nav-item bn-item">
@@ -96,7 +98,7 @@
                             </li>
 
                             <li class="nav-item mb-2">
-                                <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
+                                <a href="@Url.Action("create", "forum")" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
                             </li>
                         }
                         @if (User.Identity.IsSuperAdmin())
@@ -104,10 +106,14 @@
                             <li class="nav-item mb-2">
                                 <a href="@Url.Action("notmentored",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-tasks mr-4 text-primary"></i><span>Unassigned</span></a>
                             </li>
+                            <li class="nav-item mb-2">
+                                <a href="@Url.Action("GymGroups", User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-bookmark mr-4 text-success"></i><span class="mr-2">Gym Groups</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
+                            </li>
                         }
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bell mr-4 text-success"></i><span class="mr-2">Notifications</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
-                        </li>
+                        @*<li class="nav-item mb-2">
+                                <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bell mr-4 text-success"></i><span class="mr-2">Notifications</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
+                            </li>*@
+
                         <li class="nav-item">
                             <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-danger"></i><span class="mr-2">Logout</span></a>
                         </li>
@@ -121,7 +127,7 @@
         </div>
 
     </div>
-    
+
     <div id="sideNav" class="side-nav pt-0  d-lg-none" style="position:fixed;z-index:1; top:0; height:100%;width:100%;background-color:rgba(0,0,0,0.4)">
         <div class="bg-white p-4 col-md-4 col-sm-9" style="height:100%">
             <button type="button" class="close side-bar-toggle">
@@ -141,7 +147,7 @@
                     </li>
 
                     <li class="nav-item mb-2">
-                        <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
+                        <a href="@Url.Action("create", "forum")" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
                     </li>
                 }
                 @if (User.Identity.IsSuperAdmin())
@@ -149,10 +155,11 @@
                     <li class="nav-item mb-2">
                         <a href="@Url.Action("notmentored",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-tasks mr-4 text-primary"></i><span>Unassigned</span></a>
                     </li>
+                    <li class="nav-item mb-2">
+                        <a href="@Url.Action("GymGroups", User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-bookmark mr-4 text-success"></i><span class="mr-2">Gym Groups</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
+                    </li>
                 }
-                <li class="nav-item mb-2">
-                    <a href="#" class="nav-link text-dark  p-3"><i class="fa fa-bell mr-4 text-success"></i><span class="mr-2">Notifications</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
-                </li>
+
                 <li class="nav-item">
                     <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-danger"></i><span class="mr-2">Logout</span></a>
                 </li>
@@ -228,14 +235,10 @@
 
         });
 
-       
+
 
     </script>
-    <script>
-        if (window.innerWidth < 1000) {
-            
-        }
-    </script>
+
 
     @RenderSection("Scripts", false)
 

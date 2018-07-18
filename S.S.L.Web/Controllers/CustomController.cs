@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
+using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
+using S.S.L.Web.Infrastructure.Extensions;
 using System;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -8,6 +10,7 @@ using System.Web.Mvc;
 namespace S.S.L.Web.Controllers
 {
     [Authorize]
+
     public class CustomController : Controller
     {
         private readonly UserManager _user;
@@ -60,6 +63,15 @@ namespace S.S.L.Web.Controllers
         }
 
 
+        [Route("custom/user")]
+        [Authorize(Roles = nameof(UserType.Administrator))]
+        public async Task<JsonResult> GetUser(int userId)
+        {
+            if (!User.Identity.IsSuperAdmin()) return Json("Unauthorized", JsonRequestBehavior.AllowGet);
 
+            var user = await _user.GetUserById(userId);
+
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
     }
 }

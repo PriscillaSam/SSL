@@ -6,7 +6,8 @@ namespace S.S.L.Domain.Interfaces.Repositories
 {
     public interface IFacilitatorRepository
     {
-        Task<List<UserModel>> GetMenteesByFacilitator(int userId);
+        Task<List<MenteeUserModel>> GetMenteesByFacilitator(int userId);
         Task<List<UserModel>> GetFacilitators(string gender);
+        Task UpdateMenteeProgressAsync(int menteeId, int facilitatorId);
     }
 }

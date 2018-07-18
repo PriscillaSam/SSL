@@ -16,6 +16,7 @@ namespace S.S.L.Domain.Models
         public string State { get; set; }
 
         public UserType UserType { get; set; }
+        public GymGroup GymGroup { get; set; }
         public string FullName => $"{FirstName} {LastName}";
         public IEnumerable<string> Roles { get; set; }
     }

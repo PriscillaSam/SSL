@@ -15,7 +15,7 @@ namespace S.S.L.Domain.Managers
         }
 
 
-        public async Task<List<UserModel>> GetFacilitatorMentees(int userId)
+        public async Task<List<MenteeUserModel>> GetFacilitatorMentees(int userId)
         {
             return await _repo.GetMenteesByFacilitator(userId);
         }
@@ -23,6 +23,12 @@ namespace S.S.L.Domain.Managers
         public async Task<List<UserModel>> GetFacilitators(string gender)
         {
             return await _repo.GetFacilitators(gender);
+        }
+
+
+        public async Task UpdateMenteeProgress(int menteeId, int facilitatorId)
+        {
+            await _repo.UpdateMenteeProgressAsync(menteeId, facilitatorId);
         }
     }
 }

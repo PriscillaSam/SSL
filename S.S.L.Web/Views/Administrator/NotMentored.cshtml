@@ -30,15 +30,16 @@
                 <tbody>
                     @foreach (var mentee in Model.Mentees)
                     {
+                        var user = mentee.User;
                         <tr>
                             <th scope="row">@rowCount</th>
-                            <td>@mentee.FirstName</td>
-                            <td>@mentee.LastName</td>
-                            <td><a href="mailto:@mentee.Email" class="text-muted">@mentee.Email</a></td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td><a href="mailto:@user.Email" class="text-muted">@user.Email</a></td>
                             <td>
-                                <a href="#" class="badge badge-warning mr-3 p-1 js-assign" data-toggle="modal" data-target="#assignModal" data-id="@mentee.Id">Assign Facilitator</a>
+                                <a href="#" class="badge badge-warning mr-3 p-1 js-assign" data-toggle="modal" data-target="#assignModal" data-id="@user.Id">Assign Facilitator</a>
 
-                                <a href="#" class="badge badge-danger p-1 js-delete-user" title="delete" data-id="@mentee.Id">
+                                <a href="#" class="badge badge-danger p-1 js-delete-user" title="delete" data-id="@user.Id">
                                     <i class="fa fa-lg fa-trash"></i>
                                 </a>
                             </td>
@@ -67,7 +68,7 @@
 
 <!--Modal-->
 <div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog " role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content bg-light">
             <div class="modal-header">
                 <h5 class="modal-title text-gold text-center ml-3" id="exampleModalCenterTitle"><i class="fa fa-pencil fa-lg mr-3"></i>Assign Facilitator</h5>
@@ -143,7 +144,7 @@
                 var link = $(this);
                 $.ajax({
                     type: "POST",
-                    url: "/mentee/get",
+                    url: "/custom/user",
                     data: { userId: link.attr("data-id") }
                 }).done(function (user) {
                     $("#username").text(user.FullName);

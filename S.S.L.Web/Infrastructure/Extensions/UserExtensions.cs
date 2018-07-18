@@ -6,5 +6,7 @@ namespace S.S.L.Web.Infrastructure.Extensions
     public static class UserExtensions
     {
         public static bool HasRole(this UserModel user, string role) => user.Roles.Any(u => u == role);
+
+        public static bool HasGymGroup(this UserModel user) => user.GymGroup != 0;
     }
 }

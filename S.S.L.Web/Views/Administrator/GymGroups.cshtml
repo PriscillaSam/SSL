@@ -1,0 +1,121 @@
+﻿@model IEnumerable<S.S.L.Domain.Enums.GymGroupView>
+@using S.S.L.Web.Infrastructure.Extensions;
+
+@{
+    ViewBag.Title = "GymGroups";
+    ViewBag.Heading = "Gym Groups";
+    ViewBag.SubHeading = "Organize Gym groups";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+@if (Model.Any())
+{
+    <div class="col-md-8 mt-2 bg-white shadow">
+
+        <div class="accordion mt-3" id="accordionExample">
+
+
+            @foreach (var g in Model)
+            {
+                <div class="card rounded mb-2" style="border-bottom:1px solid #eee">
+                    <div class="card-header bg-dark shadow" id="@g.GroupName.GetDescription()">
+                        <h5 class="mb-0">
+                            <a href="#" class="collapsed text-sm" data-toggle="collapse" data-target="#@g.GroupName" aria-expanded="false" aria-controls="@g.GroupName">
+                                @g.GroupName.GetDescription()
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="@g.GroupName" class="collapse" aria-labelledby="@g.GroupName.GetDescription()" data-parent="#accordionExample">
+                        <div class="card-body">
+                            @if (g.GroupMembers.Any())
+                            {
+                                <h6 class="text-gold">Members</h6>
+                                foreach (var m in g.GroupMembers)
+                                {
+                                    <div class="row shadow-sm bg-light rounded p-2 mb-2">
+                                        <div class="col-sm-3">
+                                            <p class="text-muted m-0 text-sm">@m.FullName</p>
+                                        </div>
+                                        
+                                        <div class="col-sm-3 ">
+                                            <p class="text-muted m-0 text-sm">@m.Gender</p>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <span class="badge badge-secondary shadow mr-4">@m.UserType.ToString()</span><a href="#" class="js-gym-remove" title="remove" data-id="@m.Id"><span class="badge badge-danger"><i class="fa fa-remove"></i></span></a>
+                                        </div>
+                                    </div>
+                                   
+                                }
+                            }
+                            else
+                            {
+                                <p>No members yet</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+
+        </div>
+
+
+    </div>
+}
+else
+{
+    <div class="col-lg-8 mt-2 bg-white h-25 shadow">
+
+        <div class="alert alert-light shadow mt-2">
+            <p class="text-center text-success">There are currently no Gym members.</p>
+
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".js-gym-remove").click(function (e) {
+
+                e.preventDefault();
+                var link = $(this);
+                bootbox.confirm({
+                    message: "Are you sure you want to remove this user from this gym group?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-outline-danger'
+                        },
+                        cancel: {
+                            label: 'Cancel',
+                            className: 'btn-info'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                type: "POST",
+                                data: { userId: link.attr("data-id") },
+                                url: "/admin/gym/remove"
+                            })
+                                .done(function (msg) {
+                                    link.parent
+                                    link.siblings(".badge").hide();
+
+                                }).fail(function (msg) { alert(msg); });
+                        }
+                    }
+                });
+
+            });
+
+        });
+
+
+    </script>
+}

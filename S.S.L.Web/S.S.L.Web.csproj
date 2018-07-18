@@ -145,6 +145,7 @@
     <Content Include="Emails\MenteeWelcome.txt" />
     <Content Include="Emails\PasswordReset.txt" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\App\mentee.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -238,18 +239,21 @@
     <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\CustomController.cs" />
     <Compile Include="Controllers\FacilitatorController.cs" />
+    <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenteeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DatabaseMigrator.cs" />
+    <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\IdentityExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\UserExtensions.cs" />
     <Compile Include="Infrastructure\NinjectModules\MainModule.cs" />
     <Compile Include="Models\AdminViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\AdminViewModels\FacilitatorSignUpViewModel.cs" />
     <Compile Include="Models\AdminViewModels\FacilitatorsViewModel.cs" />
+    <Compile Include="Models\AdminViewModels\MenteesViewModel.cs" />
     <Compile Include="Models\AdminViewModels\UnassignedMenteeViewModel.cs" />
     <Compile Include="Models\AuthViewModels\LoginViewModel.cs" />
     <Compile Include="Models\AuthViewModels\ForgotPasswordViewModel.cs" />
@@ -297,6 +301,8 @@
     <Content Include="Views\Facilitator\UserProfile.cshtml" />
     <Content Include="Views\Mentee\UserProfile.cshtml" />
     <Content Include="Views\Administrator\UserProfile.cshtml" />
+    <Content Include="Views\Forum\Create.cshtml" />
+    <Content Include="Views\Administrator\GymGroups.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

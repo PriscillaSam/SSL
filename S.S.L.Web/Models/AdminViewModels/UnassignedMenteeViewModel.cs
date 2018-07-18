@@ -6,7 +6,7 @@ namespace S.S.L.Web.Models.AdminViewModels
 {
     public class UnassignedMenteeViewModel
     {
-        public IEnumerable<UserModel> Mentees { get; set; }
+        public IEnumerable<MenteeUserModel> Mentees { get; set; }
 
         [Required(ErrorMessage = "please select a gender")]
         public string Gender { get; set; }

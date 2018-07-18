@@ -1,4 +1,5 @@
 ﻿@model MenteeProfileViewModel
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Profile";
     ViewBag.Heading = Model.Mentee.FullName;
@@ -61,20 +62,22 @@
                     <p class="text-center text-success">You have not been assigned a mentor yet.</p>
                 </div>
             }
-           
+
 
         </div>
     </div>
 
 </div>
-<div class="col-lg-2 col-md-2">
+@if (User.Identity.GetUserId() == Model.Mentee.Id.ToString())
+{
+    <div class="col-lg-2 col-md-2">
+        <p class="ml-4 ">
+            <a href="#" class="rounded-circle bg-dark p-4 shadow" data-target="#userModal" data-toggle="modal">
+                <i class="fa fa-edit fa-lg text-gold"></i>
+            </a>
+        </p>
 
-    <p class="ml-4">
-        <a href="#" class="rounded-circle bg-dark p-4 shadow" data-target="#userModal" data-toggle="modal">
-            <i class="fa fa-edit fa-lg text-gold"></i>
-        </a>
-    </p>
-
-</div>
+    </div>
+}
 
 

@@ -8,10 +8,12 @@ namespace S.S.L.Domain.Managers
     public class CustomManager
     {
         private readonly ICustomRepository _repo;
+        private readonly IStateCountryRepository _locationRepo;
 
-        public CustomManager(ICustomRepository repo)
+        public CustomManager(ICustomRepository repo, IStateCountryRepository locationRepo)
         {
             _repo = repo;
+            _locationRepo = locationRepo;
         }
 
 
@@ -28,6 +30,19 @@ namespace S.S.L.Domain.Managers
         public async Task<TodoModel> UpdateTodo(int todoId, int userId)
         {
             return await _repo.UpdateTodoAsync(todoId, userId);
+        }
+
+        public async Task<List<StateModel>> GetStates(int? countryId)
+        {
+            var states = await _locationRepo.GetStatesAsync(countryId);
+            return states;
+        }
+
+        public async Task<List<CountryModel>> GetCountries()
+        {
+            var countries = await _locationRepo.GetCountriesAsync();
+            return countries;
+
         }
     }
 }

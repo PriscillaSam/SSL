@@ -19,6 +19,7 @@ namespace S.S.L.Web.Infrastructure.NinjectModules
             Bind<ICustomRepository>().To<CustomRepository>();
             Bind<IMenteeRepository>().To<MenteeRepository>();
             Bind<IFacilitatorRepository>().To<FacilitatorRepository>();
+            Bind<IForumRepository>().To<ForumRepository>();
         }
     }
 }

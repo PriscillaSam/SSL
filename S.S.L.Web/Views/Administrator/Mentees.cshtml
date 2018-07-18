@@ -1,5 +1,5 @@
 ﻿@using S.S.L.Web.Infrastructure.Extensions;
-@model IEnumerable<UserModel>
+@model MenteesViewModel
 @{
     ViewBag.Title = "Mentees";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -11,7 +11,7 @@
 
 <div class="col-lg-9 mt-3 animated fadeIn">
     <div class="container-fluid bg-light p-2 shadow">
-        @if (Model.Any())
+        @if (Model.Mentees.Any())
         {
 
             <table class="table table-hover table-bordered table-responsive-sm" id="users">
@@ -23,30 +23,53 @@
                         <th scope="col">Email</th>
                         @if (User.Identity.IsSuperAdmin())
                         {
+                            <th scope="col">Gym Group</th>
                             <th scope="col">Manage</th>
                         }
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var mentee in Model)
+                    @foreach (var mentee in Model.Mentees)
                     {
+                        var user = mentee.User;
                         <tr>
                             <th scope="row">@rowCount</th>
-                            <td>@mentee.FirstName</td>
-                            <td>@mentee.LastName</td>
-                            <td><a href="mailto:@mentee.Email" class="text-muted text-capitalize">@mentee.Email</a></td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td><a href="mailto:@user.Email" class="text-muted text-capitalize">@user.Email</a></td>
 
                             @if (User.Identity.IsSuperAdmin())
                             {
 
-
                                 <td>
+                                    @if (user.HasGymGroup())
+                                    {
+                                        <span class="badge badge-dark p-1">@user.GymGroup.GetDescription()</span>
+                                    }
+                                    else
+                                    {
+                                        if (mentee.FinishedClasses)
+                                        {
+                                            <a href="#" class="badge badge-info p-1 js-assign-gym" data-toggle="modal" data-target="#assignModal" data-id="@user.Id">Assign GymGroup</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary p-1">Classes Pending</span>
 
-                                    <a href="#" class="badge badge-warning p-1 mr-2 js-change-role" data-id="@mentee.Id">Make Facilitator</a>
-                                    <a href="#" class="badge badge-danger p-1 js-delete-user" title="delete" data-id="@mentee.Id">
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <a href="#" class="badge badge-danger p-1 mr-2 js-delete-user" title="delete" data-id="@user.Id">
                                         <i class="fa fa-lg fa-trash"></i>
                                     </a>
+                                    @if (mentee.FinishedClasses)
+                                    {
+                                        <a href="#" class="badge badge-warning p-1 js-change-role" data-id="@user.Id">Make Facilitator</a>
+
+                                    }
+
                                 </td>
                             }
                         </tr>
@@ -72,12 +95,63 @@
 
 </div>
 
+<div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-light">
+            <div class="modal-header">
+                <h5 class="modal-title text-gold text-center ml-3" id="exampleModalCenterTitle"><i class="fa fa-pencil fa-lg mr-3"></i>Assign GymGroup</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="end">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+           <form>
+                @Html.HiddenFor(model => model.MenteeId, htmlAttributes: new { id = "id" })
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row" id="json-result">
+                            <div class="col-md-12">
+                                <div class="alert alert-success shadow">
+                                    <span class="text-sm text-center text-muted form-text" >Gym Group Assigned</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row shadow mb-3">
+                           
+                            <div class="col-md-12 p-3">
+                                <p class="text-default mb-0">Name</p>
+                                <h6 class="text-muted mb-3" id="username"></h6>
+
+                                <p class="text-default mb-0">Gender</p>
+                                <h6 class="text-muted mb-3" id="user-gender"></h6>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row shadow">
+                            <div class="col-md-12 p-2">
+                                @Html.EnumDropDownListFor(model => model.GymGroup, "SELECT GYM GROUP", htmlAttributes: new { @class = "form-control text-sm p-2" , id = "group"})
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-gold">
+                    <button type="submit" class="btn-sm btn-outline-gold" id="create">Assign</button>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" />
 @section Scripts{
 
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/bootbox.min.js"></script>

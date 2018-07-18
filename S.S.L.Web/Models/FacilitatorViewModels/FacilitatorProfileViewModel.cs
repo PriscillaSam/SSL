@@ -7,6 +7,6 @@ namespace S.S.L.Web.Models.FacilitatorViewModels
     {
 
         public UserModel Facilitator { get; set; }
-        public IEnumerable<UserModel> Mentees { get; set; }
+        public IEnumerable<MenteeUserModel> Mentees { get; set; }
     }
 }

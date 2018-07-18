@@ -19,7 +19,7 @@ namespace S.S.L.Domain.Managers
             await _repo.AddMentee(userId);
         }
 
-        public async Task<List<UserModel>> GetMentees(bool mentored)
+        public async Task<List<MenteeUserModel>> GetMentees(bool mentored)
         {
             return await _repo.GetMentees(mentored);
         }

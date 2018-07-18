@@ -4,13 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Welcome</title>
 </head>
-<body>
-    <p>Hello {user},</p>
-    <p>The SSL community welcomes you.<br> We are grateful that you have taken this bold step to be a part of the change coming to our society, nation and the world at large.
-        <br>
-        We believe we are taking over and we act accordingly.
-    </p>
+
+<body style=" width: 100%;background-color: #eee;">
+    <div style=" margin: 0px auto; width: 70%; background-color: white;padding: 20px;">    
+        <header>
+            <h4 style="color: #B8860B;">Hello {user},</h4>
+        </header>
+        <p>We are delighted to have you join the SSL community .</p>
+        <p>This email is to get you acquainted with the next steps to take on your journey with us.</p>
+        <h5 style="margin-bottom: 0;">Next steps:</h5>
+
+        <p>We believe you have spoken to support and are aware of the gift you are to give to the community. 
+            The account details are below. 
+        </p>
+        <p>When we receive your gift an SSL Facilitator will be assigned to you to guide you through the foundational classes. 
+        </p>
+        <p>We are grateful that you have taken this bold step to be a part of the change coming to our society, nation and the world at large. 
+        <br> We believe we are taking over and we act accordingly.</p>
+        <p>Once again we welcome you.</p>
+        <p style="margin-bottom: 10px;"><strong>Best regards</strong></p>
+        <h5 style="color: #B8860B;">The SSL Community.</h5>
+
+        
+    </div>
+    <div style="background-color: #E6E6FA; text-align: center;margin: 0px auto; width: 70%;padding: 20px;">
+            <p style="font-size: 15px;color: #00008B;"><span style="color:#B8860B;">SSL Account:</span> Sacred Secular League | Zenith Bank | 1015777693</p>
+        </div>
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+ 
+
+ 

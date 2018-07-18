@@ -3,6 +3,7 @@ using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
 using S.S.L.Web.Models.CustomViewModels;
 using S.S.L.Web.Models.FacilitatorViewModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -10,7 +11,7 @@ using static S.S.L.Domain.Enums.UserType;
 namespace S.S.L.Web.Controllers
 {
 
-    [Authorize(Roles = nameof(Facilitator))]
+    [Authorize(Roles = nameof(Facilitator) + "," + nameof(Administrator))]
     [RoutePrefix("facilitator")]
     public class FacilitatorController : Controller
     {
@@ -45,10 +46,11 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
-        [Route("profile")]
-        public async Task<ActionResult> UserProfile()
+        [HttpGet]
+        [Route("")]
+        [Route("profile/{userId:int}")]
+        public async Task<ActionResult> UserProfile(int userId)
         {
-            var userId = int.Parse(User.Identity.GetUserId());
 
             var facilitator = await _user.GetUserById(userId);
             var mentees = await _facilitator.GetFacilitatorMentees(userId);
@@ -58,7 +60,7 @@ namespace S.S.L.Web.Controllers
                 Facilitator = facilitator,
                 Mentees = mentees
             };
-
+            await PopulateLocationDropdown();
             return View(model);
         }
 
@@ -78,9 +80,32 @@ namespace S.S.L.Web.Controllers
                 Facilitator = facilitator,
                 Mentees = mentees
             };
-
+            await PopulateLocationDropdown();
             return View(viewModel);
         }
 
+        [Route("mentee/update")]
+        [HttpPost]
+        public async Task<JsonResult> UpdateClassProgress(int menteeId)
+        {
+            var facilitatorId = int.Parse(User.Identity.GetUserId());
+            try
+            {
+                await _facilitator.UpdateMenteeProgress(menteeId, facilitatorId);
+                return Json("Updated", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+        private async Task PopulateLocationDropdown()
+        {
+            ViewBag.Countries = new SelectList(await _custom.GetCountries(), "Name", "Name");
+            ViewBag.States = new SelectList(await _custom.GetStates(1), "Name", "Name");
+
+        }
     }
 }

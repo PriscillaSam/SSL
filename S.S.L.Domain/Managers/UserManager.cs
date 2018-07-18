@@ -33,10 +33,7 @@ namespace S.S.L.Domain.Managers
             return await _repo.ValidateUserAsync(email, passHash);
         }
 
-        public async Task<List<UserModel>> GetUsersAsync(UserType type)
-        {
-            return await _repo.GetUsers(type);
-        }
+        public async Task<List<UserModel>> GetUsersAsync(UserType type) => await _repo.GetUsers(type);
 
 
 
@@ -68,20 +65,11 @@ namespace S.S.L.Domain.Managers
             return await _repo.AddFacilitator(newMentor, makeAdmin, passHash);
         }
 
-        public async Task<UserModel> GetUserById(int userId)
-        {
-            return await _repo.GetUserAsync(userId);
-        }
+        public async Task<UserModel> GetUserById(int userId) => await _repo.GetUserAsync(userId);
 
-        public async Task UpdateProfile(int userId, UserModel model)
-        {
-            await _repo.UpdateUserProfile(userId, model);
-        }
+        public async Task UpdateProfile(int userId, UserModel model) => await _repo.UpdateUserProfile(userId, model);
 
-        public async Task<UserModel> ConfirmUser(int userId)
-        {
-            return await _repo.ConfirmUser(userId);
-        }
+        public async Task<UserModel> ConfirmUser(int userId) => await _repo.ConfirmUser(userId);
 
         public async Task<UserModel> ValidateEmail(string email)
         {
@@ -98,14 +86,20 @@ namespace S.S.L.Domain.Managers
             var passwordHash = _encryption.Encrypt(password);
             await _repo.ResetPassword(email, passwordHash);
         }
-        public async Task RemoveUser(int userId)
+        public async Task RemoveUser(int userId) => await _repo.RemoveUser(userId);
+
+        public async Task UpdateUserRole(int userId) => await _repo.UpdateUserRole(userId);
+
+        public async Task<List<GymGroupView>> GetGymGroupsAsync() => await _repo.GetGymGroupingsAsync();
+
+        public async Task RemoveGymMembership(int userId)
         {
-            await _repo.RemoveUser(userId);
+            await _repo.RemoveUserFromGym(userId);
         }
 
-        public async Task UpdateUserRole(int userId)
+        public async Task AddGymMember(int userId, GymGroup group)
         {
-            await _repo.UpdateUserRole(userId);
+            await _repo.AssignGymGroup(userId, group);
         }
     }
 }

@@ -31,6 +31,7 @@ namespace S.S.L.Web.Controllers
             _mentee = mentee;
             _facilitator = facilitator;
             _emailService = new EmailGenerator();
+
         }
 
         // GET: Admin
@@ -70,7 +71,7 @@ namespace S.S.L.Web.Controllers
                 Facilitator = facilitator,
                 Mentees = mentees
             };
-
+            await PopulateLocationDropdown();
             return View(model);
         }
 
@@ -90,7 +91,7 @@ namespace S.S.L.Web.Controllers
                 Facilitator = facilitator,
                 Mentees = mentees
             };
-
+            await PopulateLocationDropdown();
             return View(viewModel);
         }
 
@@ -148,9 +149,16 @@ namespace S.S.L.Web.Controllers
         public async Task<ActionResult> Mentees()
         {
             var mentored = true;
-            var model = await _mentee.GetMentees(mentored);
+            var model = new MenteesViewModel
+            {
+                Mentees = await _mentee.GetMentees(mentored),
+
+            };
             return View(model);
         }
+
+
+
 
         [Route("mentees/assign")]
         public async Task<ActionResult> NotMentored()
@@ -193,6 +201,12 @@ namespace S.S.L.Web.Controllers
             return View(viewModel);
         }
 
+        [Route("gym-groups")]
+        public async Task<ActionResult> GymGroups()
+        {
+            var model = await _user.GetGymGroupsAsync();
+            return View(model);
+        }
 
         #region Ajax Method Calls
 
@@ -241,6 +255,45 @@ namespace S.S.L.Web.Controllers
             return Json(facilitators, JsonRequestBehavior.AllowGet);
         }
 
+        [Route("gym/remove")]
+        [HttpPost]
+        public async Task<JsonResult> GymRemove(int userId)
+        {
+            try
+            {
+
+                if (!User.Identity.IsSuperAdmin()) throw new Exception("Unautorized");
+                await _user.RemoveGymMembership(userId);
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+        [Route("gym/assign")]
+        [HttpPost]
+        public async Task<JsonResult> AssignGymGroup(int userId, GymGroup group)
+        {
+            try
+            {
+                await _user.AddGymMember(userId, group);
+                return Json(group.GetDescription(), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+
+            }
+        }
         #endregion
+
+        private async Task PopulateLocationDropdown()
+        {
+            ViewBag.Countries = new SelectList(await _custom.GetCountries(), "Name", "Name");
+            ViewBag.States = new SelectList(await _custom.GetStates(1), "Name", "Name");
+
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using S.S.L.Domain.Models;
+﻿using S.S.L.Domain.Enums;
+using S.S.L.Domain.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -25,5 +26,9 @@ namespace S.S.L.Web.Models.AdminViewModels
         [Display(Name = "Make Admin")]
         public bool MakeAdmin { get; set; }
 
+
+        //fields for gym assignment
+        public int UserId { get; set; }
+        public GymGroup GymGroup { get; set; }
     }
 }

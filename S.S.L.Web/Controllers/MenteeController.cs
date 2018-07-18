@@ -2,7 +2,6 @@
 using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
-using S.S.L.Web.Infrastructure.Extensions;
 using S.S.L.Web.Models.CustomViewModels;
 using S.S.L.Web.Models.MenteeViewModels;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Web.Mvc;
 
 namespace S.S.L.Web.Controllers
 {
-    [Authorize(Roles = nameof(UserType.Mentee))]
+    [Authorize]
     [RoutePrefix("mentee")]
     public class MenteeController : Controller
     {
@@ -28,6 +27,7 @@ namespace S.S.L.Web.Controllers
         }
         // GET: Mentee
         [Route("dashboard")]
+        [Authorize(Roles = nameof(UserType.Mentee))]
         public async Task<ActionResult> Index()
         {
             //get todos
@@ -47,6 +47,8 @@ namespace S.S.L.Web.Controllers
         }
 
         [Route("profile")]
+        [Authorize(Roles = nameof(UserType.Mentee))]
+
         public async Task<ActionResult> UserProfile()
         {
             var userId = int.Parse(User.Identity.GetUserId());
@@ -55,11 +57,12 @@ namespace S.S.L.Web.Controllers
                 Mentee = await _mentee.GetMentee(userId),
                 Facilitator = await _mentee.GetMenteeFacilitator(userId)
             };
+            await PopulateLocationDropdown();
 
             return View(model);
         }
 
-
+        [Authorize(Roles = nameof(UserType.Mentee))]
         [Route("profile")]
         [HttpPost]
         public async Task<ActionResult> UserProfile(UserModel model)
@@ -73,20 +76,17 @@ namespace S.S.L.Web.Controllers
                 Mentee = await _mentee.GetMentee(userId),
                 Facilitator = await _mentee.GetMenteeFacilitator(userId)
             };
-
-            return View(viewModel);        
+            await PopulateLocationDropdown();
+            return View(viewModel);
 
         }
 
-        [Route("get")]
-        public async Task<JsonResult> Mentee(int userId)
+
+        private async Task PopulateLocationDropdown()
         {
-            if (!User.Identity.IsSuperAdmin()) return Json("Unauthorized", JsonRequestBehavior.AllowGet);
+            ViewBag.Countries = new SelectList(await _custom.GetCountries(), "Name", "Name");
+            ViewBag.States = new SelectList(await _custom.GetStates(1), "Name", "Name");
 
-            var mentee = await _user.GetUserById(userId);
-
-            return Json(mentee, JsonRequestBehavior.AllowGet);
         }
-
     }
 }

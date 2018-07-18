@@ -1,4 +1,6 @@
 ﻿@model FacilitatorProfileViewModel
+@using Microsoft.AspNet.Identity;
+@using S.S.L.Web.Infrastructure.Extensions;
 @{
     ViewBag.Title = "Profile";
     ViewBag.Heading = Model.Facilitator.FullName;
@@ -37,19 +39,34 @@
                     </div>
                     foreach (var mentee in Model.Mentees)
                     {
+                        var user = mentee.User;
+
                         <div class="row shadow bg-light rounded p-2 mb-2 js-animate">
                             <div class="col-md-3">
-                                <p class="text-muted m-0 text-sm">@mentee.FullName</p>
+                                <p class="text-muted m-0 text-sm">@user.FullName</p>
                             </div>
                             <div class="col-md-4 ">
-                                <p class=" m-0 text-sm"><a href="mailto:@mentee.Email" class="text-muted">@mentee.Email</a></p>
+                                <p class=" m-0 text-sm"><a href="mailto:@user.Email" class="text-muted">@user.Email</a></p>
                             </div>
                             <div class="col-md-2">
-                                <p class="text-muted m-0 text-sm">@mentee.MobileNumber</p>
+                                <p class="text-muted m-0 text-sm">@user.MobileNumber</p>
                             </div>
                             <div class="col-md-1 ">
-                                <p class="text-muted m-0 text-sm">@mentee.Gender</p>
+                                <p class="text-muted m-0 text-sm">@user.Gender</p>
                             </div>
+
+                            <div class="col-md-1 ">
+                                @if (mentee.FinishedClasses)
+                                {
+                                    <span class="badge badge-info shadow">Done</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning shadow">Mark as done</span>
+
+                                }
+                            </div>
+
                         </div>
                     }
 
@@ -65,15 +82,18 @@
         </div>
     </div>
 </div>
-<div class="col-lg-2 col-md-2">
+@if (User.Identity.GetUserId() == Model.Facilitator.Id.ToString())
+{
+    <div class="col-lg-2 col-md-2">
+        <p class="ml-4 ">
+            <a href="#" class="rounded-circle bg-dark p-4 shadow" data-target="#userModal" data-toggle="modal">
+                <i class="fa fa-edit fa-lg text-gold"></i>
+            </a>
+        </p>
 
-    <p class="ml-4 ">
-        <a href="#" class="rounded-circle bg-dark p-4 shadow" data-target="#userModal" data-toggle="modal">
-            <i class="fa fa-edit fa-lg text-gold"></i>
-        </a>
-    </p>
+    </div>
+}
 
-</div>
 
 @section scripts{
     <script>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body style=" width: 100%;background-color: #eee;">
+    <div style=" margin: 0px auto; width: 70%; background-color: white;padding: 20px;color: rgb(90, 89, 89)">    
+        <header>
+            <p style="font-size: 17px">Hi {user},</p>
+        </header>
+        <p>My name is Blessing from Sacred Secular League. I am delighted to welcome you specially into the family. I will be getting you acquainted with the next steps.
+        </p>
+        
+        <h5 style="margin-bottom: 0;">Next steps:</h5>
+
+        <p>You are expected to give a gift of &#8358;1500 to the community (account details below). This gift is a show of commitment on your part as well as payment for your SSL manual (soft and hard copy).
+            When your gift is received, an SSL Facilitator will be assigned to you to guide you through the foundational classes.<p>Completing these classes would fuel your effectiveness in the vision of influencing the secular with your sacred lifestyle, so I urge you to give attention and diligence to them.</p>
+            
+        </p>
+       
+        <p><strong>Note:</strong> We understand that for some reason you might not be able to give the gift immediately. Do notify us by sending your name and email to 08155098000 so that we can start you up without the gift. But if you can, please do not hesitate. The commitment is worth it in view of the impact you are about to experience. 
+        </p>
+        <p>I hope to hear from you soon. 
+        </p>
+        <p style="margin-bottom:0;"><strong>Grace and Peace,</strong></p>
+        <h5 style="color: #B8860B;">Blessing</h5>
+
+        
+    </div>
+    <div style="background-color: #E6E6FA; text-align: center;margin: 0px auto; width: 70%;padding:10px 20px;">
+            <p style="color: #00008B;font-size: 12px"><span style="color:#B8860B;">SSL Account:</span> Sacred Secular League | Zenith Bank | 1015777693</p>
+        </div>
+
+    </body>
+    </html>

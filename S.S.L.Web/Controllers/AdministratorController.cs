@@ -38,6 +38,9 @@ namespace S.S.L.Web.Controllers
         [Route("dashboard")]
         public async Task<ActionResult> Index()
         {
+            if (!User.Identity.IsSuperAdmin())
+                return RedirectToAction("index", User.Identity.GetUserType());
+
             var mentees = await _user.GetUsersAsync(Mentee);
             var facilitators = await _user.GetUsersAsync(Facilitator);
             var todos = await _custom.GetUserTodos(int.Parse(User.Identity.GetUserId()));
@@ -58,10 +61,10 @@ namespace S.S.L.Web.Controllers
 
         }
 
-        [Route("profile")]
-        public async Task<ActionResult> UserProfile()
+        [HttpGet]
+        [Route("profile/{userId}")]
+        public async Task<ActionResult> UserProfile(int userId)
         {
-            var userId = int.Parse(User.Identity.GetUserId());
 
             var facilitator = await _user.GetUserById(userId);
             var mentees = await _facilitator.GetFacilitatorMentees(userId);
@@ -75,11 +78,10 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
-        [Route("profile")]
+        [Route("profile/{userId}")]
         [HttpPost]
-        public async Task<ActionResult> UserProfile(UserModel model)
+        public async Task<ActionResult> UserProfile(UserModel model, int userId)
         {
-            var userId = int.Parse(User.Identity.GetUserId());
 
             await _user.UpdateProfile(userId, model);
 
@@ -158,8 +160,6 @@ namespace S.S.L.Web.Controllers
         }
 
 
-
-
         [Route("mentees/assign")]
         public async Task<ActionResult> NotMentored()
         {
@@ -226,6 +226,13 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
+        [Route("deleted")]
+        public async Task<ActionResult> RemovedUsers()
+        {
+            var model = await _user.DeletedUsers();
+            return View(model);
+        }
+
         #region Ajax Method Calls
 
         [Route("remove")]
@@ -262,6 +269,7 @@ namespace S.S.L.Web.Controllers
             {
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
+
         }
 
         [Route("get")]
@@ -279,8 +287,6 @@ namespace S.S.L.Web.Controllers
         {
             try
             {
-
-                if (!User.Identity.IsSuperAdmin()) throw new Exception("Unautorized");
                 await _user.RemoveGymMembership(userId);
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }
@@ -289,6 +295,7 @@ namespace S.S.L.Web.Controllers
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
 
             }
+
         }
         [Route("gym/assign")]
         [HttpPost]
@@ -305,13 +312,30 @@ namespace S.S.L.Web.Controllers
 
             }
         }
+
+        [Route("restore")]
+        [HttpPost]
+        public async Task<JsonResult> Restore(int userId)
+        {
+            try
+            {
+                await _user.RestoreUser(userId);
+                return Json("success", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+
+
         #endregion
 
         private async Task PopulateLocationDropdown()
         {
             ViewBag.Countries = new SelectList(await _custom.GetCountries(), "Name", "Name");
             ViewBag.States = new SelectList(await _custom.GetStates(1), "Name", "Name");
-
         }
     }
 }

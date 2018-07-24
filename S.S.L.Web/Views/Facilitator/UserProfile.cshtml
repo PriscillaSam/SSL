@@ -27,7 +27,7 @@
                         <div class="col-md-3">
                             <p class="text-light m-0 text-sm">Name</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <p class="text-light m-0 text-sm">Email</p>
                         </div>
                         <div class="col-md-2">
@@ -35,6 +35,10 @@
                         </div>
                         <div class="col-md-1">
                             <p class="text-light m-0 text-sm">Gender</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="text-light m-0 text-sm">Class Progress</p>
+
                         </div>
                     </div>
                     foreach (var mentee in Model.Mentees)
@@ -45,7 +49,7 @@
                             <div class="col-md-3">
                                 <p class="text-muted m-0 text-sm">@user.FullName</p>
                             </div>
-                            <div class="col-md-4 ">
+                            <div class="col-md-3 ">
                                 <p class=" m-0 text-sm"><a href="mailto:@user.Email" class="text-muted">@user.Email</a></p>
                             </div>
                             <div class="col-md-2">
@@ -55,15 +59,14 @@
                                 <p class="text-muted m-0 text-sm">@user.Gender</p>
                             </div>
 
-                            <div class="col-md-1 ">
+                            <div class="col-md-2 ">
                                 @if (mentee.FinishedClasses)
                                 {
                                     <span class="badge badge-info shadow">Done</span>
                                 }
                                 else
                                 {
-                                    <span class="badge badge-warning shadow">Mark as done</span>
-
+                                    <a href="#" class="badge badge-warning js-update-mentee" data-id="@user.Id">Mark as done</a>
                                 }
                             </div>
 
@@ -96,6 +99,10 @@
 
 
 @section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <script src="~/Scripts/App/mentee.js"></script>
     <script>
         $(function () {
             $(".js-animate").hover(function () {

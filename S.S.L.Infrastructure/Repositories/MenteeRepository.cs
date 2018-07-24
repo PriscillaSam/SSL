@@ -53,7 +53,7 @@ namespace S.S.L.Infrastructure.Repositories
             var mentees = from mentee in _context.Mentees
                           let isMentored = mentored ? mentee.Facilitator != null : mentee.Facilitator == null
                           from user in _context.Users
-                          where user.UserType == UserType.Mentee && user.EmailConfirmed
+                          where user.UserType == UserType.Mentee && user.EmailConfirmed && !user.IsDeleted
                           where mentee.UserId == user.Id && isMentored
                           select new MenteeUserModel
                           {
@@ -66,7 +66,6 @@ namespace S.S.L.Infrastructure.Repositories
                                   GymGroup = user.GymGroup
                               },
                               FinishedClasses = mentee.FinishedClass
-
                           };
 
             return await mentees.ToListAsync();
@@ -119,9 +118,12 @@ namespace S.S.L.Infrastructure.Repositories
                                     .Where(m => m.UserId == userId)
                                     .Include(m => m.Facilitator.User)
                                     .FirstOrDefaultAsync();
-            if (query == null) return null;
+
+            if (query == null || query.Facilitator == null) return null;
+
 
             var user = query.Facilitator.User;
+
             var facilitator = new UserModel
             {
                 FirstName = user.FirstName,

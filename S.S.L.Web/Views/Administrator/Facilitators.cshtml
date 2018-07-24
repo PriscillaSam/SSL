@@ -37,7 +37,7 @@
                         <th scope="col">Role</th>
 
 
-                        @if (User.Identity.IsSuperAdmin())
+                        @if (User.IsAdmin())
                         {
                             <th scope="col">Gym Group</th>
                             <th scope="col">Manage</th>
@@ -53,19 +53,19 @@
                             <td>@facilitator.FirstName</td>
                             <td>@facilitator.LastName</td>
                             <td><a href="mailto:@facilitator.Email" class="text-muted text-capitalize">@facilitator.Email</a></td>
-                            <td>
+                            <td class="js-change">
                                 @if (facilitator.HasRole(nameof(UserType.Administrator)))
                                 {
-                                    <span class="badge badge-dark shadow p-1 mr-1" href="#">Administrator</span>
+                                    <span class="badge badge-dark shadow p-1 mr-1">Administrator</span>
 
                                 }
                                 else
                                 {
-                                    <span class="badge badge-light shadow p-1 mr-1" href="#">Facilitator</span>
+                                    <span class="badge badge-light shadow p-1 mr-1">Facilitator</span>
 
                                 }
                             </td>
-                            @if (User.Identity.IsSuperAdmin())
+                            @if (User.IsAdmin())
                             {
                                 <td>
                                     @if (facilitator.HasGymGroup())
@@ -79,18 +79,19 @@
                                     }
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("userprofile","facilitator", new { userId = facilitator.Id})" class="badge badge-secondary shadow p-1 mr-1" title="view profile" data-id="@facilitator.Id">
+                                    <a href="@Url.Action("userprofile","facilitator", new { userId = facilitator.Id})" class="badge badge-secondary shadow p-1 mr-1" title="view profile">
                                         View
                                     </a>
 
+
+                                    @if (!facilitator.HasRole(nameof(UserType.Administrator)))
+                                    {
+                                        <a href="#" class="badge badge-warning shadow p-1 js-change-role mr-3" data-id="@facilitator.Id">Make Admin</a>
+
+                                    }
                                     <a href="#" class="badge badge-danger shadow p-1 mr-1 js-delete-user" title="delete" data-id="@facilitator.Id">
                                         <i class="fa fa-lg fa-trash"></i>
                                     </a>
-                                    @if (!facilitator.HasRole(nameof(UserType.Administrator)))
-                                    {
-                                        <a href="#" class="badge badge-info shadow p-1 js-change-role mr-3" data-id="@facilitator.Id">Make Admin</a>
-
-                                    }
 
                                 </td>
                             }
@@ -259,7 +260,6 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/bootbox.min.js"></script>
-
     <script src="~/Scripts/app/user-table.js"></script>
 
 }

@@ -166,7 +166,10 @@ namespace S.S.L.Web.Controllers
                 if (user.UserType == UserType.Mentee)
                 {
                     var email = _email.GetTemplate(EmailType.MenteeWelcome, user);
+                    var email2 = _email.GetTemplate(EmailType.MenteeNextSteps, user);
+
                     await email.GenerateEmailAsync();
+                    await email2.GenerateEmailAsync();
                 }
 
                 msg = "Your account has been verified";

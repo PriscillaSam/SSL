@@ -25,7 +25,7 @@
                         url: "/facilitator/mentee/update"
                     })
                         .done(function (msg) {
-                            link.text("Done");
+                            link.parent('div').html('<span class="badge badge-info shadow">Done</span>');
 
                         }).fail(function (msg) { alert(msg); });
                 }

@@ -67,7 +67,7 @@ namespace S.S.L.Web.Controllers
         [Authorize(Roles = nameof(UserType.Administrator))]
         public async Task<JsonResult> GetUser(int userId)
         {
-            if (!User.Identity.IsSuperAdmin()) return Json("Unauthorized", JsonRequestBehavior.AllowGet);
+            if (!User.IsAdmin()) return Json("Unauthorized", JsonRequestBehavior.AllowGet);
 
             var user = await _user.GetUserById(userId);
 

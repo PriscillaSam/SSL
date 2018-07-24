@@ -92,14 +92,15 @@ namespace S.S.L.Domain.Managers
 
         public async Task<List<GymGroupView>> GetGymGroupsAsync() => await _repo.GetGymGroupingsAsync();
 
-        public async Task RemoveGymMembership(int userId)
-        {
-            await _repo.RemoveUserFromGym(userId);
-        }
+        public async Task RemoveGymMembership(int userId) => await _repo.RemoveUserFromGym(userId);
 
-        public async Task AddGymMember(int userId, GymGroup group)
+        public async Task AddGymMember(int userId, GymGroup group) => await _repo.AssignGymGroup(userId, group);
+
+        public async Task<List<UserModel>> DeletedUsers() => await _repo.GetRemovedUsers();
+
+        public async Task RestoreUser(int userId)
         {
-            await _repo.AssignGymGroup(userId, group);
+            await _repo.RestoreUser(userId);
         }
     }
 }

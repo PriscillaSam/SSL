@@ -39,7 +39,7 @@
                             <td>@user.LastName</td>
                             <td><a href="mailto:@user.Email" class="text-muted text-capitalize">@user.Email</a></td>
 
-                            @if (User.Identity.IsSuperAdmin())
+                            @if (User.IsAdmin())
                             {
 
                                 <td>
@@ -55,18 +55,21 @@
                                         }
                                         else
                                         {
-                                            <span class="badge badge-secondary p-1">Classes Pending</span>
+                                            <span class="badge badge-warning p-1">Classes Pending</span>
 
                                         }
                                     }
                                 </td>
                                 <td>
-                                    <a href="#" class="badge badge-danger p-1 mr-2 js-delete-user" title="delete" data-id="@user.Id">
+                                    <a href="@Url.Action("userprofile","mentee", new { userId = user.Id})" class="badge badge-secondary shadow p-1 mr-2" title="view profile">
+                                        View
+                                    </a>
+                                    <a href="#" class="badge badge-danger p-1 mr-2 js-delete-user shadow" title="delete" data-id="@user.Id">
                                         <i class="fa fa-lg fa-trash"></i>
                                     </a>
                                     @if (mentee.FinishedClasses)
                                     {
-                                        <a href="#" class="badge badge-warning p-1 js-change-role" data-id="@user.Id">Make Facilitator</a>
+                                        <a href="#" class="badge badge-warning p-1 js-change-role shadow" data-id="@user.Id">Make Facilitator</a>
 
                                     }
 
@@ -104,20 +107,20 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
-           <form>
+
+            <form>
                 @Html.HiddenFor(model => model.MenteeId, htmlAttributes: new { id = "id" })
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row" id="json-result">
                             <div class="col-md-12">
                                 <div class="alert alert-success shadow">
-                                    <span class="text-sm text-center text-muted form-text" >Gym Group Assigned</span>
+                                    <span class="text-sm text-center text-muted form-text">Gym Group Assigned</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row shadow mb-3">
-                           
+
                             <div class="col-md-12 p-3">
                                 <p class="text-default mb-0">Name</p>
                                 <h6 class="text-muted mb-3" id="username"></h6>
@@ -131,8 +134,8 @@
 
                         <div class="row shadow">
                             <div class="col-md-12 p-2">
-                                @Html.EnumDropDownListFor(model => model.GymGroup, "SELECT GYM GROUP", htmlAttributes: new { @class = "form-control text-sm p-2" , id = "group"})
-
+                                @Html.EnumDropDownListFor(model => model.GymGroup, "SELECT GYM GROUP", htmlAttributes: new { @class = "form-control text-sm p-2", id = "group" })
+                                
                             </div>
                         </div>
                     </div>

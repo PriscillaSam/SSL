@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-1">
                         <p class="text-light m-0 text-sm">Gender</p>
-                    </div> 
+                    </div>
                     <div class="col-md-2">
                         <p class="text-light m-0 text-sm">Class Progress</p>
                     </div>
@@ -63,7 +63,7 @@
                             }
                             else
                             {
-                                <a href="#" class="badge badge-warning js-update-mentee"  data-id="@user.Id">Mark as done</a>
+                                <a href="#" class="badge badge-warning js-update-mentee" data-id="@user.Id">Mark as done</a>
 
                             }
                         </div>
@@ -93,8 +93,10 @@
 
 </div>
 @section scripts{
-<script src="~/Scripts/bootbox.min.js"></script>
-<script src="~/Scripts/App/mentee.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <script src="~/Scripts/App/mentee.js"></script>
     <script>
         $(function () {
             $(".js-animate").hover(function () {

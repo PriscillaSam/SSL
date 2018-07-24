@@ -24,10 +24,13 @@
                     <div class="banner-text">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-8 d-md-block d-none">
+                                <div class="col-lg-8 col-md-6 d-md-block d-none">
                                     <ul class="nav banner-nav">
                                         <li class="nav-item bn-item side-bar-toggle">
                                             <a href="#"><i class="fa fa-th fa-fw fa-2x"></i></a>
+                                        </li>
+                                        <li class="nav-item bn-item">
+                                            <a href="@Url.Action("index","home")"><i class="fa fa-home fa-2x"></i></a>
                                         </li>
                                         <li class="nav-item bn-item">
                                             <a href="#"><i class="fa fa-calendar fa-2x"></i><span class="badge badge-light text-success" style="position: absolute;">4</span></a>
@@ -36,14 +39,14 @@
                                             <a href="@Url.Action("userprofile", User.Identity.GetUserType(), new {userId = User.Identity.GetUserId() })"><i class="fa fa-user fa-2x"></i></a>
                                         </li>
 
-                                        <li class="nav-item bn-item">
-                                            <a href="#"><i class="fa fa-bell fa-2x" style="position: relative;"></i><span class="badge badge-light text-success" style="position: absolute;">8</span></a>
-                                        </li>
+                                        @*<li class="nav-item bn-item">
+                                                <a href="#"><i class="fa fa-bell fa-2x" style="position: relative;"></i><span class="badge badge-light text-success" style="position: absolute;">8</span></a>
+                                            </li>*@
 
                                     </ul>
 
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 col-md-6">
                                     <h1 class="animated fadeInDown" style="margin-bottom: 0;">@ViewBag.Heading</h1>
                                     <p class="text-gold lead">@ViewBag.SubHeading</p>
                                 </div>
@@ -66,14 +69,17 @@
                     <li class="nav-item bn-item">
                         <a href="#"><i class="fa fa-calendar fa-2x"></i></a>
                     </li>
+
                     <li class="nav-item bn-item">
                         <a href="@Url.Action("userprofile", User.Identity.GetUserType(), new {userId = User.Identity.GetUserId() })"><i class="fa fa-user fa-2x"></i></a>
                     </li>
 
+                    @*<li class="nav-item bn-item">
+                            <a href="#"><i class="fa fa-bell fa-2x"></i><span class="badge badge-light text-success" style="position: absolute;">8</span></a>
+                        </li>*@
                     <li class="nav-item bn-item">
-                        <a href="#"><i class="fa fa-bell fa-2x"></i><span class="badge badge-light text-success" style="position: absolute;">8</span></a>
+                        <a href="@Url.Action("index","home")"><i class="fa fa-home fa-2x"></i></a>
                     </li>
-
                 </ul>
 
             </div>
@@ -100,12 +106,15 @@
                             <li class="nav-item mb-2">
                                 <a href="@Url.Action("create", "forum")" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
                             </li>
-                        
+
                             <li class="nav-item mb-2">
                                 <a href="@Url.Action("notmentored",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-tasks mr-4 text-primary"></i><span>Unassigned</span></a>
                             </li>
                             <li class="nav-item mb-2">
                                 <a href="@Url.Action("GymGroups", User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-bookmark mr-4 text-success"></i><span class="mr-2">Gym Groups</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
+                            </li>
+                            <li class="nav-item mb-2">
+                                <a href="@Url.Action("removedusers", User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-trash-o mr-4 text-danger"></i><span class="mr-2">Deleted Users</span></a>
                             </li>
                         }
                         @*<li class="nav-item mb-2">
@@ -113,7 +122,7 @@
                             </li>*@
 
                         <li class="nav-item">
-                            <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-danger"></i><span class="mr-2">Logout</span></a>
+                            <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-secondary"></i><span class="mr-2">Logout</span></a>
                         </li>
                     </ul>
                 </div>
@@ -147,17 +156,22 @@
                     <li class="nav-item mb-2">
                         <a href="@Url.Action("create", "forum")" class="nav-link text-dark  p-3"><i class="fa fa-bullhorn mr-4 text-warning"></i><span>Forums</span></a>
                     </li>
-               
+
                     <li class="nav-item mb-2">
                         <a href="@Url.Action("notmentored",User.GetAdminType())" class="nav-link text-dark p-3"><i class="fa fa-tasks mr-4 text-primary"></i><span>Unassigned</span></a>
                     </li>
                     <li class="nav-item mb-2">
                         <a href="@Url.Action("GymGroups", User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-bookmark mr-4 text-success"></i><span class="mr-2">Gym Groups</span><span class="badge badge-pill badge-dark text-success shadow">8</span></a>
                     </li>
+                    <li class="nav-item mb-2">
+                        <a href="@Url.Action("removedusers", User.GetAdminType())" class="nav-link text-dark  p-3"><i class="fa fa-trash mr-4 text-danger"></i><span class="mr-2">Deleted Users</span></a>
+                    </li>
+
                 }
 
+
                 <li class="nav-item">
-                    <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-danger"></i><span class="mr-2">Logout</span></a>
+                    <a href="@Url.Action("logout", "account")" class="nav-link text-dark  p-3"><i class="fa fa-sign-out mr-4 text-secondary"></i><span class="mr-2">Logout</span></a>
                 </li>
             </ul>
         </div>
@@ -167,11 +181,11 @@
     <footer class="mt-4 animated slideInUp" style="background-color: #eee">
         <div class="container p-3">
             <div class="row justify-content-center">
-                <div class="col-lg-1 mr-5">
+                <div class="col-lg-1 col-sm-2 mr-5">
                     <img src="~/Assets/img/logo.png" alt="" class="img-responsive" width="150" height="100">
 
                 </div>
-                <div class="col-lg-5 mt-4">
+                <div class="col-lg-5 col-sm-6 mt-4">
                     <p class="text-gold">
                         <em>...Doing Righteousness at the secular front</em><br>
                         <span class="text-muted text-center">copyright &copy;2018</span>

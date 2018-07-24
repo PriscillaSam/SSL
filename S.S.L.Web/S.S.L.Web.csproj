@@ -131,6 +131,8 @@
     <Content Include="Assets\img\03.jpg" />
     <Content Include="Assets\img\login.jpg" />
     <Content Include="Assets\img\logo.png" />
+    <Content Include="Assets\img\ssl2.jpg" />
+    <Content Include="Assets\img\ssl.jpg" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -143,6 +145,7 @@
     <Content Include="Emails\AccountConfirmation.txt" />
     <Content Include="Emails\FacilitatorWelcome.txt" />
     <Content Include="Emails\MenteeAssignment.txt" />
+    <Content Include="Emails\MenteeNextSteps.txt" />
     <Content Include="Emails\MenteeWelcome.txt" />
     <Content Include="Emails\PasswordReset.txt" />
     <Content Include="Global.asax" />
@@ -304,6 +307,7 @@
     <Content Include="Views\Administrator\UserProfile.cshtml" />
     <Content Include="Views\Forum\Create.cshtml" />
     <Content Include="Views\Administrator\GymGroups.cshtml" />
+    <Content Include="Views\Administrator\RemovedUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

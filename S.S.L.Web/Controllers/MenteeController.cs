@@ -46,12 +46,11 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
-        [Route("profile")]
-        [Authorize(Roles = nameof(UserType.Mentee))]
+        [Route("profile/{userId}")]
+        [Authorize(Roles = nameof(UserType.Mentee) + "," + nameof(UserType.Administrator))]
 
-        public async Task<ActionResult> UserProfile()
+        public async Task<ActionResult> UserProfile(int userId)
         {
-            var userId = int.Parse(User.Identity.GetUserId());
             var model = new MenteeProfileViewModel
             {
                 Mentee = await _mentee.GetMentee(userId),
@@ -63,7 +62,7 @@ namespace S.S.L.Web.Controllers
         }
 
         [Authorize(Roles = nameof(UserType.Mentee))]
-        [Route("profile")]
+        [Route("profile/{userId}")]
         [HttpPost]
         public async Task<ActionResult> UserProfile(UserModel model)
         {

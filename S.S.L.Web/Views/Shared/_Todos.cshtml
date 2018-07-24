@@ -1,6 +1,6 @@
 ﻿@model TodoViewModel
 
-<div class="col-lg-7 col-md-8 col-sm-8 p-3 shadow-sm bg-light rounded">
+<div class="col-lg-7 col-md-9 col-sm-9 mt-sm-4 ml-sm-4 mt-lg-0 ml-lg-0 p-3 shadow-sm bg-light rounded">
     <div class="todo-title">
         <h4 class="text-muted" style="display: inline;">
             <i class="fa mr-3 fa-th-list"></i>My todo
@@ -15,7 +15,7 @@
                 {
                     htmlAttributes = new
                     {
-                        @class = "form-control col-md-10 col-lg-11 col-sm-10 mr-sm-2",
+                        @class = "form-control col-md-10 col-lg-10 col-sm-10 mr-sm-2",
                         placeholder = "Add new todo",
                     }
                 })
@@ -46,9 +46,7 @@
                     </div>
                 }
                 else
-                {
-
-
+                { 
                     <div class="shadow-sm p-2 mb-3">
                         <p style="display: inline;">
                             <i class="fa fa-square-o  text-danger mr-3"></i>

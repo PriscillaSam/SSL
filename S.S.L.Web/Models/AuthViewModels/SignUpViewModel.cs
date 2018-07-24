@@ -38,7 +38,6 @@ namespace S.S.L.Web.Models.AuthViewModels
         [Required(ErrorMessage = "please confirm your password"), DataType(DataType.Password), Display(Name = "Confirm Password"), Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-
     }
 
 

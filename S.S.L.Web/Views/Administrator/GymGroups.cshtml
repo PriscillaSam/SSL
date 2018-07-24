@@ -104,8 +104,9 @@ else
                                 url: "/admin/gym/remove"
                             })
                                 .done(function (msg) {
-                                    link.parent
-                                    link.siblings(".badge").hide();
+                                    
+                                    link.parent("div").fadeOut(2000);
+
 
                                 }).fail(function (msg) { alert(msg); });
                         }

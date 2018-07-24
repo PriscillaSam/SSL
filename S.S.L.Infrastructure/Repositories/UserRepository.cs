@@ -1,5 +1,4 @@
-﻿
-using S.S.L.Domain.Enums;
+﻿using S.S.L.Domain.Enums;
 using S.S.L.Domain.Interfaces.Repositories;
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.S.S.L.Entities;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace S.S.L.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
@@ -71,7 +71,8 @@ namespace S.S.L.Infrastructure.Repositories
 
             if (user == null)
                 throw new Exception("Sorry, Email or Password is invalid");
-
+            if (user.IsDeleted)
+                throw new Exception("Sorry, you are unauthorized to be here");
             if (!user.EmailConfirmed)
                 throw new Exception("Please confirm your email before proceeding");
 
@@ -97,7 +98,7 @@ namespace S.S.L.Infrastructure.Repositories
         {
             var user = await _context
                               .Users
-                              .FirstOrDefaultAsync(u => u.Email == email.ToLower());
+                              .FirstOrDefaultAsync(u => u.Email == email.ToLower() && !u.IsDeleted);
 
             if (user == null) return null;
 
@@ -137,31 +138,11 @@ namespace S.S.L.Infrastructure.Repositories
             var existingUser = await GetUser(userId);
             if (existingUser == null) return;
 
-            if (model.FirstName != null)
-            {
-                existingUser.FirstName = model.FirstName;
-
-            }
-            if (model.LastName != null)
-            {
-                existingUser.LastName = model.LastName;
-
-            }
-            if (model.Country != null)
-            {
-                existingUser.Country = model.Country;
-
-            }
-            if (model.State != null)
-            {
-                existingUser.State = model.State;
-
-            }
-            if (model.MobileNumber != null)
-            {
-                existingUser.MobileNumber = model.MobileNumber;
-
-            }
+            existingUser.FirstName = model.FirstName;
+            existingUser.LastName = model.LastName;
+            existingUser.Country = model.Country;
+            existingUser.State = model.State;
+            existingUser.MobileNumber = model.MobileNumber;
 
             _context.Entry(existingUser).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -184,9 +165,8 @@ namespace S.S.L.Infrastructure.Repositories
 
         public async Task ResetPassword(string email, string passwordHash)
         {
-
             var user = await _context.Users
-                .Where(u => u.Email == email.ToLower())
+                .Where(u => u.Email == email.ToLower() && !u.IsDeleted)
                 .FirstOrDefaultAsync();
 
             if (user == null) throw new Exception("Sorry, we don't know you.");
@@ -234,13 +214,21 @@ namespace S.S.L.Infrastructure.Repositories
 
             if (user.UserType == UserType.Mentee)
             {
-                user.UserType = UserType.Facilitator;
+
+                //get previous mentee role
+                var menteeRole = await _context.UserRoles
+                    .Where(u => u.UserId == user.Id)
+                    .FirstOrDefaultAsync();
+
+                //remove mentee role
+                _context.UserRoles.Remove(menteeRole);
+
                 //add facilitator model
                 var facilitator = new Facilitator
                 {
                     UserId = user.Id
                 };
-
+                user.UserType = UserType.Facilitator;
                 _context.Facilitators.Add(facilitator);
                 AddUserRole(user, UserType.Facilitator);
             }
@@ -264,6 +252,7 @@ namespace S.S.L.Infrastructure.Repositories
         {
 
             var existingUser = await _context.Users.AnyAsync(u => u.Email == newFacilitator.Email);
+
             if (existingUser)
                 throw new Exception("Sorry, this email is already taken.");
 
@@ -299,7 +288,7 @@ namespace S.S.L.Infrastructure.Repositories
         public async Task<List<GymGroupView>> GetGymGroupingsAsync()
         {
             var groups = await _context.Users
-                .Where(u => u.GymGroup != 0)
+                .Where(u => u.GymGroup != 0 && !u.IsDeleted)
                 .GroupBy(u => u.GymGroup)
                 .Select(g => new GymGroupView
                 {
@@ -337,6 +326,22 @@ namespace S.S.L.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<UserModel>> GetGymMembers(int userId)
+        {
+            var user = await GetUser(userId);
+            var users = await _context.Users
+                .Where(u => u.GymGroup == user.GymGroup && !u.IsDeleted)
+                .Select(u => new UserModel
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    MobileNumber = u.MobileNumber
+
+                }).ToListAsync();
+
+            return users;
+        }
 
         public async Task RemoveUser(int userId)
         {
@@ -344,9 +349,62 @@ namespace S.S.L.Infrastructure.Repositories
             if (user == null) throw new Exception("This user does not exist");
 
             user.IsDeleted = true;
+
+            if (user.UserType == UserType.Facilitator)
+            {
+
+                var facilitator = await _context.Facilitators
+                    .Where(f => f.UserId == user.Id)
+                    .FirstOrDefaultAsync();
+
+                await _context.Mentees
+                   .Where(m => m.FacilitatorId == facilitator.Id)
+                   .ForEachAsync(m =>
+                   {
+                       m.FacilitatorId = null;
+
+                   });
+            }
+
+            if (user.UserType == UserType.Mentee)
+            {
+                var mentee = await _context.Mentees.FirstOrDefaultAsync(u => u.UserId == user.Id);
+                mentee.FacilitatorId = null;
+
+            }
+
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<UserModel>> GetRemovedUsers()
+        {
+
+            var removed = await _context.Users
+                           .Where(u => u.IsDeleted)
+                           .Select(user => new UserModel
+                           {
+                               Id = user.Id,
+                               FirstName = user.FirstName,
+                               LastName = user.LastName,
+                               Email = user.Email,
+                               UserType = user.UserType
+                           })
+                           .ToListAsync();
+
+            return removed;
+
+        }
+
+        public async Task RestoreUser(int userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            user.IsDeleted = false;
+
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
         /// <summary>
         /// Custom formatter for transforming User Object to UserModel Object
         /// </summary>
@@ -364,7 +422,6 @@ namespace S.S.L.Infrastructure.Repositories
 
             };
         }
-
 
         private void AddUserRole(User user, UserType type)
         {

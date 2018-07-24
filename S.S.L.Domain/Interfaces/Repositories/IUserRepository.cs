@@ -21,5 +21,8 @@ namespace S.S.L.Domain.Interfaces.Repositories
         Task AssignGymGroup(int userId, GymGroup group);
         Task<List<GymGroupView>> GetGymGroupingsAsync();
         Task RemoveUserFromGym(int userId);
+        Task<List<UserModel>> GetGymMembers(int userId);
+        Task<List<UserModel>> GetRemovedUsers();
+        Task RestoreUser(int userId);
     }
 }

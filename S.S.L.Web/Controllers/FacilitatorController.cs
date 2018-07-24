@@ -47,11 +47,10 @@ namespace S.S.L.Web.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         [Route("profile/{userId:int}")]
         public async Task<ActionResult> UserProfile(int userId)
         {
-
+            var id = User.Identity.GetUserId();
             var facilitator = await _user.GetUserById(userId);
             var mentees = await _facilitator.GetFacilitatorMentees(userId);
 
@@ -64,11 +63,11 @@ namespace S.S.L.Web.Controllers
             return View(model);
         }
 
-        [Route("profile")]
+        [Route("profile/{userId}")]
         [HttpPost]
-        public async Task<ActionResult> UserProfile(UserModel model)
+        public async Task<ActionResult> UserProfile(UserModel model, int userId)
         {
-            var userId = int.Parse(User.Identity.GetUserId());
+            //var userId = int.Parse(User.Identity.GetUserId());
 
             await _user.UpdateProfile(userId, model);
 

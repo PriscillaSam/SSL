@@ -1,4 +1,5 @@
 ﻿@model UserModel
+@using S.S.L.Web.Infrastructure.Extensions
 @using Microsoft.AspNet.Identity;
 
 <div class="col-lg-12 bg-light p-4">
@@ -68,7 +69,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("userprofile", User.Identity.GetUserType()))
                 {
 
                     <div class="modal-body">
@@ -94,7 +95,7 @@
                                 <div class="form-group col-md-12">
                                     <label class="text-default">Mobile Number</label>
                                     @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Mobile Number" } })
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-sm " })
+                                    @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger text-sm " })
                                 </div>
                             </div>
                             <div class="row">

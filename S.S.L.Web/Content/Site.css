@@ -40,9 +40,7 @@ textarea {
     width: 100%;
 }
 
-.fas {
-    color: #666
-}
+
 
 .backdrop {
     position: relative;
@@ -60,7 +58,6 @@ textarea {
 .form-back {
     background-color: rgba(255, 255, 255, 0.9);
     height: 100%;
-    
 }
 
 .form-link:hover {
@@ -72,9 +69,6 @@ textarea {
     border-bottom: 1px solid #eee;
 }
 
-.blue-grad {
-    background: linear-gradient(to bottom right,#eee,#B8860B )
-}
 
 .btn-outline-gold {
     background-color: transparent;
@@ -101,6 +95,7 @@ textarea {
     font-size: 20px;
     border-radius: 5px;
 }
+
 .form-footer {
     position: absolute;
     bottom: 0;
@@ -112,14 +107,12 @@ textarea {
     border-left: 3px solid #00008B;
 }
 
-.bd-red {
-    border-left: 3px solid red;
-    border-right: 3px solid red;
-}
+
 .border-gold {
     border-bottom-color: #ddd;
     border-top-color: #ddd;
 }
+
 #signup-back {
     background-image: url('../Assets/img/03.jpg');
     background-size: cover;
@@ -130,9 +123,114 @@ textarea {
     background: rgba(0,0,0,0.3);
 }
 
-.text-sm{
+.text-sm {
     font-size: 14px;
-    
 }
 
 
+/*Home page design*/
+.top-nav {
+    list-style-type: none;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+.list-item {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.nav-list-item {
+    color: #ccc;
+    background-color: #00008B;
+}
+
+.list-item a {
+    display: block;
+    color: #ccc;
+    font-size: 13px;
+    width: 100%;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.nav-list-item:hover {
+    background-color: #ccc;
+}
+
+.list-item a:hover {
+    color: #00008B;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.nav-list-item-sm {
+}
+
+.list-item-sm {
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    
+}
+
+    .list-item-sm a {
+        font-size: 14px;
+        color: #ccc;
+        margin-left: 0;
+    }
+
+        .list-item-sm a:hover {
+            color: #00008B;
+
+        }
+
+.nav-sm {
+    position: fixed;
+    height:100%;
+    width:350px;
+    top: 0;
+    z-index: 10000;
+}
+
+li a:hover {
+    text-decoration-line: none;
+}
+
+.nav-sm-list {
+    list-style-type: none;
+}
+
+@media (max-width:800px) {
+    .top-nav {
+        display: none;
+    }
+
+    #logo {
+        width: 120px;
+    }
+
+    #bn-text {
+        font-size: 14px;
+    }
+}
+
+@media (max-width:600px) {
+    #nav-toggler {
+    }
+
+    .navbar {
+        background-color: rgba(255,255,255,0.8);
+    }
+    #bn-text{
+        font-size:12px;
+    }
+    #logo{
+        width:100px;
+    }
+}

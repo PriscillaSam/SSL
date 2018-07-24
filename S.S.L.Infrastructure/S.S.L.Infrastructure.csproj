@@ -81,6 +81,7 @@
     <Compile Include="Services\EmailService\EmailTemplates\AccountConfirmation.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\GenericEmailTemplate.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\MenteeAssignment.cs" />
+    <Compile Include="Services\EmailService\EmailTemplates\MenteeNextSteps.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\MenteeWelcome.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\PasswordReset.cs" />
     <Compile Include="Services\EmailService\MenteeFacilitatorModel.cs" />

@@ -6,6 +6,7 @@
         PasswordReset = 2,
         MenteeWelcome = 3,
         FacilitatorWelcome = 4,
-        MenteeAssignment = 5
+        MenteeNextSteps = 5,
+        MenteeAssignment = 6
     }
 }

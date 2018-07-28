@@ -105,8 +105,7 @@ else
                             })
                                 .done(function (msg) {
                                     
-                                    link.parent("div").fadeOut(2000);
-
+                                    link.parents(".row").fadeOut(2000);
 
                                 }).fail(function (msg) { alert(msg); });
                         }

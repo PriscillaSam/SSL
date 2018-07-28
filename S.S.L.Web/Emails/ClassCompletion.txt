@@ -1,0 +1,33 @@
+﻿<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mentee</title>
+</head>
+<body style=" width: 100%;background-color: #eee;">
+   
+     <div style=" margin: 0px auto; width: 70%; background-color: white;padding: 20px;color: rgb(90, 89, 89)">
+        <div style="margin-bottom: 30px;">
+                <p style=" font-size: 17px"><strong>Dear {user},</strong></p>
+                <p>Congratulations on completing the Sacred Secular League(SSL) foundation classes.</p>
+                <p> We commend your efforts and commitment throughout the period of training and we trust that you have a better understanding of our vision of projecting righteousness in our secular spaces.
+                </p>
+
+                <p>We encourage you by the grace of God to practice all you have been taught and will be taught towards actualizing your Primary Assignment (PA). 
+                    You will be assigned shortly to an SSL GYM group to further facilitate edification and mentorship.
+                </p>
+                <p>Just as you have finished this phase successfully, we declare that you will successfully finish every good thing you have started and will start.
+                    </p>
+
+                <p>We know we are righteous and we act accordingly.
+                    </p>
+            </div>
+            
+            <p>Shalom,</p>
+            <p style="color: #B8860B;margin-top: 0;">The SSL Community</p>
+
+</div>
+
+</body>
+</html>

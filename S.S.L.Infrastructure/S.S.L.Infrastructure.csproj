@@ -79,6 +79,8 @@
     <Compile Include="S.S.L.Entities\UserRole.cs" />
     <Compile Include="Services\EmailService\EmailGenerator.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\AccountConfirmation.cs" />
+    <Compile Include="Services\EmailService\EmailTemplates\ClassCompletion.cs" />
+    <Compile Include="Services\EmailService\EmailTemplates\FacilitatorWelcome.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\GenericEmailTemplate.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\MenteeAssignment.cs" />
     <Compile Include="Services\EmailService\EmailTemplates\MenteeNextSteps.cs" />

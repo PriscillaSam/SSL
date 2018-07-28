@@ -12,6 +12,11 @@
 <div class="alert alert-danger shadow alert-dismissible">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
 
-    <small class="text-muted form-text text-center">@ViewBag.Error</small>
+    <small class="text-muted form-text text-center">@ViewBag.Error
+    @if (ViewBag.Error == "Please confirm your email before proceeding.")
+    {
+        <span><a href="@Url.Action("resendconfirmationemail")" class="alert-link text-center">Resend email </a>to confirm your account.</span>
+    }
+    </small>
 </div>
 }

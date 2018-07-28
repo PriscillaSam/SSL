@@ -23,7 +23,7 @@ namespace S.S.L.Web.Models.AuthViewModels
         [Required(ErrorMessage = "please enter a valid phone number"), Display(Name = "Mobile Number"), RegularExpression(pattern: @"^[0-9]+$", ErrorMessage = "please enter a valid phone number"), MinLength(length: 11, ErrorMessage = "mobile number should be at least 11 digits")]
         public string MobileNumber { get; set; }
 
-        [Required(ErrorMessage = "select your state")]
+        //[Required(ErrorMessage = "select your state")]
         public string State { get; set; }
 
         [Required(ErrorMessage = "select your country")]

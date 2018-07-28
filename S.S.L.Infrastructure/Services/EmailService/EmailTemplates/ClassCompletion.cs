@@ -1,39 +1,33 @@
-﻿using S.S.L.Domain.Common;
-using S.S.L.Domain.Models;
+﻿using S.S.L.Domain.Models;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace S.S.L.Infrastructure.Services.EmailService.EmailTemplates
 {
-    public class PasswordReset : GenericEmailTemplate
+    public class ClassCompletion : GenericEmailTemplate
     {
-        private UserModel _user;
+        private readonly UserModel _user;
 
-        public PasswordReset(UserModel user)
+        public ClassCompletion(UserModel user)
         {
             _user = user;
-
         }
 
         public override async Task GenerateEmailAsync()
         {
             var emailService = SmtpService.Instance;
-            //Url.Action("About", "Home", null, Request.Url.Scheme)
 
-            var body = this[nameof(PasswordReset)]
-                .Replace("{user}", _user.FullName)
-                .Replace("{url}", ConfigSettings.Instance.Domain.PasswordResetUrl);
+            var body = this[nameof(ClassCompletion)].Replace("{user}", _user.FirstName);
 
             var mailMessage = new MailMessage
             {
-                Subject = "Password Reset For SSL",
+                Subject = "Congratulations on completing your classes",
                 Body = body,
                 IsBodyHtml = true
             };
 
             mailMessage.To.Add(new MailAddress(_user.Email));
             await emailService.SendAsync(mailMessage);
-
         }
     }
 }

@@ -20,17 +20,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 col-lg-7 col-sm-10">
-                        <h1>Hello there</h1>
-                        <h4>Just before you sign up</h4>
-                        <p>
-                            Thank you for your interest in our community Sacred Secular League. We do hope that you have read through
-                            the mission, vision and brief introduction . Just in case you haven't done that already, please do spare some
-                            time to read through <a href="">here</a>.
-                            If you have read through that means you are aware that you need to call Support on +234-8122845639 for a proper
-                            onboarding.
-                            We are excited to have you join us and look forward to making impact on your life.
-
-                        </p>
+                       
                     </div>
                     <div class="col-md-6 col-sm-10 col-lg-5 form-back">
                         <div class="animated slideInRight">
@@ -135,12 +125,11 @@
                                         <div class="form-group col-md-6">
                                             <label class="text-default">Country</label>
 
-                                            @Html.DropDownListFor(model => model.Country, (SelectList)ViewBag.Countries, "-Select your country-", new { @class = "custom-select" })
+                                            @Html.DropDownListFor(model => model.Country, (SelectList)ViewBag.Countries, "-Select your country-", new { @class = "custom-select", id="country" })
                                             @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger text-sm" })
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-6" id="state">
                                             <label class="text-default">State</label>
-
 
                                             @Html.DropDownListFor(model => model.State, (SelectList)ViewBag.States, "-Select your state-", new { @class = "custom-select" })
                                             @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger text-sm" })
@@ -192,7 +181,23 @@
     <script src="~/Scripts/jquery-3.0.0.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#country").on("change", function () {
 
+                var country = $("#country").val();
+                if (country !== "Nigeria") {
+                    $("#state").hide();
+                }
+
+                else {
+                    $("#state").show();
+
+                }
+            });
+
+        });
+    </script>
 
 </body>
 </html>

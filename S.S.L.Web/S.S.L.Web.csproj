@@ -127,8 +127,10 @@
     <Content Include="Assets\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\font-awesome\HELP-US-OUT.txt" />
     <Content Include="Assets\img\01.jpg" />
-    <Content Include="Assets\img\02.jpg" />
     <Content Include="Assets\img\03.jpg" />
+    <Content Include="Assets\img\4.jpg" />
+    <Content Include="Assets\img\74.jpg" />
+    <Content Include="Assets\img\ssl-logo.jpg" />
     <Content Include="Assets\img\login.jpg" />
     <Content Include="Assets\img\logo.png" />
     <Content Include="Assets\img\ssl2.jpg" />
@@ -143,6 +145,7 @@
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Emails\AccountConfirmation.txt" />
+    <Content Include="Emails\ClassCompletion.txt" />
     <Content Include="Emails\FacilitatorWelcome.txt" />
     <Content Include="Emails\MenteeAssignment.txt" />
     <Content Include="Emails\MenteeNextSteps.txt" />
@@ -150,6 +153,7 @@
     <Content Include="Emails\PasswordReset.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\App\mentee.js" />
+    <Content Include="Scripts\App\slides.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -213,6 +217,8 @@
     <Content Include="Assets\font-awesome\scss\_screen-reader.scss" />
     <Content Include="Assets\font-awesome\scss\_stacked.scss" />
     <Content Include="Assets\font-awesome\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\SSLApp - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\SSLWeb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -252,7 +258,6 @@
     <Compile Include="Infrastructure\DatabaseMigrator.cs" />
     <Compile Include="Infrastructure\Extensions\EnumExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\IdentityExtensions.cs" />
-    <Compile Include="Infrastructure\Extensions\UserExtensions.cs" />
     <Compile Include="Infrastructure\NinjectModules\MainModule.cs" />
     <Compile Include="Models\AdminViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\AdminViewModels\FacilitatorSignUpViewModel.cs" />
@@ -308,6 +313,8 @@
     <Content Include="Views\Forum\Create.cshtml" />
     <Content Include="Views\Administrator\GymGroups.cshtml" />
     <Content Include="Views\Administrator\RemovedUsers.cshtml" />
+    <Content Include="Views\Custom\GymMembers.cshtml" />
+    <Content Include="Views\Account\ResendConfirmationEmail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -317,7 +324,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Custom\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

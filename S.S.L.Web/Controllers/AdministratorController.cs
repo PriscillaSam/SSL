@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
+using S.S.L.Domain.ModelExtensions;
 using S.S.L.Domain.Models;
 using S.S.L.Infrastructure.Services.EmailService;
 using S.S.L.Web.Infrastructure.Extensions;
@@ -263,6 +264,13 @@ namespace S.S.L.Web.Controllers
                     throw new Exception("Unauthorized");
 
                 await _user.UpdateUserRole(userId);
+                var user = await _user.GetUserById(userId);
+
+                if (user.IsFacilitator())
+                {
+                    var email = _emailService.GetTemplate(EmailType.FacilitatorWelcome, user);
+                    await email.GenerateEmailAsync();
+                }
                 return Json("success", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

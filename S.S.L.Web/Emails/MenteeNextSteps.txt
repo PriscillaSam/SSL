@@ -15,7 +15,7 @@
         <p>My name is Blessing from Sacred Secular League. I am delighted to welcome you specially into the family. I will be getting you acquainted with the next steps.
         </p>
         
-        <h5 style="margin-bottom: 0;">Next steps:</h5>
+        <h3 style="margin-bottom: 0;">Next steps:</h3>
 
         <p>You are expected to give a gift of &#8358;1500 to the community (account details below). This gift is a show of commitment on your part as well as payment for your SSL manual (soft and hard copy).
             When your gift is received, an SSL Facilitator will be assigned to you to guide you through the foundational classes.<p>Completing these classes would fuel your effectiveness in the vision of influencing the secular with your sacred lifestyle, so I urge you to give attention and diligence to them.</p>
@@ -27,7 +27,7 @@
         <p>I hope to hear from you soon. 
         </p>
         <p style="margin-bottom:0;"><strong>Grace and Peace,</strong></p>
-        <h5 style="color: #B8860B;">Blessing</h5>
+        <h3 style="color: #B8860B;">Blessing</h3>
 
         
     </div>

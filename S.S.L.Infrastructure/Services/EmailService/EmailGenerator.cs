@@ -14,12 +14,16 @@ namespace S.S.L.Infrastructure.Services.EmailService
                     return new AccountConfirmation(param as UserModel);
                 case EmailType.MenteeWelcome:
                     return new MenteeWelcome(param as UserModel);
+                case EmailType.FacilitatorWelcome:
+                    return new FacilitatorWelcome(param as UserModel);
                 case EmailType.PasswordReset:
                     return new PasswordReset(param as UserModel);
                 case EmailType.MenteeAssignment:
                     return new MenteeAssignment(param as MenteeFacilitatorModel);
                 case EmailType.MenteeNextSteps:
                     return new MenteeNextSteps(param as UserModel);
+                case EmailType.ClassCompletion:
+                    return new ClassCompletion(param as UserModel);
                 default:
                     return null;
 

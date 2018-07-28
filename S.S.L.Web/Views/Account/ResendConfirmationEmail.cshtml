@@ -1,0 +1,101 @@
+﻿@model ForgotPasswordViewModel
+@{
+    ViewBag.Title = "Forgot";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+
+
+<div class="alert alert-success shadow animated fadeIn" id="success" style="margin-top:100px;display:none">
+    <small class="text-center text-muted" id="feedback"></small>
+
+</div>
+
+
+<div>
+
+    <div class="alert alert-light shadow" style="margin-top: 100px" id="hide">
+        <small class="text-muted form-text text-center">We are going to send you an email to confirm your account.</small>
+
+    </div>
+    <div>
+        <h4 class="text-center" style="color:#ccc">Please enter your email</h4>
+    </div>
+    <form>
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1" style="background-color: #00008B">
+                        <i class="fas fa-envelope" style="color: white"></i>
+                    </span>
+                </div>
+                @Html.EditorFor(model => model.Email, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+                        placeholder = "Email",
+                        id = "email"
+                    }
+                })
+
+            </div>
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger text-sm" })
+
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-block btn-outline-gold text-gold"><i class="fa fa-lg fa-spinner fa-spin mr-3" id="spinner" style="display:none"></i><span>Send</span></button>
+        </div>
+
+
+    </form>
+
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("form").submit(function (e) {
+                if ($('form').valid()) {
+
+                    e.preventDefault();
+                    var email = $("#email").val();
+
+                    $.ajax({
+                        type: "post",
+                        url: "/accounts/resend",
+                        data: { email: email },
+                        beforeSend: function () {
+                            // $("span").hide(2000);
+                            $("button span").text("Sending...");
+                            $("#spinner").show();
+
+                        },
+                        success: function (msg) {
+                            $('form')[0].reset();
+
+                            $("button").text("Send");
+
+                            $("#hide").hide();
+                            $("#success").show();
+                            $("#feedback").text(msg);
+
+                        },
+                        fail: function (msg) {
+                            alert(msg);
+                        }
+
+
+                    });
+                }
+            });
+            
+        });
+    </script>
+}
+
+
+
+

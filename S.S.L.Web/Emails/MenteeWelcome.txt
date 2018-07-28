@@ -21,7 +21,7 @@
         </p>
         <p>Once again we welcome you.</p>
         <p style="margin-bottom: 10px;"><strong>Best regards</strong></p>
-        <h5 style="color: #B8860B;">The SSL Community.</h5>        
+        <h3 style="color: #B8860B;">The SSL Community.</h3>        
     </div>
 </body>
 </html>

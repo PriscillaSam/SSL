@@ -1,6 +1,7 @@
 namespace S.S.L.Infrastructure.Migrations
 {
     using global::S.S.L.Domain.Enums;
+    using global::S.S.L.Domain.Interfaces.Utilities;
     using global::S.S.L.Infrastructure.S.S.L.Entities;
     using System;
     using System.Collections.Generic;
@@ -8,10 +9,13 @@ namespace S.S.L.Infrastructure.Migrations
 
     public sealed class Configuration : DbMigrationsConfiguration<Entities>
     {
-        public Configuration()
+        public Configuration(IEncryption encryption)
         {
             AutomaticMigrationsEnabled = false;
+            _encrypt = encryption;
         }
+
+        public IEncryption _encrypt { get; }
 
         /// <summary>
         /// Method for seeding data into database. 
@@ -33,7 +37,7 @@ namespace S.S.L.Infrastructure.Migrations
                     LastName = "Okwara",
                     Email = "hillprieston@gmail.com",
                     EmailConfirmed = true,
-                    PasswordHash = "5f4dcc3b5aa765d61d8327deb882cf99",
+                    PasswordHash = _encrypt.Encrypt("password"),
                     UserType = UserType.Administrator
                 });
 
@@ -58,13 +62,16 @@ namespace S.S.L.Infrastructure.Migrations
                }
              );
 
-            context.Countries.AddOrUpdate(r => r.Name,
-                new Country { Name = "Nigeria" },
-                new Country { Name = "Whales" },
-                new Country { Name = "Ghana" }
-                );
+            var countries = new List<string>()
+            { "Nigeria", "Whales", "Ghana", "Nairobi", "Mozambique" };
 
-            var states = new List<string>() { "Abia", "Adamawa", "Akwa-Ibom" };
+            countries.ForEach(c =>
+                context.Countries.AddOrUpdate(country => country.Name,
+                     new Country { Name = c }));
+
+
+            var states = new List<string>()
+            { "Abia", "Adamawa", "Akwa-Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Delta", "Ebonyi", "Enugu", "Cross River", "Edo", "Ekiti", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara", "F.C.T" };
 
             states.ForEach(x =>
                 context.States.AddOrUpdate(s => s.Name,

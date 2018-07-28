@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
+using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
 using S.S.L.Domain.Models;
+using S.S.L.Infrastructure.Services.EmailService;
 using S.S.L.Web.Models.CustomViewModels;
 using S.S.L.Web.Models.FacilitatorViewModels;
 using System;
@@ -18,12 +20,14 @@ namespace S.S.L.Web.Controllers
         private readonly UserManager _user;
         private readonly CustomManager _custom;
         private readonly FacilitatorManager _facilitator;
+        private readonly EmailGenerator _email;
 
         public FacilitatorController(CustomManager custom, FacilitatorManager facilitator, UserManager user)
         {
             _user = user;
             _custom = custom;
             _facilitator = facilitator;
+            _email = new EmailGenerator();
         }
 
         [Route("dashboard")]
@@ -59,6 +63,7 @@ namespace S.S.L.Web.Controllers
                 Facilitator = facilitator,
                 Mentees = mentees
             };
+
             await PopulateLocationDropdown();
             return View(model);
         }
@@ -91,12 +96,16 @@ namespace S.S.L.Web.Controllers
             try
             {
                 await _facilitator.UpdateMenteeProgress(menteeId, facilitatorId);
+                var user = await _user.GetUserById(menteeId);
+                var email = _email.GetTemplate(EmailType.ClassCompletion, user);
+
+                await email.GenerateEmailAsync();
+
                 return Json("Updated", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
-
             }
         }
 

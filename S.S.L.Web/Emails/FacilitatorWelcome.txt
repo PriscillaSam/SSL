@@ -1,1 +1,29 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Mentee</title>
+</head>
+<body style=" width: 100%;background-color: #eee;">
+   <div style=" margin: 0px auto; width: 70%; background-color: white;padding: 20px;color: rgb(90, 89, 89)">
+		<div style="margin-bottom: 30px;">
+			<p style=" font-size: 17px"><strong>Dear {user},</strong></p>
+			<p>Congratulations on your new role as a Sacred Secular League (SSL) facilitator. <br>SSL believes in the Grace of God at work in your life. This is the reason we have called you to function in this capacity of mentoring others.
+				</p>
+			<p>This role is an honour as well as a huge responsibility. It has become a direct responsibility for you to  teach everyone who will be assigned to you until they are baptized fully in the knowledge and power of God's agenda in the league.
+				</p>
+				<p>Necessity is now laid on you to indeed be a role model in the secular ministry. <br>
+					Other necessary information will be communicated to you subsequently.
+					</p>
+					<p>We know we are righteous and we act accordingly.
+						</p>                        
+		</div>
+		<p>Shalom,</p>
+		<p style="color: #B8860B;margin-top: 0;">The SSL Community</p>
+<p><strong>P.S.</strong> For new users, your password is <span style="color:rgb(134, 134, 134)"><strong>"password"</strong></span>. Please ensure to change your password <a href="{url}">here</a>.</p>
+		
+	 
+	</div>
+	</html>

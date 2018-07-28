@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+//using  static S.S.L.Domain.Enums.UserType;
 
 namespace S.S.L.Infrastructure.Repositories
 {
@@ -74,7 +75,7 @@ namespace S.S.L.Infrastructure.Repositories
             if (user.IsDeleted)
                 throw new Exception("Sorry, you are unauthorized to be here");
             if (!user.EmailConfirmed)
-                throw new Exception("Please confirm your email before proceeding");
+                throw new Exception("Please confirm your email before proceeding.");
 
             var _user = UserFormatter(user);
             _user.Roles = GetUserRoles(user.Id);
@@ -129,7 +130,8 @@ namespace S.S.L.Infrastructure.Repositories
                 State = user.State,
                 Gender = user.Gender,
                 MobileNumber = user.MobileNumber,
-                UserType = user.UserType
+                UserType = user.UserType,
+                GymGroup = user.GymGroup
 
             };
         }
@@ -336,7 +338,9 @@ namespace S.S.L.Infrastructure.Repositories
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
-                    MobileNumber = u.MobileNumber
+                    MobileNumber = u.MobileNumber,
+                    Gender = u.Gender,
+
 
                 }).ToListAsync();
 

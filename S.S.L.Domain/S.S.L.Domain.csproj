@@ -59,6 +59,7 @@
     <Compile Include="Managers\ForumManager.cs" />
     <Compile Include="Managers\MenteeManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="ModelExtensions\UserExtensions.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\CountryModel.cs" />

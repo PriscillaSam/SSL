@@ -75,7 +75,7 @@ namespace S.S.L.Domain.Managers
         {
             var user = await _repo.VerifyUserAsync(email);
             if (user == null)
-                throw new Exception("Sorry. We don't know you.");
+                throw new Exception("Sorry. We don't know you. Have you tried signing up?");
 
             return user;
         }
@@ -101,6 +101,12 @@ namespace S.S.L.Domain.Managers
         public async Task RestoreUser(int userId)
         {
             await _repo.RestoreUser(userId);
+        }
+
+        public async Task<List<UserModel>> GetGymMembers(int userId)
+        {
+            return await _repo.GetGymMembers(userId);
+
         }
     }
 }

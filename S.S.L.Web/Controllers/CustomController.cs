@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using S.S.L.Domain.Enums;
 using S.S.L.Domain.Managers;
+using S.S.L.Domain.ModelExtensions;
 using S.S.L.Domain.Models;
 using S.S.L.Web.Infrastructure.Extensions;
 using System;
@@ -72,6 +73,28 @@ namespace S.S.L.Web.Controllers
             var user = await _user.GetUserById(userId);
 
             return Json(user, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Route("gym-group/members")]
+        public async Task<ActionResult> GymMembers()
+        {
+            var userId = int.Parse(User.Identity.GetUserId());
+
+            var user = await _user.GetUserById(userId);
+
+            if (!user.HasGymGroup())
+            {
+                ViewBag.Message = "You have not been assigned a gym group yet";
+                ViewBag.Header = "Pending";
+            }
+
+            else
+            {
+                ViewBag.Header = user.GymGroup.GetDescription();
+            }
+            var model = await _user.GetGymMembers(userId);
+            return View(model);
         }
     }
 }

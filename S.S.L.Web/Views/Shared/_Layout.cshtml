@@ -78,14 +78,14 @@
                 <img src="~/Assets/img/01.jpg" alt="Alternate Text" class="img-fluid shadow " />
             </div>
         </div>
-        <div class="row animated info delay" id="vision">
+        <div class="row animated info delay" id="vision" style="background-color:black">
             <div class="col-md-6 col-lg-5 offset-lg-1">
                 <img src="~/Assets/img/4.jpg" alt="Alternate Text" class="img-fluid shadow" />
             </div>
-            <div class="col-md-6 col-lg-4 ">
+            <div class="col-md-6 col-lg-4 " style="margin-top:40px">
                 <section>
                     <p class="lead text-muted mb-2 animated slideInDown">What drives us?</p>
-                    <h1 class="text-default display-4 animated fadeIn text-shadow">Our Vision.</h1>
+                    <h1 class="text-default display-4 animated fadeIn">Our Vision.</h1>
                     <p class="p-info">
                         To provoke the manifestation of the sons of God in the secular via the doing of
                         righteousness so that the will of God will not just be known but will be done on
@@ -148,7 +148,7 @@
         </div>
     </footer>
     <aside class="d-lg-none">
-        <div class="overlay hidden">
+        <div class="hidden" id="side">
             <div class="nav-sm bg-light p-2 animated hidden side-nav" id="sm-nav">
                 <button type="button" class="close text-gold p-2 mt-3 side-bar-toggle">
                     <span aria-hidden="true">&times;</span>
@@ -201,7 +201,7 @@
                 }
                 else {
 
-                    $(".overlay").removeClass("hidden");
+                    $("#side").removeClass("hidden");
                     animate('.side-nav', 'slideInLeft');
                     $('.side-nav').addClass('show');
                     return false;

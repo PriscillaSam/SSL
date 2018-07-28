@@ -7,7 +7,7 @@
 }
 
 
-<div class="col-lg-9 mt-3 animated fadeIn">
+<div class="col-lg-8 mt-3 animated fadeIn">
 
     @if (ViewBag.Message != null)
     {
@@ -19,7 +19,7 @@
 
     else
     {
-        <div class="row animated fadeIn">
+        <div class="row animated slideInUp">
             <div class="col-lg-12 bg-white p-4 shadow">
                 <div class="row shadow bg-white rounded p-3 mb-3">
                     <h5 class="text-info mb-0">Gym Members</h5>
@@ -27,45 +27,42 @@
                 </div>
                 @if (Model.Any())
                 {
-                    <div class="row shadow bg-dark rounded p-2 mb-3">
-                        <div class="col-md-3 col-sm-3">
-                            <p class="text-light m-0 text-sm">Name</p>
-                        </div>
-                        <div class="col-md-3 col-sm-3">
-                            <p class="text-light m-0 text-sm">Email</p>
-                        </div>
-                        <div class="col-md-2 col-sm-2">
-                            <p class="text-light m-0 text-sm">Mobile Number</p>
-                        </div>
-                        <div class="col-md-1 col-sm-1">
-                            <p class="text-light m-0 text-sm">Gender</p>
-                        </div>
-                       
+                    <div class="row user-table">
+                        <div class="user-row">
+                            <ul class="shadow-sm bg-dark rounded p-2 mb-3 ">
+                                <li class="text-light m-0 text-sm">Name</li>
+                                <li class="text-light m-0 text-sm">Email</li>
+                                <li class="text-light m-0 text-sm">Mobile Number</li>
+                                <li class="text-light m-0 text-sm">Gender</li>
+                            </ul>
+                            @foreach (var user in Model)
+                            {
 
+                                <ul class="shadow-sm bg-light rounded p-2 mb-2">
+
+                                    <li class="text-muted text-sm">@user.FullName</li>
+                                    <li class=" m-0 text-sm"><a href="mailto:@user.Email" class="text-muted">@user.Email</a></li>
+                                    <li class="text-muted m-0 text-sm">@user.MobileNumber</li>
+
+                                    <li class="text-muted m-0 text-sm">@user.Gender</li>
+
+
+                                </ul>
+
+                            }
+
+                        </div>
                     </div>
-                    foreach (var user in Model)
-                    {
 
-                        <div class="row shadow bg-light rounded p-2 mb-2 js-animate">
-                            <div class="col-md-3 col-sm-3">
-                                <p class="text-muted m-0 text-sm">@user.FullName</p>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
-                                <p class=" m-0 text-sm"><a href="mailto:@user.Email" class="text-muted">@user.Email</a></p>
-                            </div>
-                            <div class="col-md-2 col-sm-2">
-                                <p class="text-muted m-0 text-sm">@user.MobileNumber</p>
-                            </div>
-                            <div class="col-md-1 col-sm-1">
-                                <p class="text-muted m-0 text-sm">@user.Gender</p>
-                            </div>                          
-
-                        </div>
-                    }
 
                 }
 
-
+                else
+                {
+                    <div class="alert alert-light shadow">
+                        <p class="text-center text-success mb-0">You don't have any mentees.</p>
+                    </div>
+                }
             </div>
         </div>
     }

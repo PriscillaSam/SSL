@@ -6,6 +6,7 @@
     ViewBag.Heading = "Gym Groups";
     ViewBag.SubHeading = "Organize Gym groups";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var count = 1;
 }
 
 
@@ -18,7 +19,7 @@
 
             @foreach (var g in Model)
             {
-                <div class="card rounded mb-2" style="border-bottom:1px solid #eee">
+                <div class="card rounded mb-2" style="border-bottom:1px solid #eee;">
                     <div class="card-header bg-dark shadow" id="@g.GroupName.GetDescription()">
                         <h5 class="mb-0">
                             <a href="#" class="collapsed text-sm" data-toggle="collapse" data-target="#@g.GroupName" aria-expanded="false" aria-controls="@g.GroupName">
@@ -27,27 +28,30 @@
                         </h5>
                     </div>
                     <div id="@g.GroupName" class="collapse" aria-labelledby="@g.GroupName.GetDescription()" data-parent="#accordionExample">
-                        <div class="card-body">
+                        <div class="card-body p-1" style="height:200px;overflow:auto">
                             @if (g.GroupMembers.Any())
                             {
-                                <h6 class="text-gold">Members</h6>
-                                foreach (var m in g.GroupMembers)
-                                {
-                                    <div class="row shadow-sm bg-light rounded p-2 mb-2">
-                                        <div class="col-sm-3">
-                                            <p class="text-muted m-0 text-sm">@m.FullName</p>
-                                        </div>
-                                        
-                                        <div class="col-sm-3 ">
-                                            <p class="text-muted m-0 text-sm">@m.Gender</p>
-                                        </div>
+                                <h6 class="text-gold m-3">Members</h6>
+                                    <div class="user-row">
 
-                                        <div class="col-sm-4">
-                                            <span class="badge badge-secondary shadow mr-4">@m.UserType.ToString()</span><a href="#" class="js-gym-remove" title="remove" data-id="@m.Id"><span class="badge badge-danger"><i class="fa fa-remove"></i></span></a>
-                                        </div>
+                                        @foreach (var m in g.GroupMembers)
+                                        {
+                                            <ul class="shadow-sm bg-light rounded p-2 mb-2 ml-lg-3 js-user-row">
+                                                <li>#@count</li>
+
+                                                <li class="text-muted text-sm">@m.FullName</li>
+                                                <li class="text-muted m-0 text-sm">@m.Gender</li>
+                                                <li>
+                                                    <span class="badge badge-secondary shadow">@m.UserType.ToString()</span>
+                                                    <a href="#" class="js-gym-remove" title="remove" data-id="@m.Id"><span class="badge badge-danger"><i class="fa fa-remove"></i></span></a>
+                                                </li>
+                                            </ul>
+                                            count++;
+
+                                        }
+
                                     </div>
-                                   
-                                }
+
                             }
                             else
                             {
@@ -104,8 +108,8 @@ else
                                 url: "/admin/gym/remove"
                             })
                                 .done(function (msg) {
-                                    
-                                    link.parents(".row").fadeOut(2000);
+
+                                    link.parents(".js-user-row").fadeOut("slow");
 
                                 }).fail(function (msg) { alert(msg); });
                         }

@@ -12,64 +12,52 @@
             Html.RenderPartial("_Profile", Model.Facilitator);
         }
     </div>
-    <div class="row animated slideInUp">
+    <div class="row animated slideInUp" id="mentees">
         <div class="col-lg-12 bg-white p-4 shadow">
             <div class="row shadow bg-white rounded p-3 mb-3">
                 <h5 class="text-info mb-0">Mentees Corner</h5>
 
             </div>
+
             @if (Model.Mentees.Any())
             {
-                <div class="row shadow bg-dark rounded p-2 mb-3 ">
-                    <div class="col-md-3">
-                        <p class="text-light m-0 text-sm">Name</p>
-                    </div>
-                    <div class="col-md-3">
-                        <p class="text-light m-0 text-sm">Email</p>
-                    </div>
-                    <div class="col-md-2">
-                        <p class="text-light m-0 text-sm">Mobile Number</p>
-                    </div>
-                    <div class="col-md-1">
-                        <p class="text-light m-0 text-sm">Gender</p>
-                    </div>
-                    <div class="col-md-2">
-                        <p class="text-light m-0 text-sm">Class Progress</p>
-                    </div>
+                <div class="row">
+                    <div class="user-row">
+                        <ul class="shadow-sm bg-dark rounded p-2 mb-3 ">
+                            <li class="text-light m-0 text-sm">Name</li>
+                            <li class="text-light m-0 text-sm">Email</li>
+                            <li class="text-light m-0 text-sm">Mobile Number</li>
+                            <li class="text-light m-0 text-sm">Gender</li>
+                            <li class="text-light m-0 text-sm">Class Progress</li>
+                        </ul>
+                        @foreach (var m in Model.Mentees)
+                        {
+                            var user = m.User;
 
+                            <ul class="shadow-sm bg-light rounded p-2 mb-2 js-animate">
+
+                                <li class="text-muted text-sm">@user.FullName</li>
+                                <li class="text-muted m-0 text-sm">@user.Gender</li>
+                                <li class="text-muted m-0 text-sm">@user.MobileNumber</li>
+                                <li class=" m-0 text-sm"><a href="mailto:@user.Email" class="text-muted">@user.Email</a></li>
+
+                                @if (m.FinishedClasses)
+                                {
+                                    <li><span class="badge badge-info shadow">Done</span></li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="#" class="badge badge-warning js-update-mentee" data-id="@user.Id">Mark as done</a>
+                                    </li>
+                                }
+                            </ul>
+
+                        }
+
+                    </div>
                 </div>
-                foreach (var mentee in Model.Mentees)
-                {
-                    var user = mentee.User;
 
-                    <div class="row shadow bg-light rounded p-2 mb-2 js-animate">
-                        <div class="col-md-3">
-                            <p class="text-muted m-0 text-sm">@user.FullName</p>
-                        </div>
-                        <div class="col-md-3 ">
-                            <p class=" m-0 text-sm"><a href="mailto:@user.Email" class="text-muted">@user.Email</a></p>
-                        </div>
-                        <div class="col-md-2">
-                            <p class="text-muted m-0 text-sm">@user.MobileNumber</p>
-                        </div>
-                        <div class="col-md-1 ">
-                            <p class="text-muted m-0 text-sm">@user.Gender</p>
-                        </div>
-
-                        <div class="col-md-1 ">
-                            @if (mentee.FinishedClasses)
-                            {
-                                <span class="badge badge-info shadow">Done</span>
-                            }
-                            else
-                            {
-                                <a href="#" class="badge badge-warning js-update-mentee" data-id="@user.Id">Mark as done</a>
-
-                            }
-                        </div>
-
-                    </div>
-                }
 
             }
 

@@ -302,5 +302,8 @@ li a:hover {
     #banner-img{
         height:300px;
     }
+    .display-4{
+        font-size:2.5rem;
+    }
 }
 
